@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from main import p
+from main import client
 
 class Info(commands.Cog):
 	global p
@@ -15,14 +16,14 @@ class Info(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# help command
-	@commands.command(name='help', aliases=['Help', 'HELP'], description='Shows a list of all command modules.', module=module_name)
-	async def help(self, ctx, category=None):
+	@commands.command(name='help', aliases=['Help', 'HELP'], description='**Shows:-**\nList of all modules if `input`=`none`.\nList of all commands if `input`=`all`.\nList of all commands in a module if `input`=`module_name`.\nHelp about a command if `input`=`command_name`\n(only for certain commands).')
+	async def help(self, ctx, input_=None):
 		# (There is probably a better, more efficient way to make commands other than if-elif-else statements.)
 
-		if category != None:
-			c = category.lower()
+		if input_ != None:
+			c = input_.lower()
 		# help
-		if category == None:
+		if input_ == None:
 			embed = discord.Embed(title='Normal Bot\'s Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
 
 			embed.add_field(name='🛠️Utility', value=f'`{p}help utility`')
@@ -38,8 +39,53 @@ class Info(commands.Cog):
 		elif c == 'all':
 			embed = discord.Embed(title='List of all commands:', description=f'The bot prefix is `{p}`.', color=discord.Color.random())
 
+			# Makes a field for every command.
 			for command in self.client.walk_commands():
-				embed.add_field(name=p + command.name, value=command.description)
+					parameters = list(command.params.keys())
+					try:
+						if parameters[2]:
+							if parameters[3]:
+								if parameters[4]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+									pm3 = parameters[4].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+							else:
+								pm1 = parameters[2].replace('_', ' (optional)')
+
+								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+						else:
+							embed.add_field(name=p + command.name, value=command.description)
+					except:
+						try:
+							if parameters[2]:
+								if parameters[3]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+							else:
+								embed.add_field(name=p + command.name, value=command.description)
+						except:
+							try:
+								if parameters[2]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								embed.add_field(name=p + command.name, value=command.description)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help all')
@@ -47,9 +93,54 @@ class Info(commands.Cog):
 		elif c == 'utility':
 			embed = discord.Embed(description='**🛠️Utility Commands**', color=discord.Color.random())
 
+			# Makes a field for every command in 'utility' module.
 			for command in self.client.walk_commands():
 				if command.module == 'cogs.utility':
-					embed.add_field(name=p + command.name, value=command.description)
+					parameters = list(command.params.keys())
+					try:
+						if parameters[2]:
+							if parameters[3]:
+								if parameters[4]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+									pm3 = parameters[4].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+							else:
+								pm1 = parameters[2].replace('_', ' (optional)')
+
+								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+						else:
+							embed.add_field(name=p + command.name, value=command.description)
+					except:
+						try:
+							if parameters[2]:
+								if parameters[3]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+							else:
+								embed.add_field(name=p + command.name, value=command.description)
+						except:
+							try:
+								if parameters[2]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								embed.add_field(name=p + command.name, value=command.description)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help utility')
@@ -57,9 +148,54 @@ class Info(commands.Cog):
 		elif c == 'fun':
 			embed = discord.Embed(description='**😄Fun Commands**', color=discord.Color.random())
 
+			# Makes a field for every command in 'fun' module.
 			for command in self.client.walk_commands():
 				if command.module == 'cogs.fun':
-					embed.add_field(name=p + command.name, value=command.description)
+					parameters = list(command.params.keys())
+					try:
+						if parameters[2]:
+							if parameters[3]:
+								if parameters[4]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+									pm3 = parameters[4].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+							else:
+								pm1 = parameters[2].replace('_', ' (optional)')
+
+								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+						else:
+							embed.add_field(name=p + command.name, value=command.description)
+					except:
+						try:
+							if parameters[2]:
+								if parameters[3]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+							else:
+								embed.add_field(name=p + command.name, value=command.description)
+						except:
+							try:
+								if parameters[2]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								embed.add_field(name=p + command.name, value=command.description)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help fun')
@@ -67,9 +203,54 @@ class Info(commands.Cog):
 		elif c == 'info':
 			embed = discord.Embed(description='**ℹ️Info Commands**', color=discord.Color.random())
 
+			# Makes a field for every command in 'info' module.
 			for command in self.client.walk_commands():
 				if command.module == 'cogs.info':
-					embed.add_field(name=p + command.name, value=command.description)
+					parameters = list(command.params.keys())
+					try:
+						if parameters[2]:
+							if parameters[3]:
+								if parameters[4]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+									pm3 = parameters[4].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+							else:
+								pm1 = parameters[2].replace('_', ' (optional)')
+
+								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+						else:
+							embed.add_field(name=p + command.name, value=command.description)
+					except:
+						try:
+							if parameters[2]:
+								if parameters[3]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+							else:
+								embed.add_field(name=p + command.name, value=command.description)
+						except:
+							try:
+								if parameters[2]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								embed.add_field(name=p + command.name, value=command.description)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help info')
@@ -77,9 +258,54 @@ class Info(commands.Cog):
 		elif c == 'animal' or c =='animals':
 			embed = discord.Embed(description='**🐶Animals Commands**', color=discord.Color.random())
 
+			# Makes a field for every command in 'animal/animals' module.
 			for command in self.client.walk_commands():
 				if command.module == 'cogs.animals':
-					embed.add_field(name=p + command.name, value=command.description)
+					parameters = list(command.params.keys())
+					try:
+						if parameters[2]:
+							if parameters[3]:
+								if parameters[4]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+									pm3 = parameters[4].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+							else:
+								pm1 = parameters[2].replace('_', ' (optional)')
+
+								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+						else:
+							embed.add_field(name=p + command.name, value=command.description)
+					except:
+						try:
+							if parameters[2]:
+								if parameters[3]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+									pm2 = parameters[3].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+							else:
+								embed.add_field(name=p + command.name, value=command.description)
+						except:
+							try:
+								if parameters[2]:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								embed.add_field(name=p + command.name, value=command.description)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help animal(s)')
@@ -87,9 +313,54 @@ class Info(commands.Cog):
 		elif c == 'game' or c =='games':
 				embed = discord.Embed(description='**🎲Game Commands**', color=discord.Color.random())
 
+				# Makes a field for every command in 'game/games' module.
 				for command in self.client.walk_commands():
 					if command.module == 'cogs.games':
-						embed.add_field(name=p + command.name, value=command.description)
+						parameters = list(command.params.keys())
+						try:
+							if parameters[2]:
+								if parameters[3]:
+									if parameters[4]:
+										pm1 = parameters[2].replace('_', ' (optional)')
+										pm2 = parameters[3].replace('_', ' (optional)')
+										pm3 = parameters[4].replace('_', ' (optional)')
+
+										embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+									else:
+										pm1 = parameters[2].replace('_', ' (optional)')
+										pm2 = parameters[3].replace('_', ' (optional)')
+
+										embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+								else:
+									pm1 = parameters[2].replace('_', ' (optional)')
+
+									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+							else:
+								embed.add_field(name=p + command.name, value=command.description)
+						except:
+							try:
+								if parameters[2]:
+									if parameters[3]:
+										pm1 = parameters[2].replace('_', ' (optional)')
+										pm2 = parameters[3].replace('_', ' (optional)')
+
+										embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									else:
+										pm1 = parameters[2].replace('_', ' (optional)')
+
+										embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								try:
+									if parameters[2]:
+										pm1 = parameters[2].replace('_', ' (optional)')
+
+										embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									else:
+										embed.add_field(name=p + command.name, value=command.description)
+								except:
+									embed.add_field(name=p + command.name, value=command.description)
 
 				await ctx.reply(embed=embed)
 				print(f'[LOGS] Command used: {p}help game(s)')
@@ -97,12 +368,63 @@ class Info(commands.Cog):
 		elif c == 'moderation' or c =='mod':
 					embed = discord.Embed(description='**❗Moderation Commands**', color=discord.Color.random())
 
+					# Makes a field for every command in 'moderation' module.
 					for command in self.client.walk_commands():
 						if command.module == 'cogs.moderation':
-							embed.add_field(name=p + command.name, value=command.description)
+							parameters = list(command.params.keys())
+							try:
+								if parameters[2]:
+									if parameters[3]:
+										if parameters[4]:
+											pm1 = parameters[2].replace('_', ' (optional)')
+											pm2 = parameters[3].replace('_', ' (optional)')
+											pm3 = parameters[4].replace('_', ' (optional)')
+
+											embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+										else:
+											pm1 = parameters[2].replace('_', ' (optional)')
+											pm2 = parameters[3].replace('_', ' (optional)')
+
+											embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									else:
+										pm1 = parameters[2].replace('_', ' (optional)')
+
+										embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								else:
+									embed.add_field(name=p + command.name, value=command.description)
+							except:
+								try:
+									if parameters[2]:
+										if parameters[3]:
+											pm1 = parameters[2].replace('_', ' (optional)')
+											pm2 = parameters[3].replace('_', ' (optional)')
+
+											embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+										else:
+											pm1 = parameters[2].replace('_', ' (optional)')
+
+											embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									else:
+										embed.add_field(name=p + command.name, value=command.description)
+								except:
+									try:
+										if parameters[2]:
+											pm1 = parameters[2].replace('_', ' (optional)')
+
+											embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+										else:
+											embed.add_field(name=p + command.name, value=command.description)
+									except:
+										embed.add_field(name=p + command.name, value=command.description)
 
 					await ctx.reply(embed=embed)
 					print(f'[LOGS] Command used: {p}help moderation')
+
+	# Ping command
+	@commands.command(name='ping', aliases=['Ping', 'PING'], description='Shows the bot\'s ping/latency.')
+	async def ping(self, ctx):
+		global client
+		await ctx.send(f'🏓 | ...pong! In {round(client.latency * 1000)}ms.')
 
 def setup(client):
 	client.add_cog(Info(client))
