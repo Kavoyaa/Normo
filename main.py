@@ -14,12 +14,26 @@ client.remove_command("help")
 # When bot comes online
 @client.event
 async def on_ready():
-    print("[BOT ONLINE]\nLogged in as {0.user}.\n".format(client))
+    client_name = '{0.user}'.format(client)
+    print('[LOGS] {BOT ONLINE} Logged in as ' + client_name + '.\n\n')
 
-# Loads the cogs
-for filename in os.listdir('./cogs'):
-	if filename.endswith('.py'):
-		client.load_extension(f'cogs.{filename[:-3]}')
+# In case of command error
+@client.event
+async def on_command_error(ctx, error):
+    # Ignores the error if it is 'CommandNotFOund', which means the command used was invalid.
+    if isinstance(error, commands.ComamndNotFound):
+        pass
+    else:
+        embed = discord.Embed(description=f'**Command Error:**\n{error}', color = 0xFF0000)
+        await ctx.send(embed=embed)
+
+# Loads the cogs.
+def load_cogs():
+    for filename in os.listdir('./cogs'):
+    	if filename.endswith('.py'):
+    		client.load_extension(f'cogs.{filename[:-3]}')
+
+load_cogs()
 
 '''
 Gets the environment variable 'TOKEN' from a '.env' file.
