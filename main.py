@@ -20,8 +20,8 @@ async def on_ready():
 # In case of command error
 @client.event
 async def on_command_error(ctx, error):
-    # Ignores the error if it is 'CommandNotFOund', which means the command used was invalid.
-    if isinstance(error, commands.ComamndNotFound):
+    # Ignores the error if it is 'CommandNotFound', which means the command used was invalid.
+    if isinstance(error, commands.CommandNotFound):
         pass
     else:
         embed = discord.Embed(description=f'**Command Error:**\n{error}', color = 0xFF0000)
@@ -33,12 +33,18 @@ def load_cogs():
     	if filename.endswith('.py'):
     		client.load_extension(f'cogs.{filename[:-3]}')
 
-load_cogs()
+def run():
+    '''
+    Gets the environment variable 'TOKEN' from a '.env' file.
+    This is to hide the bot token.
+    If you want do the same, make a file called '.env' and put "TOKEN = <your_bot_token>" in it.
+    '''
+    dotenv.load_dotenv()
+    TOKEN = os.environ.get("TOKEN")
 
-'''
-Gets the environment variable 'TOKEN' from a '.env' file.
-This is to hide the bot token.
-If you want do the same, make a file called '.env' and put "TOKEN = <your_bot_token>" in it.
-'''
-dotenv.load_dotenv()
-client.run(os.environ.get("TOKEN"))
+    # Runs the bot
+    client.run(TOKEN)
+
+# Loading cogs and running the bot.
+load_cogs()
+run()
