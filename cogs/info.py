@@ -455,28 +455,35 @@ class Info(commands.Cog):
 		elif c == 'c' or c == 'calc' or c == 'calculate' or c == 'cal':
 			'''Gives information about .calculate command.'''
 
-			embed = discord.Embed(title='➕✖️➕✖️➕Calculator Commands➖➗➖➗',description=f'**Usage:** `{p}caclulate <input>`. **Example:** `{p}calculate 20+1`.',color=discord.Color.random())
+			embed = discord.Embed(title='➕✖️➕✖️➕Calculator Commands➖➗➖➗',description=f'**Usage:** `{p}calculate <input>`. **Example:** `{p}calculate 20+1`.',color=discord.Color.random())
 
-			embed.add_field(name='Addition       =`X+Y`',value='**Examples:**\n`23+56`, `23+4+51`',inline=True)
-			embed.add_field(name='Subtraction   =`X-Y`',value='**Examples:**\n`56-23`, `1-23-2`',inline=True)
-			embed.add_field(name='Multiplication =`X*Y`',value='**Examples:**\n`3*7`, `354\*65`',inline=True)
-			embed.add_field(name='Division        =`X/5`',value='**Examples:**\n`26/2`, `2352/435`',inline=True)
-			embed.add_field(name='Powers         =`X**Y`',value='**Examples:**\n`2**3` (this means 2^3), `231**44` (this means 231^44',inline=True)
-			embed.add_field(name='Remainder      =`X%Y`',value='**Examples:**\n`3%1` (this will give remainder of 3/1), `325%6` (this will give remainder of 325/6)',inline=True)
+			# Basic maths section
+			embed.add_field(name='Addition       =`X+Y`',value='**Examples:**\n`23+56`, `23+4+51`')
+			embed.add_field(name='Subtraction   =`X-Y`',value='**Examples:**\n`56-23`, `1-23-2`')
+			embed.add_field(name='Multiplication =`X*Y`',value='**Examples:**\n`3*7`, `354\*65`')
+			embed.add_field(name='Division        =`X/5`',value='**Examples:**\n`26/2`, `2352/435`')
+			embed.add_field(name='Powers         =`X**Y`',value='**Examples:**\n`2**3` (this means 2^3), `231**44` (this means 231^44)')
+			embed.add_field(name='Remainder      =`X%Y`',value='**Examples:**\n`3%1` (this will give remainder of 3/1), `325%6` (this will give remainder of 325/6)')
 
+			# Comparasion operators section
 			embed.add_field(name='**Comparison Operators: **',value="Comparison Operators return `True` or `False` value.",inline=False)
 
-			embed.add_field(name="Greater than(>)             ='`>`'",value="Examples: `5>4`, `234>3532`",inline=True)
-			embed.add_field(name="Less than(<)                ='`<`'",value="Examples: `45<5`, `3546<567`",inline=True)
-			embed.add_field(name="Equal to(=)                 ='`==`'",value="Examples: `5==4`, `3245==3425`",inline=True)
-			embed.add_field(name="Not equal to(≠)             ='`!=`'",value="Examples: `53!=67`, `451!=451`",inline=True)
-			embed.add_field(name="Greater than or equal to(≥) ='`>=`'",value="Examples: `54>=32`, `2>=65`",inline=True)
-			embed.add_field(name="Less than or equal to(≤)    ='`<=`'",value="Examples: `34<=78`, `412<=23`",inline=True)
+			embed.add_field(name="Greater than(>)             ='`>`'",value="Examples: `5>4`, `234>3532`")
+			embed.add_field(name="Less than(<)                ='`<`'",value="Examples: `45<5`, `3546<567`")
+			embed.add_field(name="Equal to(=)                 ='`==`'",value="Examples: `5==4`, `3245==3425`")
+			embed.add_field(name="Not equal to(≠)             ='`!=`'",value="Examples: `53!=67`, `451!=451`")
+			embed.add_field(name="Greater than or equal to(≥) ='`>=`'",value="Examples: `54>=32`, `2>=65`")
+			embed.add_field(name="Less than or equal to(≤)    ='`<=`'",value="Examples: `34<=78`, `412<=23`")
 
-			embed.set_footer(text=f"⭐PROTIP: You can simply type '{p}c' instead of typing the full command name (very cool).")
+			# Text evaluation section
+			embed.add_field(name='**Evaluating Text**', value='You can even evaluate text!', inline=False)
+
+			embed.add_field(name='How to evaluate text?', value='A simple way to understand this is by examples. Put whatever text you want in single quotes(`\' \'`) or double quotes(`" "`).\n\n**Examples:**\n\n`.calc "hello" * 3` (multiplying "hello" by 3)\nOutput: `hellohellohello`(says hello 3 times)\n\n`.calc "abc " + "xyz"` (adding "xyz" to "abc", note how I added blank space at end of "abc".)\nOutput: `abc xyz`\n\nAnd that\'s basically it! I hope you get an understanding of how to evaluate text, there\'s a lot more you can do with text ealuation but that\'s for you to find out(totally not an excuse so that I dont have to explain everything in text because it\'s hard)!', inline=False)
+
+			embed.set_footer(text=f"⭐PROTIP: You can simply type '{p}c', '{p}cal' or '{p}calc' instead of typing the full command name (very cool)!")
 
 			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help calc')
+			print(f'[LOGS] Command used: {p}help calculate')
 
 
 def setup(client):
