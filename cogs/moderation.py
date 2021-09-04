@@ -119,5 +119,21 @@ class Moderation(commands.Cog):
 			await ctx.send(embed=embed)
 			print(f'[LOGS] Command used: {p}ban')
 
+	# Purge command
+	@commands.command(name='purge', aliases=['Purge', 'PURGE', 'clear', 'Clear', 'CLEAR'], description='Deletes the given amount of messages.\nRequired perm(s): Manage messages')
+	@commands.has_permissions(manage_messages=True)
+	async def purge(self, ctx, amount: int):
+		await ctx.channel.purge(limit=amount)
+
+		if amount == 1:
+			embed = discord.Embed(title=f'**Sucessfully deleted {str(amount)} message.**')
+		else:
+			embed = discord.Embed(title=f'**Sucessfully deleted {str(amount)} messages.**')
+
+		embed.set_footer(text='This message will be deleted in 10 seconds.')
+
+		await ctx.send(embed=embed, delete_after=10)
+		print(f'[LOGS] Command used: {p}purge')
+
 def setup(client):
 	client.add_cog(Moderation(client))

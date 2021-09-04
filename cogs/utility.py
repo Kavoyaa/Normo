@@ -17,9 +17,13 @@ class Utility(commands.Cog):
 	@commands.command(name='count', aliases=['Count', 'COUNT'], description='Counts the number of words in the given `text`.')
 	async def count(self, ctx, *, text):
 		words = text.split()
+		number_of_words = len(words)
 
-		await ctx.reply(f'There are {len(words)} words in this text.')
-		print(f'[LOGS] Command used: {p}count')
+		if number_of_words == 1:
+			await ctx.reply(f'There is {number_of_words} in this text.\n*smh you can count that much yourself, why use me?*')
+		else:
+			await ctx.reply(f'There are {number_of_words} words in this text.')
+			print(f'[LOGS] Command used: {p}count')
 
 	# Binary command
 	@commands.command(name='binary', aliases=['Binary', 'BINARY'], description='Converts the given `input` to ASCII binary.')
