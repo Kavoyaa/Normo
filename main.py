@@ -17,6 +17,8 @@ async def on_ready():
     client_name = '{0.user}'.format(client)
     print('[LOGS] {BOT ONLINE} Logged in as ' + client_name + '.\n\n')
 
+    await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Commands: {p}help'))
+
 # In case of command error
 @client.event
 async def on_command_error(ctx, error):
