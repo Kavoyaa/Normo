@@ -24,6 +24,22 @@ class Info(commands.Cog):
 		await ctx.send(f'🏓 | ...pong! In {latency}ms.')
 		print(f'[LOGS] Command used: {p}ping')
 
+	# Aliases command
+	@commands.command(name='aliases', aliases=['Aliases', 'ALIASES'], description='Shows aliasesof all comamnds.')
+	async def aliases(self, ctx):
+		'''Shows all command aliases'''
+		embed = discord.Embed(title='Normal Bot\'s Command Aliases', color=discord.Color.random())
+
+		for command in self.client.walk_commands():
+			a = str(command.aliases)
+			a_v1 = a.replace("'", "`")
+			a_v2 = a_v1.replace('[', '')
+			a_v3 = a_v2.replace(']', '')
+
+			embed.add_field(name=f'{p}{command.name}', value=a_v3)
+
+		await ctx.reply(embed=embed)
+
 	# help command
 	@commands.command(name='help', aliases=['Help', 'HELP'], description='Shows help about a module or command(only certain commands). `{p}help all` for a list of all commands.')
 	async def help(self, ctx, input_=None):
