@@ -15,6 +15,67 @@ class Fun(commands.Cog):
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
+	# Kill command
+	@commands.command(name='kill', aliases=['Kill', 'KILL', 'keel', 'Keel', 'KEEL', 'keal', 'Keal', 'KEAL'], description='Kill your enemies!')
+	async def kill(self, ctx, user: discord.Member, *, reason_=''):
+		"""
+		'kills' the mentioned user.
+		"""
+
+		gifs = [
+		'https://media1.tenor.com/images/a80b2bf31635899ac0900ea6281a41f6/tenor.gif?itemid=5535365',
+		'https://media1.tenor.com/images/bb4b7a7559c709ffa26c5301150e07e4/tenor.gif?itemid=9955653',
+		'https://media1.tenor.com/images/eb7fc71c616347e556ab2b4c813700d1/tenor.gif?itemid=5840101',
+		'https://media1.tenor.com/images/2c945adbbc31699861f411f86ce8058f/tenor.gif?itemid=5459053',
+		'https://media1.tenor.com/images/795bf8203af5b4a5d0713a8a2c2a0bcf/tenor.gif?itemid=18595358'
+		]
+
+		embed = discord.Embed(description=reason_, color=discord.Color.random())
+
+		embed.set_author(name=f'{ctx.author.name} is killing {user.name}!', icon_url=ctx.author.avatar_url)
+
+		embed.set_image(url=random.choice(gifs))
+
+		embed.set_footer(text=f'{ctx.author.name} killed {user.name}. RIP💀')
+
+		await ctx.send(embed=embed)
+		print(f'[LOGS] Command used: {p}kill')
+
+	# Inspire command
+	@commands.command(name='inspire', aliases=['Inspire', 'INSPIRE', 'motivate', 'Motivate', 'MOTIVATE'], description='Shows a random inspirational quote.')
+	async def inspire(self, ctx):
+		'''Shows random inspirational quote'''
+		response = requests.get('https://api.quotable.io/random')
+		res = response.json()
+		content = res['content']
+		author = res['author']
+
+		embed = discord.Embed(description=f'**"{content}"**\n-{author}', colour=0x00FF00)
+
+		await ctx.reply(embed=embed)
+		print(f'[LOGS] Command used: {p}inspire')
+
+	# Hello command
+	@commands.command(name='hello', aliases=['Hello', 'HELLO'], description='Feeling lonely? Have the bot say hello to you!')
+	async def hello(self, ctx):
+		'''Says hello'''
+		await ctx.reply(f'Hello {ctx.author.mention}!')
+		print(f'[LOGS] Command used: {p}hello')
+
+	# Afk command
+	@commands.command(name='afk', aliases=['Afk', 'AFK'], description='Tells people that you are AFK.')
+	async def afk(self, ctx):
+		'''Says <ctx.author> is AFK'''
+		await ctx.send(f'{ctx.author.mention} is AFK!')
+		print(f'[LOGS] Command used: {p}afk')
+
+	# Bye command
+	@commands.command(name='bye', aliases=['Bye', 'BYE'], description='Says bye. Yep, that\'s it. Bye.')
+	async def bye(self, ctx):
+		'''Says bye'''
+		await ctx.reply(f'Bye-bye {ctx.author.mention}!')
+		print(f'[LOGS] Command used: {p}bye')
+
 	# Joke command
 	@commands.command(name='joke', aliases=['Joke', 'JOKE'], description='Shows a random joke.')
 	async def joke(self, ctx):
@@ -107,6 +168,16 @@ class Fun(commands.Cog):
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}meme')
+
+	# Yomama command
+	@commands.command(name='yomama', aliases=['Yomama', 'YOMAMA', 'YoMama', 'yoMama'], description='Tells a yomama joke.\nYo mama so fat I couldn\'t fit the entire joke about her here.')
+	async def yomama(self, ctx):
+		res = requests.get("https://api.yomomma.info/")
+		r = res.json()
+		joke = r['joke']
+
+		await ctx.send(joke)
+		print(f'[LOGS] Command used: {p}yomama')
 
 def setup(client):
 	client.add_cog(Fun(client))

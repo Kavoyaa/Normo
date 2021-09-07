@@ -64,5 +64,19 @@ class Utility(commands.Cog):
 		await ctx.send(eval(input))
 		print(f'[LOGS] Command used: {p}calculate')
 
+	# Uppercase command
+	@commands.command(name='uppercase', aliases=['Uppercase', 'UPPERCASE', 'upper', 'Upper', 'UPPER'], description='Converts the given text to UPPERCASE.')
+	async def uppercase(slef, ctx, *, text):
+		'''Converts given input to uppercase'''
+		await ctx.reply(text.upper())
+		print(f'[LOGS] Command used: {p}upper')
+
+	# Lowercase command
+	@commands.command(name='lowercase', aliases=['Lowercase', 'LOWERCASE', 'lower', 'Lower', 'LOWER'], description='Converts the given text to lowercase.')
+	async def lowercase(slef, ctx, *, text):
+		'''Converts given input to lowercase'''
+		await ctx.reply(text.lower())
+		print(f'[LOGS] Command used: {p}lower')
+
 def setup(client):
 	client.add_cog(Utility(client))

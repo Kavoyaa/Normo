@@ -39,6 +39,7 @@ class Info(commands.Cog):
 			embed.add_field(name=f'{p}{command.name}', value=a_v3)
 
 		await ctx.reply(embed=embed)
+		print(f'[LOGS] Command used: {p}aliases')
 
 	# help command
 	@commands.command(name='help', aliases=['Help', 'HELP'], description='Shows help about a module or command(only certain commands). `{p}help all` for a list of all commands.')
