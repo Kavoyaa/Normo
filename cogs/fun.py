@@ -15,13 +15,59 @@ class Fun(commands.Cog):
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
+	# 8ball command
+	@commands.command(name='8ball', aliases=['8Ball', '8BALL', 'eightball', 'Eightball', 'EIGHTBALL', 'EightBall', 'eightBall'], description='Ask the magic 8-ball a question!')
+	async def eightball(self, ctx, question):
+		'''Gives a random response from the list below'''
+		responses = [
+		'It is certain.',
+		'It is decidedly so.',
+		'Without a doubt.',
+		'Yes definitely.',
+		'You may rely on it.',
+		'As I see it, yes.',
+		'Most likely.',
+		'Outlook good.',
+		'Yes.',
+		'Signs point to yes.',
+		'Reply hazy, try again.',
+		'Ask again later.',
+		'Better not tell you now.',
+		'Cannot predict now.',
+		'Concentrate and ask again.',
+		'Don\'t count on it.',
+		'My reply is no.',
+		'My sources say no.',
+		'Outlook not so good.',
+		'No.',
+		'Very doubtful.',
+		]
+
+		await ctx.send(random.choice(responses))
+		print(f'[LOGS] Command used: {p}8ball')
+
+	#Coinflip command
+	@commands.command(name='coinflip', aliases=['Coinflip', 'COINFLIP', 'CoinFlip', 'coinFlip'], description='Flips a coin!')
+	async def coinflip(self, ctx):
+		'''Says either heads or tails.'''
+		responses = ['Heads!', 'Tails!']
+
+		await ctx.reply(random.choice(responses))
+		print(f'[LOGS] Command used: {p}coinflip')
+
+	#Choose command
+	@commands.command(name='choose', aliases=['Choose', 'CHOOSE'], description='Chooses a random item from the given input.\n**Example for usage:**\n`.choose apple mango`\n**Output:** `apple`\nYou can put as many items as you like.')
+	async def choose(self, ctx, items):
+		'''Chooses a random item from the given input'''
+		output = items.split()
+
+		await ctx.reply(random.choice(output))
+		print(f'[LOGS] Command used: {p}choose')
+
 	# Kill command
 	@commands.command(name='kill', aliases=['Kill', 'KILL', 'keel', 'Keel', 'KEEL', 'keal', 'Keal', 'KEAL'], description='Kill your enemies!')
 	async def kill(self, ctx, user: discord.Member, *, reason_=''):
-		"""
-		'kills' the mentioned user.
-		"""
-
+		'''Sends a random GIF from the list below'''
 		gifs = [
 		'https://media1.tenor.com/images/a80b2bf31635899ac0900ea6281a41f6/tenor.gif?itemid=5535365',
 		'https://media1.tenor.com/images/bb4b7a7559c709ffa26c5301150e07e4/tenor.gif?itemid=9955653',

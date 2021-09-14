@@ -66,7 +66,7 @@ class Utility(commands.Cog):
 		print(f'[LOGS] Command used: {p}calculate')
 
 	# Dictionary command
-	@commands.command(name='dictionary', aliases=['Dictionary', 'DICTIONARY', 'dict', 'Dict', 'DICT'])
+	@commands.command(name='dictionary', aliases=['Dictionary', 'DICTIONARY', 'dict', 'Dict', 'DICT'], description='Gets the dictionary information about a word.')
 	async def dictionary(self, ctx, word):
 		res = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word.lower()}")
 
