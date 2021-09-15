@@ -20,30 +20,22 @@ class Fun(commands.Cog):
 	async def eightball(self, ctx, question):
 		'''Gives a random response from the list below'''
 		responses = [
-		'It is certain.',
-		'It is decidedly so.',
-		'Without a doubt.',
-		'Yes definitely.',
-		'You may rely on it.',
-		'As I see it, yes.',
-		'Most likely.',
-		'Outlook good.',
-		'Yes.',
-		'Signs point to yes.',
-		'Reply hazy, try again.',
-		'Ask again later.',
-		'Better not tell you now.',
-		'Cannot predict now.',
-		'Concentrate and ask again.',
-		'Don\'t count on it.',
-		'My reply is no.',
-		'My sources say no.',
-		'Outlook not so good.',
-		'No.',
-		'Very doubtful.',
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553440924983326/IMG_20210915_092503.png', # Yes.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553441122099200/IMG_20210915_092612.png', # It is certain.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553441319256094/IMG_20210915_092710.png', # Without a doubt.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553441457664041/IMG_20210915_092842.png', # Yes, definetly.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553441667354624/IMG_20210915_093651.png', # You may rely on it.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553442023866398/IMG_20210915_093805.png', # As I see it, yes.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553442376220682/IMG_20210915_093921.png', # Most likely.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553442711760896/IMG_20210915_094026.png', # Outlook good.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553443135381514/IMG_20210915_094154.png', # It is decidely so.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553443546419210/IMG_20210915_094226.png' # Signs point to yes.
 		]
 
-		await ctx.send(random.choice(responses))
+		embed = discord.Embed(color=0x000099)
+		embed.set_image(url=random.choice(responses))
+
+		await ctx.send(f'"{question}"', embed=embed)
 		print(f'[LOGS] Command used: {p}8ball')
 
 	#Coinflip command
