@@ -17,8 +17,8 @@ class Fun(commands.Cog):
 
 	# 8ball command
 	@commands.command(name='8ball', aliases=['8Ball', '8BALL', 'eightball', 'Eightball', 'EIGHTBALL', 'EightBall', 'eightBall'], description='Ask the magic 8-ball a question!')
-	async def eightball(self, ctx, question):
-		'''Gives a random response from the list below'''
+	async def eightball(self, ctx, *, question):
+		'''Sends an embed with a randoom image from the list below'''
 		responses = [
 		'https://cdn.discordapp.com/attachments/877916745745195060/887553440924983326/IMG_20210915_092503.png', # Yes.
 		'https://cdn.discordapp.com/attachments/877916745745195060/887553441122099200/IMG_20210915_092612.png', # It is certain.
@@ -29,13 +29,24 @@ class Fun(commands.Cog):
 		'https://cdn.discordapp.com/attachments/877916745745195060/887553442376220682/IMG_20210915_093921.png', # Most likely.
 		'https://cdn.discordapp.com/attachments/877916745745195060/887553442711760896/IMG_20210915_094026.png', # Outlook good.
 		'https://cdn.discordapp.com/attachments/877916745745195060/887553443135381514/IMG_20210915_094154.png', # It is decidely so.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553443546419210/IMG_20210915_094226.png' # Signs point to yes.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887553443546419210/IMG_20210915_094226.png', # Signs point to yes.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887564987017605120/IMG_20210915_103601.png', # No.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572407093706772/IMG_20210915_103912.png', # Reply hazy, try again.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572407303413800/IMG_20210915_103953.png', # Ask again later.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572407567650846/IMG_20210915_104030.png', # Better not tell you now.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572407773200434/IMG_20210915_104106.png', # Cannot predict now.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572407957745685/IMG_20210915_104148.png', # Concentrate and ask again.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572408314232862/IMG_20210915_104455.png', # Don't count on it.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572408586866698/IMG_20210915_104522.png', # My reply is no.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572408758853652/IMG_20210915_104556.png', # My sources say no.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572409023090708/IMG_20210915_110236.png', # Outlook not so good.
+		'https://cdn.discordapp.com/attachments/877916745745195060/887572409241202758/IMG_20210915_110301.png' # Very doubtful.
 		]
 
 		embed = discord.Embed(color=0x000099)
 		embed.set_image(url=random.choice(responses))
 
-		await ctx.send(f'"{question}"', embed=embed)
+		await ctx.send(f"\"{question}\"", embed=embed)
 		print(f'[LOGS] Command used: {p}8ball')
 
 	#Coinflip command
