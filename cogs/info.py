@@ -79,16 +79,16 @@ class Info(commands.Cog):
 									pm2 = parameters[3].replace('_', ' (optional)')
 									pm3 = parameters[4].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`] [`{pm3}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 							else:
 								pm1 = parameters[2].replace('_', ' (optional)')
 
-								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 						else:
 							embed.add_field(name=p + command.name, value=command.description)
 					except:
@@ -98,11 +98,11 @@ class Info(commands.Cog):
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 							else:
 								embed.add_field(name=p + command.name, value=command.description)
 						except:
@@ -110,7 +110,7 @@ class Info(commands.Cog):
 								if parameters[2]:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -139,16 +139,16 @@ class Info(commands.Cog):
 									pm2 = parameters[3].replace('_', ' (optional)')
 									pm3 = parameters[4].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} `[{pm1}`] [`{pm2}`] <`{pm3}`>', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 							else:
 								pm1 = parameters[2].replace('_', ' (optional)')
 
-								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 						else:
 							embed.add_field(name=p + command.name, value=command.description)
 					except:
@@ -158,11 +158,11 @@ class Info(commands.Cog):
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 							else:
 								embed.add_field(name=p + command.name, value=command.description)
 						except:
@@ -170,7 +170,7 @@ class Info(commands.Cog):
 								if parameters[2]:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -195,16 +195,16 @@ class Info(commands.Cog):
 									pm2 = parameters[3].replace('_', ' (optional)')
 									pm3 = parameters[4].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} `[{pm1}`] [`{pm2}`] <`{pm3}`>', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 							else:
 								pm1 = parameters[2].replace('_', ' (optional)')
 
-								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 						else:
 							embed.add_field(name=p + command.name, value=command.description)
 					except:
@@ -214,11 +214,11 @@ class Info(commands.Cog):
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 							else:
 								embed.add_field(name=p + command.name, value=command.description)
 						except:
@@ -226,7 +226,7 @@ class Info(commands.Cog):
 								if parameters[2]:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -251,16 +251,16 @@ class Info(commands.Cog):
 									pm2 = parameters[3].replace('_', ' (optional)')
 									pm3 = parameters[4].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} `[{pm1}`] [`{pm2}`] <`{pm3}`>', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 							else:
 								pm1 = parameters[2].replace('_', ' (optional)')
 
-								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 						else:
 							embed.add_field(name=p + command.name, value=command.description)
 					except:
@@ -270,11 +270,11 @@ class Info(commands.Cog):
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 							else:
 								embed.add_field(name=p + command.name, value=command.description)
 						except:
@@ -282,7 +282,7 @@ class Info(commands.Cog):
 								if parameters[2]:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -291,6 +291,7 @@ class Info(commands.Cog):
 			# Adding fields for sub-commands manually
 			embed.add_field(name=f'{p}help `calc`', value=f'A detailed guide on how to use `{p}calculate` command.')
 			embed.add_field(name=f'{p}help `hex`', value=f'Shows how to use `{p}hex` command properly and a list of all colours avaliable in `{p}hex`.')
+			embed.add_field(name=f'{p}help `hex` (coming soon)', value='Coming soon.')
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help info')
@@ -310,16 +311,16 @@ class Info(commands.Cog):
 									pm2 = parameters[3].replace('_', ' (optional)')
 									pm3 = parameters[4].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} `[{pm1}`] [`{pm2}`] <`{pm3}`>', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 							else:
 								pm1 = parameters[2].replace('_', ' (optional)')
 
-								embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+								embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 						else:
 							embed.add_field(name=p + command.name, value=command.description)
 					except:
@@ -329,11 +330,11 @@ class Info(commands.Cog):
 									pm1 = parameters[2].replace('_', ' (optional)')
 									pm2 = parameters[3].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 							else:
 								embed.add_field(name=p + command.name, value=command.description)
 						except:
@@ -341,7 +342,7 @@ class Info(commands.Cog):
 								if parameters[2]:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -365,16 +366,16 @@ class Info(commands.Cog):
 										pm2 = parameters[3].replace('_', ' (optional)')
 										pm3 = parameters[4].replace('_', ' (optional)')
 
-										embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+										embed.add_field(name=f'{p}{command.name} `[{pm1}`] [`{pm2}`] <`{pm3}`>', value=command.description)
 									else:
 										pm1 = parameters[2].replace('_', ' (optional)')
 										pm2 = parameters[3].replace('_', ' (optional)')
 
-										embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+										embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 								else:
 									pm1 = parameters[2].replace('_', ' (optional)')
 
-									embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+									embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 							else:
 								embed.add_field(name=p + command.name, value=command.description)
 						except:
@@ -384,11 +385,11 @@ class Info(commands.Cog):
 										pm1 = parameters[2].replace('_', ' (optional)')
 										pm2 = parameters[3].replace('_', ' (optional)')
 
-										embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+										embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 									else:
 										pm1 = parameters[2].replace('_', ' (optional)')
 
-										embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+										embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -396,7 +397,7 @@ class Info(commands.Cog):
 									if parameters[2]:
 										pm1 = parameters[2].replace('_', ' (optional)')
 
-										embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+										embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 									else:
 										embed.add_field(name=p + command.name, value=command.description)
 								except:
@@ -420,16 +421,16 @@ class Info(commands.Cog):
 											pm2 = parameters[3].replace('_', ' (optional)')
 											pm3 = parameters[4].replace('_', ' (optional)')
 
-											embed.add_field(name=f'{p}{command.name} `<{pm1}`> <`{pm2}`> <`{pm3}`>', value=command.description)
+											embed.add_field(name=f'{p}{command.name} `[{pm1}`] [`{pm2}`] <`{pm3}`>', value=command.description)
 										else:
 											pm1 = parameters[2].replace('_', ' (optional)')
 											pm2 = parameters[3].replace('_', ' (optional)')
 
-											embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+											embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 									else:
 										pm1 = parameters[2].replace('_', ' (optional)')
 
-										embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+										embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 								else:
 									embed.add_field(name=p + command.name, value=command.description)
 							except:
@@ -439,11 +440,11 @@ class Info(commands.Cog):
 											pm1 = parameters[2].replace('_', ' (optional)')
 											pm2 = parameters[3].replace('_', ' (optional)')
 
-											embed.add_field(name=f'{p}{command.name} <`{pm1}`> <`{pm2}`>', value=command.description)
+											embed.add_field(name=f'{p}{command.name} [`{pm1}`] [`{pm2}`]', value=command.description)
 										else:
 											pm1 = parameters[2].replace('_', ' (optional)')
 
-											embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+											embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 									else:
 										embed.add_field(name=p + command.name, value=command.description)
 								except:
@@ -451,7 +452,7 @@ class Info(commands.Cog):
 										if parameters[2]:
 											pm1 = parameters[2].replace('_', ' (optional)')
 
-											embed.add_field(name=f'{p}{command.name} <`{pm1}`>', value=command.description)
+											embed.add_field(name=f'{p}{command.name} [`{pm1}`]', value=command.description)
 										else:
 											embed.add_field(name=p + command.name, value=command.description)
 									except:
@@ -463,7 +464,7 @@ class Info(commands.Cog):
 		elif c == 'hex':
 			'''Gives information about .hex command.'''
 
-			embed = discord.Embed(description=f'**How to use:** To use the command, simply type `{p}hex` followed by the name of the colour you want. If the colour is available, the bot will return the hex code of the colour.\n**Example:** `{p}hex red`\n\nIf your colour\'s name consists of two words, type it in one word.\n**Example:** Type `{p}hex darkgreen` instead of "{p}hex dark green".\n\nHere are all the colours available in `{p}hex`:-')
+			embed = discord.Embed(description=f'**How to use:** To use the command, simply type `{p}hex` followed by the name of the colour you want. If the colour is available, the bot will return the hex code of the colour.\n**Example:** `{p}hex red`\n\nHere are all the colours available in `{p}hex`:-')
 
 			embed.set_image(url='https://cdn.discordapp.com/attachments/878136393858187285/879052476026851398/sphx_glr_named_colors_003.png')
 

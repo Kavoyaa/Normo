@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from main import p
 import requests
+import matplotlib
 
 class Utility(commands.Cog):
 	global p
@@ -102,6 +103,12 @@ class Utility(commands.Cog):
 		'''Converts given input to lowercase'''
 		await ctx.reply(text.lower())
 		print(f'[LOGS] Command used: {p}lower')
+
+	# Hexcode command
+	@commands.command(name='hexcode', aliases=['Hexcode', 'HEXCODE', 'HexCode', 'hexCode', 'hex', 'Hex', 'HEX'], description='Tells the hex code of the given colour.')
+	async def hexcode(self, ctx, *, colour):
+		colourName = colour.replace(' ', '')
+		await ctx.reply(matplotlib.colors.cnames[colourName])
 
 def setup(client):
 	client.add_cog(Utility(client))

@@ -135,5 +135,78 @@ class Moderation(commands.Cog):
 		await ctx.send(embed=embed, delete_after=10)
 		print(f'[LOGS] Command used: {p}purge')
 
+	# Embed command
+	@commands.command(name='embed', aliases=['Embed', 'EMBED'], description='Make your own embeds!\n`.help embed`(coming soon) to see how to use.\nRequited perm(s): Administrator')
+	@commands.has_permissions(administrator=True)
+	async def embed(self, ctx, *, input):
+		code = input
+		title = ''
+		desc = ''
+
+		if '<title>' in code:
+			_title = code.split('<title>')
+			title = _title[1]
+
+		if '<desc>' in code:
+			_desc = code.split('<desc>')
+			desc = _desc[1]
+
+		if '<colour>' in code:
+			colour = code.split('<colour>')
+			hexVal = colour[1].replace('#', '0x')
+			convertedHex = int(hexVal, 16)
+
+			embed = discord.Embed(title=title, description=desc, colour=convertedHex)
+		elif not '<colour>' in code:
+			embed = discord.Embed(title=title, description=desc)
+
+		if '<img>' in code:
+			img = code.split('<img>')
+			embed.set_image(url=img[1])
+
+		if '<thumbnail>' in code:
+			thumbnail = code.split('<thumbnail>')
+			embed.set_thumbnail(url=thumbnail[1])
+
+		if '<footer>' in code:
+			footer = code.split('<footer>')
+			embed.set_footer(text=footer[1])
+
+		if '<author>' in code:
+			author = code.split('<author>')
+
+			if '<name>' in author[1]:
+				name = author[1].split('<name>')
+
+				if '<icon>' in author[1]:
+					authorIcon = author[1].split('<icon>')
+					embed.set_author(name=name[1], icon_url=authorIcon[1])
+				else:
+					embed.set_author(name=name[1])
+
+		if '<fields>' in code:
+			field = code.split('<fields>')
+
+			for i in range(100):
+				try:
+					if i % 2 !=0:
+						name = field[1].split('<name>')
+						value = field[1].split('<value>')
+						inline = field[1].split('<inline>')
+
+						if value[i]:
+							if name[i]:
+								if inline[i]:
+									if inline[i] == 'False' or inline[i] == 'false':
+										embed.add_field(name=name[i], value=value[i], inline=False)
+									elif inline[i] == 'True' or inline[i] == 'true':
+										embed.add_field(name=name[i], value=value[i], inline=True)
+				except:
+					pass
+
+		await ctx.send(embed=embed)
+		print(f'[LOGS] Command used: {p}embed')
+
+
 def setup(client):
 	client.add_cog(Moderation(client))
