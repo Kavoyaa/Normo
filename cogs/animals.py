@@ -16,7 +16,7 @@ class Animals(commands.Cog):
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
-	@commands.command(name='cat', aliases=['Cat', 'CAT'], description='Shows a random cute cat picture 😻!')
+	@commands.command(name='cat', aliases=['Cat', 'CAT', 'cats', 'Cats', 'CATS'], description='Shows a random cat picture 😻!')
 	async def cat(self, ctx):
 		'''
 		Gets the environment variable 'TOKEN' from a '.env' file.
@@ -30,12 +30,24 @@ class Animals(commands.Cog):
 		r = res.json()
 		url = r[0]['url']
 
-		embed = discord.Embed(description=f'[Meow😻]({url})', color=discord.Color.random())
-
+		embed = discord.Embed(description=f'**[Meow😻]({url})**', color=discord.Color.random())
 		embed.set_image(url=url)
 
 		await ctx.reply(embed=embed)
 		print(f'[LOGS] Command used: {p}cat')
+
+	@commands.command(name='dog', aliases=['Dog', 'DOG' , 'dogs', 'Dogs', 'DOGS'], description='Shows a random dog picture 🐶!')
+	async def dog(self, ctx):
+		'''Sends a random dog picture.'''
+		res = requests.get(f'https://dog.ceo/api/breeds/image/random')
+		r = res.json()
+		url = r['message']
+
+		embed = discord.Embed(description=f'**[Woof🐶]({url})**', color=discord.Color.random())
+		embed.set_image(url=url)
+
+		await ctx.reply(embed=embed)
+		print(f'[LOGS] Command used: {p}dog')
 
 def setup(client):
 	client.add_cog(Animals(client))
