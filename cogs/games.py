@@ -12,6 +12,6 @@ class Games(commands.Cog):
 	@commands.Cog.listener()
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
-
+		
 def setup(client):
-	client.add_cog(Game(client))
+	client.add_cog(Games(client))
