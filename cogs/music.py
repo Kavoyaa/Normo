@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from main import p
 
-class Games(commands.Cog):
+class Music(commands.Cog):
 	global p
 
 	def __init__(self, client):
@@ -14,4 +14,4 @@ class Games(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 def setup(client):
-	client.add_cog(Game(client))
+	client.add_cog(Music(client))
