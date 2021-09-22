@@ -63,7 +63,11 @@ class Utility(commands.Cog):
 	@commands.command(name='calculate', aliases=['Calculate', 'CALCULATE', 'c', 'C', 'calc', 'Calc', 'CALC', 'cal', 'Cal', 'CAL'], description='Evaluates the given input.\n`.help calc` for more info.')
 	async def calculate(self, ctx, *, input):
 		'''Evaluates the given input'''
-		await ctx.send(eval(input))
+		i = input
+		if '__' in i:
+			pass
+		else:
+			await ctx.reply(eval(input, {'__builtins__':{}}))
 		print(f'[LOGS] Command used: {p}calculate')
 
 	# Dictionary command
