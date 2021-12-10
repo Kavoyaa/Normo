@@ -56,13 +56,15 @@ class Moderation(commands.Cog):
 		A softban bans then immediately unbans the mentioned user to act asa kick which also deletes messages of the kicked user.
 		'''
 
+		reason = reason_
+
 		if user == ctx.author:
 			await ctx.send('You can\'t softban yourself!')
 		else:
 			# Embed which will be sent when a person is softbanned
 			embed = discord.Embed(colour=0xFF0000)
 
-			embed.set_author(name=f'User Softbanned | {user}', icon_url=member.avatar_url)
+			embed.set_author(name=f'User Softbanned | {user}', icon_url=user.avatar_url)
 
 			embed.add_field(name='User', value=f'{user.mention}', inline=True)
 			embed.add_field(name='Moderator',value=f'{ctx.author.mention}', inline=True)

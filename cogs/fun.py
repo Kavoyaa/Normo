@@ -15,38 +15,55 @@ class Fun(commands.Cog):
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
+	# Fact command
+	@commands.command(name='fact', aliases=['Fact', 'FACT', 'fax', 'Fax', 'FAX', 'facts', 'Facts', 'FACTS'], description='Show a random fact!')
+	async def fact(self, ctx):
+		'''Sends a random fact.'''
+
+		res = requests.get('https://uselessfacts.jsph.pl/random.json?language=en')
+		r = res.json()
+		fact = r['text']
+
+		embed = discord.Embed(title='Random Fact', description=f'{fact}', color=discord.Color.blue())
+
+		await ctx.send(embed=embed)
+
+
 	# 8ball command
 	@commands.command(name='8ball', aliases=['8Ball', '8BALL', 'eightball', 'Eightball', 'EIGHTBALL', 'EightBall', 'eightBall'], description='Ask the magic 8-ball a question!')
 	async def eightball(self, ctx, *, question):
 		'''Sends an embed with a randoom image from the list below'''
+
 		responses = [
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553440924983326/IMG_20210915_092503.png', # Yes.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553441122099200/IMG_20210915_092612.png', # It is certain.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553441319256094/IMG_20210915_092710.png', # Without a doubt.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553441457664041/IMG_20210915_092842.png', # Yes, definetly.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553441667354624/IMG_20210915_093651.png', # You may rely on it.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553442023866398/IMG_20210915_093805.png', # As I see it, yes.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553442376220682/IMG_20210915_093921.png', # Most likely.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553442711760896/IMG_20210915_094026.png', # Outlook good.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553443135381514/IMG_20210915_094154.png', # It is decidely so.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887553443546419210/IMG_20210915_094226.png', # Signs point to yes.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887564987017605120/IMG_20210915_103601.png', # No.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572407093706772/IMG_20210915_103912.png', # Reply hazy, try again.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572407303413800/IMG_20210915_103953.png', # Ask again later.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572407567650846/IMG_20210915_104030.png', # Better not tell you now.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572407773200434/IMG_20210915_104106.png', # Cannot predict now.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572407957745685/IMG_20210915_104148.png', # Concentrate and ask again.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572408314232862/IMG_20210915_104455.png', # Don't count on it.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572408586866698/IMG_20210915_104522.png', # My reply is no.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572408758853652/IMG_20210915_104556.png', # My sources say no.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572409023090708/IMG_20210915_110236.png', # Outlook not so good.
-		'https://cdn.discordapp.com/attachments/877916745745195060/887572409241202758/IMG_20210915_110301.png' # Very doubtful.
+		'as_i_see_it_yes',
+		'ask_again_later',
+		'better_not_tell_you_now',
+		'cannot_predict_now',
+		'concentrate_and_ask_again',
+		'dont_count_on_it.',
+		'it_is_certain',
+		'it_is_decidely_so',
+		'most_likely',
+		'my_reply_is_no.',
+		'no',
+		'outlook_good',
+		'reply_hazy_try_again',
+		'signs_point_to_yes',
+		'very_doubtful',
+		'without_a_doubt',
+		'yes_definitely',
+		'yes',
+		'you_may_rely_on_it',
 		]
 
-		embed = discord.Embed(color=0x000099)
-		embed.set_image(url=random.choice(responses))
+		img = random.choice(responses)
 
-		await ctx.send(f"\"{question}\"", embed=embed)
+		file = discord.File(f'images/8ball/{img}.png')
+
+		embed = discord.Embed(color=0x000099)
+		embed.set_image(url=f'attachment://{img}.png')
+
+		await ctx.send(f'*\🎱"{question}"\🎱*', file=file, embed=embed)
 		print(f'[LOGS] Command used: {p}8ball')
 
 	#Coinflip command
@@ -60,7 +77,7 @@ class Fun(commands.Cog):
 
 	#Choose command
 	@commands.command(name='choose', aliases=['Choose', 'CHOOSE'], description='Chooses a random item from the given input.\n**Example for usage:**\n`.choose apple mango`\n**Output:** `apple`\nYou can put as many items as you like.')
-	async def choose(self, ctx, items):
+	async def choose(self, ctx, *, items):
 		'''Chooses a random item from the given input'''
 		output = items.split()
 
@@ -129,19 +146,22 @@ class Fun(commands.Cog):
 	@commands.command(name='joke', aliases=['Joke', 'JOKE'], description='Shows a random joke.')
 	async def joke(self, ctx):
 		'''Shows a random joke.'''
+
+		'''
 		def joke1():
-			res = requests.get('https://official-joke-api.appspot.com/random_joke')
-			r = res.json()
-			setup = r['setup']
-			punchline = r['punchline']
-
-			return f'**{setup}**\n\n||{punchline}||'
-
-		def joke2():
 			res = requests.get('https://v2.jokeapi.dev/joke/Miscellaneous,Dark,Pun,Spooky,Christmas?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart')
 			r = res.json()
 			setup = r['setup']
 			punchline = r['delivery']
+
+			return f'**{setup}**\n\n||{punchline}||'
+
+
+		def joke2():
+			res = requests.get('https://official-joke-api.appspot.com/random_joke')
+			r = res.json()
+			setup = r['setup']
+			punchline = r['punchline']
 
 			return f'**{setup}**\n\n||{punchline}||'
 
@@ -153,6 +173,9 @@ class Fun(commands.Cog):
 		elif randomNum == 2:
 			await ctx.send(joke2())
 			print(f'[LOGS] Command used: {p}joke')
+		'''
+
+		await ctx.reply('All the APIs used for this command died so the command is temporarily disabled. Sadge.')
 
 	# Meme command
 	@commands.command(name='meme', aliases=['Meme', 'MEME'], description='Shows a random meme from Reddit.')
@@ -227,6 +250,21 @@ class Fun(commands.Cog):
 
 		await ctx.send(joke)
 		print(f'[LOGS] Command used: {p}yomama')
+
+	# Uwu command
+	@commands.command(name='uwu', aliases=['Uwu', 'UWU', 'UwU', 'uWu', 'uwU', 'uWU', 'UWu'], description='UwU.')
+	async def uwu(self, ctx):
+		await ctx.send('**UwU**')
+
+	# Owo command
+	@commands.command(name='owo', aliases=['Owo', 'OWO', 'OwO', 'oWo', 'owO', 'oWO', 'OWo'], description='OwO.')
+	async def owo(self, ctx):
+		await ctx.send('**OwO**')
+
+	# Say command
+	@commands.command(name='say', aliases=['Say', 'SAY'], description='Have the bot say something!')
+	async def say(self, ctx, *, message):
+		await ctx.send(message)
 
 def setup(client):
 	client.add_cog(Fun(client))

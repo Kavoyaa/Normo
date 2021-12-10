@@ -5,11 +5,11 @@ import os
 import dotenv
 
 # Set this to prefix of your choice.
-p = "."
+p = '.'
 client = commands.Bot(command_prefix = p)
 
 # Removes the default 'help' command so we can use our own custom one.
-client.remove_command("help")
+client.remove_command('help')
 
 # When bot comes online
 @client.event
@@ -18,8 +18,9 @@ async def on_ready():
     print('[LOGS] {BOT ONLINE} Logged in as ' + client_name + '.\n\n')
 
     await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Commands: {p}help'))
-'''
+
 # In case of command error
+
 @client.event
 async def on_command_error(ctx, error):
     # Ignores the error if it is 'CommandNotFound', which means the command used was invalid.
@@ -28,7 +29,7 @@ async def on_command_error(ctx, error):
     else:
         embed = discord.Embed(description=f'**Command Error:**\n{error}', color = 0xFF0000)
         await ctx.send(embed=embed)
-'''
+
 # Loads the cogs.
 def load_cogs():
     for filename in os.listdir('./cogs'):
@@ -46,7 +47,7 @@ def run():
 
     # Runs the bot
     client.run(TOKEN)
-e
+
 # Loading cogs and running the bot.
 load_cogs()
 run()
