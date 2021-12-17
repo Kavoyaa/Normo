@@ -125,7 +125,7 @@ class Moderation(commands.Cog):
 	@commands.command(name='purge', aliases=['Purge', 'PURGE', 'clear', 'Clear', 'CLEAR'], description='Deletes the given amount of messages.\nRequired perm(s): Manage messages')
 	@commands.has_permissions(manage_messages=True)
 	async def purge(self, ctx, amount: int):
-		await ctx.channel.purge(limit=amount)
+		await ctx.channel.purge(limit=amount + 1)
 
 		if amount == 1:
 			embed = discord.Embed(title=f'**Sucessfully deleted {str(amount)} message.**')

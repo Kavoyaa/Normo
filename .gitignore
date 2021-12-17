@@ -125,3 +125,6 @@ dmypy.json
 .pyre/
 templates.py
 .gitattributes
+.replit
+.poetry.lock
+.pyproject.toml

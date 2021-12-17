@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from main import p
 from PIL import Image
+import PIL.ImageOps  
 from io import BytesIO
 import os
 
@@ -16,8 +17,40 @@ class Images(commands.Cog):
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
+	# Avatar command
+	@commands.command(name='avatar', aliases=['Avatar', 'AVATAR', 'av', 'Av', 'aV', 'AV'], description="Sends the mentioned user's avatar(sends the command user's avatar if no one is mentioned).")
+	async def avatar(self, ctx, user_: discord.Member=None):
+		if user_ == None:
+			av = ctx.author.avatar_url
+			heading = f"{ctx.author}'s avatar:"
+		else:
+			av = user_.avatar_url
+			heading = f"{user_}'s avatar:"
+		
+		embed = discord.Embed(title= heading, color=discord.Color.random())
+		embed.set_image(url=av)
+
+		await ctx.reply(embed=embed)
+	
+	# Invert command
+	@commands.command(name='invert', aliases=['Invert', 'INVERT'], description='Sends colo(u)r inverted version of the mentioned user\'s profile picture!')
+	async def invert(self, ctx, user_: discord.Member=None):
+		user = user_
+		if user == None:
+			user = ctx.author
+
+		avatar = user.avatar_url_as(size=128)
+		data = BytesIO(await avatar.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((177, 177))
+		inverted_image = PIL.ImageOps.invert(pfp.convert('RGB'))
+		inverted_image.save('inverted.jpg')
+
+		await ctx.send(file = discord.File('inverted.jpg'))
+		os.remove('inverted.jpg')
+
 	# Wanted command
-	@commands.command(name='wanted', aliases=['Wanted', 'WANTED'], description='Generates a wanted poster of the given user.')
+	@commands.command(name='wanted', aliases=['Wanted', 'WANTED'], description='Generates a wanted poster of the given user!')
 	async def wanted(self, ctx, user_: discord.Member=None):
 		user = user_
 		if user == None:
@@ -37,6 +70,28 @@ class Images(commands.Cog):
 
 		# Deletes the saved image file
 		os.remove('wanted_output.jpg')
+
+	# Cmon command
+	@commands.command(name='cmon', aliases=['Cmon', 'CMON'], description='Generates a "C\'mon do something" meme with the profile picture of the given user!')
+	async def dosomething(self, ctx, user_: discord.Member=None):
+		user = user_
+		if user == None:
+			user = ctx.author
+
+		wanted = Image.open('images/dosomething.jpg')
+		asset = user.avatar_url_as(size=128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((177, 177))
+		wanted.paste(pfp, (120, 212))
+		# Creates a 'wanted_output.jpg' which gets sent as output
+		wanted.save('do_output.jpg')
+
+		await ctx.send(file = discord.File('do_output.jpg'))
+
+
+		# Deletes the saved image file
+		os.remove('do_output.jpg')
 
 def setup(client):
 	client.add_cog(Images(client))

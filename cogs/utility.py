@@ -65,18 +65,18 @@ class Utility(commands.Cog):
 
 		await ctx.send(reversedString)
 		print(f'[LOGS] Command used: {p}reverse')
-
+	'''
 	# Calculate command
 	@commands.command(name='calculate', aliases=['Calculate', 'CALCULATE', 'c', 'C', 'calc', 'Calc', 'CALC', 'cal', 'Cal', 'CAL'], description='Evaluates the given input.\n`.help calc` for more info.')
 	async def calculate(self, ctx, *, input):
-		'''Evaluates the given input'''
+		Evaluates the given input
 		i = input
 		if '__' in i:
 			pass
 		else:
 			await ctx.reply(eval(input, {'__builtins__':{}}))
 		print(f'[LOGS] Command used: {p}calculate')
-
+	'''
 	# Dictionary command
 	@commands.command(name='dictionary', aliases=['Dictionary', 'DICTIONARY', 'dict', 'Dict', 'DICT'], description='Gets the dictionary information about a word.')
 	async def dictionary(self, ctx, word):
@@ -120,66 +120,6 @@ class Utility(commands.Cog):
 	async def hexcode(self, ctx, *, colour):
 		colourName = colour.replace(' ', '')
 		await ctx.reply(matplotlib.colors.cnames[colourName])
-
-'''
-	# Python command
-	@commands.command(name='python', aliases=['Python', 'PYTHON', 'py', 'Py', 'pY', 'PY'], description='Executes Python code.')
-	async def python(self, ctx, * , code):
-
-		#Executes Python code.
-
-		if 'os' in code.lower():
-			await ctx.reply("Due to security reasons, and me being too lazy to make this command secure, the use of 'os' module is not allowed. Even if you're not using the module and the code just happens to have 'os' in it, I'd still not allow it XD. Sorry :)")
-		else:
-			arg = code
-			start = time.process_time()
-			arg = arg[6:]
-			arg = arg.split("```")
-
-			param = arg[1]
-			f = open("inputs.txt", "w")
-			f.write(param)
-			f.close()
-
-			arg=arg[0]
-			t = textwrap.indent(arg, '\t')
-			f = open("output.py", "w")
-			f.write(
-f
-import traceback
-try:
-{t}
-except:
-	print(traceback.format_exc())
-
-			)
-			f.close()
-
-			error = False
-			try:
-				res = subprocess.check_output("python3 output.py < inputs.txt", shell=True)
-			except subprocess.CalledProcessError:
-				res = '[ERROR]'
-				error = True
-
-			time_taken = str(time.process_time() - start)
-
-			if error == False:
-				if res.decode('UTF-8') == '':
-					embed = discord.Embed(color=discord.Color.gold())
-					embed.add_field(name="Program Output", value=f'```\nNo Output```')
-				else:
-					embed = discord.Embed(color=discord.Color.gold())
-					embed.add_field(name="Program Output", value=f'```yaml\n{res.decode("utf-8")}\n```')
-			elif error:
-				embed = discord.Embed(color=discord.Color.gold())
-				embed.add_field(name="Program Output", value=f'```css\n[ERROR]\nCheck your code and run again.\n```')
-
-			await ctx.send(embed=embed)
-
-			os.remove("output.py")
-			os.remove("inputs.txt")
-'''
 
 def setup(client):
 	client.add_cog(Utility(client))

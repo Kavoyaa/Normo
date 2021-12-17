@@ -3,6 +3,8 @@ from discord.ext import commands
 from main import p
 import random
 import requests
+import os
+from stat import S_IREAD, S_IWUSR
 
 class Fun(commands.Cog):
 	global p
@@ -44,7 +46,7 @@ class Fun(commands.Cog):
 		'it_is_certain',
 		'it_is_decidely_so',
 		'most_likely',
-		'my_reply_is_no.',
+		'my_reply_is_no',
 		'no',
 		'outlook_good',
 		'reply_hazy_try_again',
@@ -57,11 +59,11 @@ class Fun(commands.Cog):
 		]
 
 		img = random.choice(responses)
-
 		file = discord.File(f'images/8ball/{img}.png')
 
 		embed = discord.Embed(color=0x000099)
 		embed.set_image(url=f'attachment://{img}.png')
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar_url)
 
 		await ctx.send(f'*\🎱"{question}"\🎱*', file=file, embed=embed)
 		print(f'[LOGS] Command used: {p}8ball')
