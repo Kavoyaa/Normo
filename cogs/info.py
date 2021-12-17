@@ -52,7 +52,7 @@ class Info(commands.Cog):
 			c = input_.lower()
 		# help
 		if input_ == None:
-			embed = discord.Embed(title='Normal Bot\'s Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help [command]` for info on a specific command.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
+			embed = discord.Embed(title='Nromal Bot\'s Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help [command]` for info on a specific command.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
 
 			embed.add_field(name='🛠️Utility', value=f'`{p}help utility`')
 			embed.add_field(name='😄Fun', value=f'`{p}help fun`')

@@ -91,6 +91,24 @@ class Images(commands.Cog):
 
 		# Deletes the saved image file
 		os.remove('cmon_output.jpg')
+	
+	# Grayscale command
+	@commands.command(name='grayscale', aliases=['Grayscale', 'GRAYSCALE', 'greyscale', 'Greyscale', 'GREYSCALE'])
+	async def gray(self, ctx, user_: discord.Member=None):
+		user = user_
+		if user == None:
+			user = ctx.author
+
+		avatar = user.display_avatar.with_size(128)
+		data = BytesIO(await avatar.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((177, 177))
+		inverted_image = PIL.ImageOps.grayscale(pfp.convert('RGB'))
+		inverted_image.save('grayscaled.jpg')
+
+		await ctx.send(file = discord.File('grayscaled.jpg'))
+		os.remove('grayscaled.jpg')
 
 def setup(client):
 	client.add_cog(Images(client))
+
