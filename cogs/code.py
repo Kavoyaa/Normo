@@ -1,16 +1,9 @@
-import discord
-from discord.ext import commands
-from main import p
+import nextcord as discord
+from nextcord.ext import commands
 import os
 import asyncio
-from dotenv import load_dotenv
-import requests
-import json
-import traceback
-import sys
 import time
 import subprocess
-import re
 import textwrap
 import io
 import signal
@@ -30,6 +23,8 @@ class Code(commands.Cog):
 	# Python command
 	@commands.command(name='python', aliases=['Python', 'PYTHON', 'py', 'Py', 'pY', 'PY'], description='Executes Python code(you cannot import modules).')
 	async def code(self, ctx, *, code):
+		#("<a:colorfulloading:921300287505960960>")
+		await ctx.message.add_reaction("<a:colorfulloading:921304808256860171>")
 		start = time.process_time()
 		e = code.lower()
 		code = code.replace('```py', '```')
@@ -67,7 +62,6 @@ except:
 			py_compile.compile('check.py', doraise=True)
 			print(f'[CODE]\n{arg[1:]}')
 		except py_compile.PyCompileError as se:
-			
 			res = str(se)
 			res = res.replace("check.py", "file.py")
 			res = res[1:]
@@ -110,7 +104,6 @@ except:
 		os.remove("output.py")
 		os.remove("inputs.txt")
 
-
 		''''
 		if 'import' in e:
 			embed = discord.Embed(description='**You cannot import modules.**', color=discord.Color.gold())
@@ -120,8 +113,6 @@ except:
 		elif output== '':
 			embed = discord.Embed(color=discord.Color.gold())
 			embed.add_field(name='Program Output', value='```css\nNo Output\n```')
-			embed.add_field(name='Time Taken', value=f'```\n{str(time.process_time() - start)[:12]}\n```', inline=False)
-			print("[OUTPUT]\nNo Output")
 		else:
 			if error == False:
 				if '  File "output.py", line ' in output:
@@ -142,21 +133,30 @@ except:
 
 					o = output[:58] + num + output[n:]
 					output = o
-
-			embed = discord.Embed(color=discord.Color.gold())
+			
 			if len(output) <= 980:
-				embed.add_field(name="Program Output", value=f'```yaml\n{output}\n```')
-				
-				if "Traceback" in output or "SyntaxError:" in output:
+				if 'Traceback (most recent call last):' in output and '  File "file.py", line ' in output and ' in <module>' in output or error: 
+					embed = discord.Embed(color=discord.Color.red())
+					embed.add_field(name="Program Output", value=f'```yaml\n{output}\n```')
+
 					print(f'[ERROR]\n{output}')
 				else:
+					embed = discord.Embed(color=discord.Color.gold())
+					embed.add_field(name="Program Output", value=f'```yaml\n{output}\n```')
+
 					print(f'[OUTPUT]\n{output}')
 			else:
+				embed = discord.Embed(color=discord.Color.gold())
 				embed.add_field(name="Program Output", value=f'```yaml\n{output[:980]} #Size limit reached\n```')
-				print(f'[OUTPUT]\n{output[:980]}')
-			embed.add_field(name='Time Taken', value=f'```\n{str(time.process_time() - start)[:12]}\n```', inline=False)
 
+				print(f'[OUTPUT]\n{output[:980]}')
+
+		
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
+
+		await ctx.message.clear_reaction("<a:colorfulloading:921304808256860171>")
 		await ctx.send(embed=embed)
+		
 
 		with open('webserver.py', 'w') as w:
 			w.write('''
@@ -176,6 +176,7 @@ def webserver():
     t = Thread(target=run)
     t.start()
 			''')
+	
 
 def setup(client):
 	client.add_cog(Code(client))

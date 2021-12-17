@@ -1,6 +1,6 @@
 # Importing modules
-import discord
-from discord.ext import commands
+import nextcord as discord
+from nextcord.ext import commands
 import os
 import dotenv
 from stat import S_IREAD
@@ -21,7 +21,7 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Commands: {p}help'))
 
 # In case of command error
-#'''
+'''
 @client.event
 async def on_command_error(ctx, error):
     # Ignores the error if it is 'CommandNotFound', which means the command used was invalid.

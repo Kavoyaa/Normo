@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord as discord
+from nextcord.ext import commands
 from main import p
 from PIL import Image
 import PIL.ImageOps  
@@ -21,10 +21,10 @@ class Images(commands.Cog):
 	@commands.command(name='avatar', aliases=['Avatar', 'AVATAR', 'av', 'Av', 'aV', 'AV'], description="Sends the mentioned user's avatar(sends the command user's avatar if no one is mentioned).")
 	async def avatar(self, ctx, user_: discord.Member=None):
 		if user_ == None:
-			av = ctx.author.avatar_url
+			av = ctx.author.avatar.url
 			heading = f"{ctx.author}'s avatar:"
 		else:
-			av = user_.avatar_url
+			av = user_.avatar.url
 			heading = f"{user_}'s avatar:"
 		
 		embed = discord.Embed(title= heading, color=discord.Color.random())
@@ -39,7 +39,7 @@ class Images(commands.Cog):
 		if user == None:
 			user = ctx.author
 
-		avatar = user.avatar_url_as(size=128)
+		avatar = user.display_avatar.with_size(128)
 		data = BytesIO(await avatar.read())
 		pfp = Image.open(data)
 		pfp = pfp.resize((177, 177))
@@ -57,7 +57,7 @@ class Images(commands.Cog):
 			user = ctx.author
 
 		wanted = Image.open('images/wanted.jpg')
-		asset = user.avatar_url_as(size=128)
+		asset = user.display_avatar.with_size(128)
 		data = BytesIO(await asset.read())
 		pfp = Image.open(data)
 		pfp = pfp.resize((177, 177))
@@ -78,20 +78,19 @@ class Images(commands.Cog):
 		if user == None:
 			user = ctx.author
 
-		wanted = Image.open('images/dosomething.jpg')
-		asset = user.avatar_url_as(size=128)
+		wanted = Image.open('images/cmon.jpg')
+		asset = user.display_avatar.with_size(128)
 		data = BytesIO(await asset.read())
 		pfp = Image.open(data)
 		pfp = pfp.resize((177, 177))
 		wanted.paste(pfp, (120, 212))
-		# Creates a 'wanted_output.jpg' which gets sent as output
-		wanted.save('do_output.jpg')
+		# Creates a 'cmon_output.jpg' which gets sent as output
+		wanted.save('cmon_output.jpg')
 
-		await ctx.send(file = discord.File('do_output.jpg'))
-
+		await ctx.send(file = discord.File('cmon_output.jpg'))
 
 		# Deletes the saved image file
-		os.remove('do_output.jpg')
+		os.remove('cmon_output.jpg')
 
 def setup(client):
 	client.add_cog(Images(client))

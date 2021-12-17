@@ -1,6 +1,4 @@
-import discord
-from discord.ext import commands
-from main import p
+from nextcord.ext import commands
 
 class Creator(commands.Cog):
 	global p

@@ -9,6 +9,7 @@ python = "^3.8"
 python-dotenv = "^0.19.2"
 discord = "^1.7.3"
 Flask = "^2.0.2"
+nextcord = "^2.0.0-alpha.4"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord as discord
+from nextcord.ext import commands
 from main import p
 
 class Moderation(commands.Cog):
@@ -25,7 +25,7 @@ class Moderation(commands.Cog):
 			# Embed which will be sent when a person is kicked
 			embed = discord.Embed(colour=0xFF0000)
 
-			embed.set_author(name=f'User Kicked | {user}', icon_url=user.avatar_url)
+			embed.set_author(name=f'User Kicked | {user}', icon_url=user.avatar.url)
 
 			embed.add_field(name='User', value=f'{user.mention}', inline=True)
 			embed.add_field(name='Moderator',value=f'{ctx.author.mention}', inline=True)
@@ -64,7 +64,7 @@ class Moderation(commands.Cog):
 			# Embed which will be sent when a person is softbanned
 			embed = discord.Embed(colour=0xFF0000)
 
-			embed.set_author(name=f'User Softbanned | {user}', icon_url=user.avatar_url)
+			embed.set_author(name=f'User Softbanned | {user}', icon_url=user.avatar.url)
 
 			embed.add_field(name='User', value=f'{user.mention}', inline=True)
 			embed.add_field(name='Moderator',value=f'{ctx.author.mention}', inline=True)
@@ -99,7 +99,7 @@ class Moderation(commands.Cog):
 			# Embed which will be sent when a person is banned
 			embed = discord.Embed(colour=0xFF0000)
 
-			embed.set_author(name=f'User Banned | {user}', icon_url=user.avatar_url)
+			embed.set_author(name=f'User Banned | {user}', icon_url=user.avatar.url)
 
 			embed.add_field(name='User', value=f'{user.mention}', inline=True)
 			embed.add_field(name='Moderator',value=f'{ctx.author.mention}', inline=True)

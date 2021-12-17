@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 from main import p
 import requests
 import matplotlib
@@ -65,18 +65,7 @@ class Utility(commands.Cog):
 
 		await ctx.send(reversedString)
 		print(f'[LOGS] Command used: {p}reverse')
-	'''
-	# Calculate command
-	@commands.command(name='calculate', aliases=['Calculate', 'CALCULATE', 'c', 'C', 'calc', 'Calc', 'CALC', 'cal', 'Cal', 'CAL'], description='Evaluates the given input.\n`.help calc` for more info.')
-	async def calculate(self, ctx, *, input):
-		Evaluates the given input
-		i = input
-		if '__' in i:
-			pass
-		else:
-			await ctx.reply(eval(input, {'__builtins__':{}}))
-		print(f'[LOGS] Command used: {p}calculate')
-	'''
+
 	# Dictionary command
 	@commands.command(name='dictionary', aliases=['Dictionary', 'DICTIONARY', 'dict', 'Dict', 'DICT'], description='Gets the dictionary information about a word.')
 	async def dictionary(self, ctx, word):

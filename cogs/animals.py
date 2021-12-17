@@ -1,6 +1,5 @@
-import discord
-from discord.ext import commands
-from main import p
+import nextcord as discord
+from nextcord.ext import commands
 import os
 import requests
 
@@ -32,7 +31,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Meow😻](https://thecatapi.com/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
@@ -46,7 +45,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Woof🐶](https://dog.ceo/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -60,7 +59,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Fox🦊](https://randomfox.ca/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
@@ -74,7 +73,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Quack🦆](https://random-d.uk/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -88,7 +87,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Panda🐼](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -102,7 +101,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Birb🐦](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
@@ -116,7 +115,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Koala🐨](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -130,7 +129,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Raccoooon🦝](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 

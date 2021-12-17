@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord as discord
+from nextcord.ext import commands
 from main import p
 import requests
 
@@ -32,6 +32,7 @@ class Music(commands.Cog):
 			embed = discord.Embed(description=lyrics, color=discord.Color.blue())
 			embed.set_author(name=f'"{title}" by {author}')
 			embed.set_thumbnail(url=thumbnail)
+			embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
 			
 			await ctx.send(embed=embed)
 		except:

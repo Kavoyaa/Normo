@@ -1,7 +1,6 @@
-import discord
-from discord.ext import commands
+import nextcord as discord
+from nextcord.ext import commands
 from main import p
-from main import client
 
 class Info(commands.Cog):
 	global p
@@ -113,7 +112,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🛠️Utility commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help utility')
@@ -134,7 +133,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='😄Fun commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help fun')
@@ -155,7 +154,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='ℹ️Info commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help info')
@@ -176,7 +175,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🐶Animals commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help animal(s)')
@@ -197,7 +196,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🎲Game commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help game(s)')
@@ -218,7 +217,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🖼️Image commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help image(s)')
@@ -239,7 +238,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🎵Music commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help music')
@@ -260,7 +259,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='💻Code commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help code')
@@ -281,7 +280,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='📏Math commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help maths')
@@ -302,7 +301,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='❗Moderation commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help moderation')
@@ -323,7 +322,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🎉Giveaway commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar_url)
+			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help giveaway(s)')
@@ -339,44 +338,29 @@ class Info(commands.Cog):
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help hex')
 
-		# help calculate
-		elif c == 'c' or c == 'calc' or c == 'calculate' or c == 'cal':
-			'''Gives information about .calculate command.'''
+		# help python
+		elif c == 'python':
+			'''Gives information about .python command.'''
+			v = '''
+```
+.python
+`​`​`py
+[code]
+`​``input
+```
+**NOTE:** Specify the inputs only if there are any.
+'''
 
-			embed = discord.Embed(title='➕✖️➕✖️➕Calculator Commands➖➗➖➗',description=f'**Usage:** `{p}calculate <input>`. **Example:** `{p}calculate 20+1`.',color=discord.Color.random())
+			embed = discord.Embed(title=f'**{c}**', description='Executes Python code(you cannot import modules).', color=discord.Color.random())
+			embed.add_field(name='Usage:', value=v, inline=False)
+			embed.add_field(name='Aliases:', value='`Python`, `PYTHON`, `py`, `Py`, `pY`, `PY`')
+			embed.add_field(name='Module:', value='code', inline=False)
 
-			# Basic maths section
-			embed.add_field(name='Addition       =`X+Y`',value='**Examples:**\n`23+56`, `23+4+51`')
-			embed.add_field(name='Subtraction   =`X-Y`',value='**Examples:**\n`56-23`, `1-23-2`')
-			embed.add_field(name='Multiplication =`X*Y`',value='**Examples:**\n`3*7`, `354\*65`')
-			embed.add_field(name='Division        =`X/5`',value='**Examples:**\n`26/2`, `2352/435`')
-			embed.add_field(name='Powers         =`X**Y`',value='**Examples:**\n`2**3` (this means 2^3), `231**44` (this means 231^44)')
-			embed.add_field(name='Remainder      =`X%Y`',value='**Examples:**\n`3%1` (this will give remainder of 3/1), `325%6` (this will give remainder of 325/6)')
-
-			# Comparasion operators section
-			embed.add_field(name='**Comparison Operators: **',value="Comparison Operators return `True` or `False` value.",inline=False)
-
-			embed.add_field(name="Greater than(>)             ='`>`'",value="Examples: `5>4`, `234>3532`")
-			embed.add_field(name="Less than(<)                ='`<`'",value="Examples: `45<5`, `3546<567`")
-			embed.add_field(name="Equal to(=)                 ='`==`'",value="Examples: `5==4`, `3245==3425`")
-			embed.add_field(name="Not equal to(≠)             ='`!=`'",value="Examples: `53!=67`, `451!=451`")
-			embed.add_field(name="Greater than or equal to(≥) ='`>=`'",value="Examples: `54>=32`, `2>=65`")
-			embed.add_field(name="Less than or equal to(≤)    ='`<=`'",value="Examples: `34<=78`, `412<=23`")
-
-			# Text evaluation section
-			embed.add_field(name='**Evaluating Text**', value='You can even evaluate text!', inline=False)
-
-			embed.add_field(name='How to evaluate text?', value='A simple way to understand this is by examples. Put whatever text you want in single quotes(`\' \'`) or double quotes(`" "`).\n\n**Examples:**\n\n`.calc "hello" * 3` (multiplying "hello" by 3)\nOutput: `hellohellohello`(says hello 3 times)\n\n`.calc "abc " + "xyz"` (adding "xyz" to "abc", note how I added blank space at end of "abc".)\nOutput: `abc xyz`\n\nAnd that\'s basically it! I hope you get an understanding of how to evaluate text, there\'s a lot more you can do with text ealuation but that\'s for you to find out(totally not an excuse so that I dont have to explain everything in text because it\'s hard)!', inline=False)
-
-			embed.set_footer(text=f"⭐PROTIP: You can simply type '{p}c', '{p}cal' or '{p}calc' instead of typing the full command name (very cool)!")
-
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help calculate')
+			await ctx.send(embed=embed)
 
 		# help [command]
 		else:
 			for command in self.client.walk_commands():
-
 				if command.name == c:
 					embed = discord.Embed(title=f'**{c}**', description=command.description, color=discord.Color.random())
 					parameters = list(command.params.keys())

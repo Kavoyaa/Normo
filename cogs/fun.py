@@ -1,10 +1,8 @@
-import discord
-from discord.ext import commands
+import nextcord as discord
+from nextcord.ext import commands
 from main import p
 import random
 import requests
-import os
-from stat import S_IREAD, S_IWUSR
 
 class Fun(commands.Cog):
 	global p
@@ -29,6 +27,53 @@ class Fun(commands.Cog):
 		embed = discord.Embed(title='Random Fact', description=f'{fact}', color=discord.Color.blue())
 
 		await ctx.send(embed=embed)
+	
+	# Emojify command
+	@commands.command(name='emojify', aliases=['Emojify', 'EMOJIFY'], description='Make the bot say whatever you want with emojis!')
+	async def emojify(self, ctx, *, text):
+		'''Converts the given text into emojis.'''
+		text = text.lower()
+		output = ''
+		for char in text:
+			if char == " ":
+				output += "      "
+			if char in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '?', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']:
+				if char == '1':
+					char = ":one:"
+				elif char == "2":
+					char = ":two:"
+				elif char == "3":
+					char = ":three:"
+				elif char == "4":
+					char = ":four:"
+				elif char == "5":
+					char = ":five:"
+				elif char == "6":
+					char = ":six:"
+				elif char == "7":
+					char = ":seven:"
+				elif char == "8":
+					char = ":eight:"
+				elif char == "9":
+					char = ":nine:"
+				elif char == "0":
+					char = ":zero:"
+				elif char == "!":
+					char = ":grey_exclamation:"
+				elif char == "?":
+					char = ":grey_question:"
+				elif char == "#":
+					char = ":hash:"
+				elif char == "*":
+					char = ":asterisk:"
+				else:
+					char = char.replace(char, f":regional_indicator_{char}:")
+				output += char
+			else:
+				output += char
+		
+		await ctx.send(output)
+
 
 
 	# 8ball command
@@ -63,7 +108,7 @@ class Fun(commands.Cog):
 
 		embed = discord.Embed(color=0x000099)
 		embed.set_image(url=f'attachment://{img}.png')
-		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar_url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.send(f'*\🎱"{question}"\🎱*', file=file, embed=embed)
 		print(f'[LOGS] Command used: {p}8ball')
@@ -100,7 +145,7 @@ class Fun(commands.Cog):
 
 		embed = discord.Embed(description=reason_, color=discord.Color.random())
 
-		embed.set_author(name=f'{ctx.author.name} is killing {user.name}!', icon_url=ctx.author.avatar_url)
+		embed.set_author(name=f'{ctx.author.name} is killing {user.name}!', icon_url=ctx.author.avatar.url)
 
 		embed.set_image(url=random.choice(gifs))
 
@@ -206,6 +251,12 @@ class Fun(commands.Cog):
 			'https://meme-api.herokuapp.com/gimme/trippinthroughtime',
 			'https://meme-api.herokuapp.com/gimme/technicallythetruth'
 			]
+
+			res = requests.get(random.choice(links))
+			r = res.json()
+			title = r['title']
+			url = r['url']
+			nsfw = r['nsfw']
 		# API two.
 		elif randomNum == 3:
 			links= [
