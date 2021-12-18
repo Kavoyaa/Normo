@@ -1,6 +1,7 @@
 import nextcord as discord
 from nextcord.ext import commands
 from main import p
+from main import client
 
 class Info(commands.Cog):
 	global p
@@ -112,7 +113,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🛠️Utility commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help utility')
@@ -133,7 +134,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='😄Fun commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help fun')
@@ -154,7 +155,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='ℹ️Info commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help info')
@@ -175,7 +176,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🐶Animals commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help animal(s)')
@@ -196,7 +197,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🎲Game commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help game(s)')
@@ -217,7 +218,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🖼️Image commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help image(s)')
@@ -238,7 +239,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🎵Music commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help music')
@@ -259,7 +260,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='💻Code commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help code')
@@ -280,7 +281,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='📏Math commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help maths')
@@ -301,7 +302,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='❗Moderation commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help moderation')
@@ -322,7 +323,7 @@ class Info(commands.Cog):
 
 			embed = discord.Embed(title='🎉Giveaway commands:', description=c, color=discord.Color.random())
 
-			embed.set_footer(text=f'Requested by: {ctx.author}', icon_url=ctx.author.avatar.url)
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			await ctx.reply(embed=embed)
 			print(f'[LOGS] Command used: {p}help giveaway(s)')
@@ -346,9 +347,10 @@ class Info(commands.Cog):
 .python
 `​`​`py
 [code]
-`​``input
-```
-**NOTE:** Specify the inputs only if there are any.
+`​``input 1
+input 2
+input 3
+```***NOTE:** Specify the inputs only if there are any.*
 '''
 
 			embed = discord.Embed(title=f'**{c}**', description='Executes Python code(you cannot import modules).', color=discord.Color.random())

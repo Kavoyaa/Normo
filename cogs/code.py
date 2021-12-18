@@ -53,6 +53,7 @@ except:
 		)
 		f.close()
 
+		status = ''
 		res = ''
 		error = False	
 		try:
@@ -64,8 +65,9 @@ except:
 		except py_compile.PyCompileError as se:
 			res = str(se)
 			res = res.replace("check.py", "file.py")
-			res = res[1:]
+			res = res[2:]
 			error = True
+			status = 'fail'
 
 		os.remove('check.py')		
 
@@ -113,6 +115,7 @@ except:
 		elif output== '':
 			embed = discord.Embed(color=discord.Color.gold())
 			embed.add_field(name='Program Output', value='```css\nNo Output\n```')
+			status = 'success'
 		else:
 			if error == False:
 				if '  File "output.py", line ' in output:
@@ -138,12 +141,12 @@ except:
 				if 'Traceback (most recent call last):' in output and '  File "file.py", line ' in output and ' in <module>' in output or error: 
 					embed = discord.Embed(color=discord.Color.red())
 					embed.add_field(name="Program Output", value=f'```yaml\n{output}\n```')
-
+					status = 'fail'
 					print(f'[ERROR]\n{output}')
 				else:
 					embed = discord.Embed(color=discord.Color.gold())
 					embed.add_field(name="Program Output", value=f'```yaml\n{output}\n```')
-
+					status = 'success'
 					print(f'[OUTPUT]\n{output}')
 			else:
 				embed = discord.Embed(color=discord.Color.gold())
@@ -155,8 +158,13 @@ except:
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.message.clear_reaction("<a:colorfulloading:921304808256860171>")
-		await ctx.send(embed=embed)
-		
+		msg = await ctx.send(embed=embed)
+
+		if status == 'fail':
+			await msg.add_reaction('❌')
+			
+		else:
+			await msg.add_reaction("yellow_check_mark:921595794761592853>")
 
 		with open('webserver.py', 'w') as w:
 			w.write('''

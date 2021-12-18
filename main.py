@@ -21,14 +21,14 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Commands: {p}help'))
 
 # In case of command error
-'''
+#'''
 @client.event
 async def on_command_error(ctx, error):
     # Ignores the error if it is 'CommandNotFound', which means the command used was invalid.
     if isinstance(error, commands.CommandNotFound):
         pass
-    else:
-        embed = discord.Embed(description=f'**Command Error:**\n{error}', color = 0xFF0000)
+    else:  # If not 'CommandNotFOund' error
+        embed = discord.Embed(description=f'**Command Error:**\n{str(error).capitalize()}', color = 0xFF0000)
         await ctx.send(embed=embed)
 #'''
 # Loads the cogs.

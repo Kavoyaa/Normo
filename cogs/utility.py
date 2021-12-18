@@ -1,9 +1,8 @@
-import nextcord
+import nextcord as discord
 from nextcord.ext import commands
 from main import p
 import requests
 import matplotlib
-
 import time
 import os
 import subprocess
@@ -69,26 +68,29 @@ class Utility(commands.Cog):
 	# Dictionary command
 	@commands.command(name='dictionary', aliases=['Dictionary', 'DICTIONARY', 'dict', 'Dict', 'DICT'], description='Gets the dictionary information about a word.')
 	async def dictionary(self, ctx, word):
-		res = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word.lower()}")
-
-		r = res.json()
-
-		meanings = r[0]['meanings']
-		partOfSpeech0 = meanings[0]['partOfSpeech']
-		definition0 = meanings[0]['definitions'][0]['definition']
-
 		try:
-			partOfSpeech1 = meanings[1]['partOfSpeech']
-			definition1 = meanings[1]['definitions'][0]['definition']
-		except:
-			pass
+			res = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word.lower()}")
+			r = res.json()
+		
+			meanings = r[0]['meanings']
+			partOfSpeech0 = meanings[0]['partOfSpeech']
+			definition0 = meanings[0]['definitions'][0]['definition']
 
-		try:
-			await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}\n\n**{partOfSpeech1}**\n{definition1}")
-			print(f'[LOGS] Command used: {p}dictionary')
+			try:
+				partOfSpeech1 = meanings[1]['partOfSpeech']
+				definition1 = meanings[1]['definitions'][0]['definition']
+			except:
+				pass
+
+			try:
+				await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}\n\n**{partOfSpeech1}**\n{definition1}")
+				print(f'[LOGS] Command used: {p}dictionary')
+			except:
+				await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}")
+				print(f'[LOGS] Command used: {p}dictionary')
 		except:
-			await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}")
-			print(f'[LOGS] Command used: {p}dictionary')
+			embed = discord.Embed(description=f"**Command Error:**\nWord '{word.lower()}' not found.", color = 0xFF0000)
+			await ctx.send(embed=embed)
 
 	# Uppercase command
 	@commands.command(name='uppercase', aliases=['Uppercase', 'UPPERCASE', 'upper', 'Upper', 'UPPER'], description='Converts the given text to UPPERCASE.')

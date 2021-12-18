@@ -39,10 +39,10 @@ class Images(commands.Cog):
 		if user == None:
 			user = ctx.author
 
-		avatar = user.display_avatar.with_size(128)
+		avatar = user.display_avatar
 		data = BytesIO(await avatar.read())
 		pfp = Image.open(data)
-		pfp = pfp.resize((177, 177))
+
 		inverted_image = PIL.ImageOps.invert(pfp.convert('RGB'))
 		inverted_image.save('inverted.jpg')
 
@@ -99,10 +99,9 @@ class Images(commands.Cog):
 		if user == None:
 			user = ctx.author
 
-		avatar = user.display_avatar.with_size(128)
+		avatar = user.display_avatar
 		data = BytesIO(await avatar.read())
 		pfp = Image.open(data)
-		pfp = pfp.resize((177, 177))
 		inverted_image = PIL.ImageOps.grayscale(pfp.convert('RGB'))
 		inverted_image.save('grayscaled.jpg')
 

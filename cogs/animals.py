@@ -31,7 +31,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Meow😻](https://thecatapi.com/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
@@ -45,7 +45,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Woof🐶](https://dog.ceo/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -59,7 +59,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Fox🦊](https://randomfox.ca/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
@@ -73,7 +73,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Quack🦆](https://random-d.uk/)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -87,7 +87,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Panda🐼](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -101,7 +101,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Birb🐦](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
@@ -115,7 +115,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Koala🐨](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 	
@@ -129,7 +129,7 @@ class Animals(commands.Cog):
 
 		embed = discord.Embed(description='**[Raccoooon🦝](https://some-random-api.ml)**', color=discord.Color.random())
 		embed.set_image(url=url)
-		embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar.url)
+		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
 
