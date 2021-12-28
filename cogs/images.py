@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from main import p
 from PIL import Image
 import PIL.ImageOps  
@@ -18,7 +18,7 @@ class Images(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Avatar command
-	@commands.command(name='avatar', aliases=['Avatar', 'AVATAR', 'av', 'Av', 'aV', 'AV'], description="Sends the mentioned user's avatar(sends the command user's avatar if no one is mentioned).")
+	@commands.command(name='avatar', aliases=['av'], description="Sends the mentioned user's avatar(sends the command user's avatar if no one is mentioned).")
 	async def avatar(self, ctx, user_: discord.Member=None):
 		if user_ == None:
 			av = ctx.author.avatar.url
@@ -33,7 +33,7 @@ class Images(commands.Cog):
 		await ctx.reply(embed=embed)
 	
 	# Invert command
-	@commands.command(name='invert', aliases=['Invert', 'INVERT'], description='Sends colo(u)r inverted version of the mentioned user\'s profile picture!')
+	@commands.command(name='invert', description='Sends colo(u)r inverted version of the mentioned user\'s profile picture!')
 	async def invert(self, ctx, user_: discord.Member=None):
 		user = user_
 		if user == None:
@@ -50,7 +50,7 @@ class Images(commands.Cog):
 		os.remove('inverted.jpg')
 
 	# Wanted command
-	@commands.command(name='wanted', aliases=['Wanted', 'WANTED'], description='Generates a wanted poster of the given user!')
+	@commands.command(name='wanted', description='Generates a wanted poster of the given user!')
 	async def wanted(self, ctx, user_: discord.Member=None):
 		user = user_
 		if user == None:
@@ -72,7 +72,7 @@ class Images(commands.Cog):
 		os.remove('wanted_output.jpg')
 
 	# Cmon command
-	@commands.command(name='cmon', aliases=['Cmon', 'CMON'], description='Generates a "C\'mon do something" meme with the profile picture of the given user!')
+	@commands.command(name='cmon', aliases=['comeon'], description='Generates a "C\'mon do something" meme with the profile picture of the given user!')
 	async def dosomething(self, ctx, user_: discord.Member=None):
 		user = user_
 		if user == None:
@@ -93,7 +93,7 @@ class Images(commands.Cog):
 		os.remove('cmon_output.jpg')
 	
 	# Grayscale command
-	@commands.command(name='grayscale', aliases=['Grayscale', 'GRAYSCALE', 'greyscale', 'Greyscale', 'GREYSCALE'])
+	@commands.command(name='grayscale')
 	async def gray(self, ctx, user_: discord.Member=None):
 		user = user_
 		if user == None:

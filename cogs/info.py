@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from main import p
 from main import client
 
@@ -15,7 +15,7 @@ class Info(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Ping command
-	@commands.command(name='ping', aliases=['Ping', 'PING'], description='Shows the bot\'s ping/latency.')
+	@commands.command(name='ping', description='Shows the bot\'s ping/latency.')
 	async def ping(self, ctx):
 		'''Tells the latency of the bot'''
 		global client
@@ -25,7 +25,7 @@ class Info(commands.Cog):
 		print(f'[LOGS] Command used: {p}ping')
 
 	# Aliases command
-	@commands.command(name='aliases', aliases=['Aliases', 'ALIASES', 'alias', 'Alias', 'ALIAS'], description='Shows alias(es) of the given comamnds.')
+	@commands.command(name='aliases', aliases = ['alias'], description='Shows alias(es) of the given comamnds.')
 	async def aliases(self, ctx, command):
 		'''Shows all command aliases'''
 		c = command.lower()
@@ -43,7 +43,7 @@ class Info(commands.Cog):
 		print(f'[LOGS] Command used: {p}aliases')
 
 	# help command
-	@commands.command(name='help', aliases=['Help', 'HELP'], description=f'Shows help about a module or command. `{p}help all` for a list of all commands.')
+	@commands.command(name='help', description=f'Shows help about a module or command. `{p}help all` for a list of all commands.')
 	async def help(self, ctx, input_=None):
 		'''A fully automatic help command which also shows the parameters needed for a command.'''
 
@@ -413,24 +413,40 @@ input 3
 
 					for command in self.client.walk_commands():
 						if command.name == c:
-							a = str(command.aliases)
-							a = a.replace("'", "`")
-							a = a.replace('[', '')
-							a = a.replace(']', '')
+							a = ''
+							commandAliases = command.aliases
+
+							for item in commandAliases:
+								a += f'`{item}`, '
+							
+							if a == '':
+								a = 'None'
+							else:
+								a = a[:-2]
+							
+							embed.add_field(name=f'Aliases: ', value=a, inline=False)
+
+							module = command.module.split('.')
+							embed.add_field(name='Module: ', value=module[1], inline=False)
+					'''
+					for command in self.client.walk_commands():
+						if command.name == c:
+							print(f'[A]\n{command.aliases}')
+							try:
+								a = str(command.aliases)
+								a = a.replace("'", "`")
+								a = a.replace('[', '')
+								a = a.replace(']', '')
+							except:
+								a = 'None'
+							print(a)
 
 							embed.add_field(name=f'Aliases: ', value=a, inline=False)
 
 							module = command.module.split('.')
 							embed.add_field(name='Module: ', value=module[1], inline=False)
-
-			try:
-				await ctx.reply(embed=embed)
-			except:
-				embed = discord.Embed(description=f'**Command Error:**\nCommand "{input_}" not found', color = 0xFF0000)
-				await ctx.send(embed=embed)
-			print(f'[LOGS] Command used: {p}help [{input_}]')
-
-
+					'''
+			await ctx.reply(embed=embed)
 
 def setup(client):
 	client.add_cog(Info(client))

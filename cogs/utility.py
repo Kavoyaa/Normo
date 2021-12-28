@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from main import p
 import requests
 import matplotlib
@@ -22,7 +22,7 @@ class Utility(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Count command
-	@commands.command(name='count', aliases=['Count', 'COUNT'], description='Counts the number of words in the given `text`.')
+	@commands.command(name='count', description='Counts the number of words in the given `text`.')
 	async def count(self, ctx, *, text):
 		words = text.split()
 		number_of_words = len(words)
@@ -34,7 +34,7 @@ class Utility(commands.Cog):
 			print(f'[LOGS] Command used: {p}count')
 
 	# Binary command
-	@commands.command(name='binary', aliases=['Binary', 'BINARY'], description='Converts the given `input` to ASCII binary.')
+	@commands.command(name='binary', description='Converts the given `input` to ASCII binary.')
 	async def binary(self, ctx, *, input):
 		res = ''.join(format(ord(i), '08b') for i in input)
 		output = str(res)
@@ -43,18 +43,22 @@ class Utility(commands.Cog):
 		print(f'[LOGS] Command used: {p}binary')
 
 	# Convert command
-	@commands.command(name='convert', aliases=['Convert', 'CONVERT'], description='Converts the given `input`(which would/must be ASCII binary) to text.')
+	@commands.command(name='convert', description='Converts the given `input`(which would/must be ASCII binary) to text.')
 	async def convert(self, ctx, *, input):
-		binary_int = int(input, 2)
-		byte_number = binary_int.bit_length() + 7 // 8
-		binary_array = binary_int.to_bytes(byte_number, "big")
-		converted_text = binary_array.decode()
+		try:
+			binary_int = int(input, 2)
+			byte_number = binary_int.bit_length() + 7 // 8
+			binary_array = binary_int.to_bytes(byte_number, "big")
+			converted_text = binary_array.decode()
 
-		await ctx.send(converted_text)
-		print(f'[LOGS] Command used : {p}convert')
+			await ctx.send(converted_text)
+		except:
+			embed = discord.Embed(color=discord.Color.red())
+			embed.add_field(name='Command Error:', value="The given binary code is either not valid or it isn't ASCII binary.")
+			await ctx.send(embed=embed)
 
 	# Reverse command
-	@commands.command(name='reverse', aliases=['r', 'R', 'Reverse', 'REVERSE', 'esrever', 'ESREVER', 'Esrever'], description='Reverses the given text.')
+	@commands.command(name='reverse', aliases=['esrever', 'r'], description='Reverses the given text.')
 	async def reverse(self, ctx, *, text):
 		'''Reverses the given input(text).'''
 		reversedString = ''
@@ -66,7 +70,7 @@ class Utility(commands.Cog):
 		print(f'[LOGS] Command used: {p}reverse')
 
 	# Dictionary command
-	@commands.command(name='dictionary', aliases=['Dictionary', 'DICTIONARY', 'dict', 'Dict', 'DICT'], description='Gets the dictionary information about a word.')
+	@commands.command(name='dictionary', aliases=['dict'], description='Gets the dictionary information about a word.')
 	async def dictionary(self, ctx, word):
 		try:
 			res = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word.lower()}")
@@ -89,25 +93,26 @@ class Utility(commands.Cog):
 				await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}")
 				print(f'[LOGS] Command used: {p}dictionary')
 		except:
-			embed = discord.Embed(description=f"**Command Error:**\nWord '{word.lower()}' not found.", color = 0xFF0000)
+			embed = discord.Embed(color=discord.Color.red())
+			embed.add_field(name='Command Error:', value=f"Word '{word.lower()}")
 			await ctx.send(embed=embed)
 
 	# Uppercase command
-	@commands.command(name='uppercase', aliases=['Uppercase', 'UPPERCASE', 'upper', 'Upper', 'UPPER'], description='Converts the given text to UPPERCASE.')
+	@commands.command(name='uppercase', aliases=['upper'], description='Converts the given text to UPPERCASE.')
 	async def uppercase(slef, ctx, *, text):
 		'''Converts given input to uppercase'''
 		await ctx.reply(text.upper())
 		print(f'[LOGS] Command used: {p}upper')
 
 	# Lowercase command
-	@commands.command(name='lowercase', aliases=['Lowercase', 'LOWERCASE', 'lower', 'Lower', 'LOWER'], description='Converts the given text to lowercase.')
+	@commands.command(name='lowercase', aliases=['lower'], description='Converts the given text to lowercase.')
 	async def lowercase(slef, ctx, *, text):
 		'''Converts given input to lowercase'''
 		await ctx.reply(text.lower())
 		print(f'[LOGS] Command used: {p}lower')
 
 	# Hexcode command
-	@commands.command(name='hexcode', aliases=['Hexcode', 'HEXCODE', 'HexCode', 'hexCode', 'hex', 'Hex', 'HEX'], description='Tells the hex code of the given colour.')
+	@commands.command(name='hexcode', aliases=['hex'], description='Tells the hex code of the given colour.')
 	async def hexcode(self, ctx, *, colour):
 		colourName = colour.replace(' ', '')
 		await ctx.reply(matplotlib.colors.cnames[colourName])

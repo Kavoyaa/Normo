@@ -126,5 +126,4 @@ dmypy.json
 templates.py
 .gitattributes
 .replit
-.poetry.lock
-.pyproject.toml
+.pycord

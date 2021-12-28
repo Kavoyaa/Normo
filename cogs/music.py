@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from main import p
 import requests
 
@@ -15,7 +15,7 @@ class Music(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Lyrics command
-	@commands.command(name='lyrics', aliases=['Lyrics', 'LYRICS', 'lyric', 'Lyric', 'LYRIC'], description='Shows the lyrics of the inputted song!')
+	@commands.command(name='lyrics', aliases=['lyric'], description='Shows the lyrics of the inputted song!')
 	async def afk(self, ctx, *, song):
 		'''Returns lyrics of the inputted song.'''
 		try:
@@ -36,7 +36,8 @@ class Music(commands.Cog):
 			
 			await ctx.send(embed=embed)
 		except:
-			embed = discord.Embed(description='**Command Error:**\nSong not found. Try typing the name of the artist along with the song name.', color = 0xFF0000)
+			embed = discord.Embed(color=discord.Color.red())
+			embed.add_field(name='Command Error:', value='Song not found. Try typing the name of the artist along with the song name.')
 			await ctx.send(embed=embed)
 
 def setup(client):

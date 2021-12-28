@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from main import p
 import random
 import requests
@@ -16,7 +16,7 @@ class Fun(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Fact command
-	@commands.command(name='fact', aliases=['Fact', 'FACT', 'fax', 'Fax', 'FAX', 'facts', 'Facts', 'FACTS'], description='Show a random fact!')
+	@commands.command(name='fact', description='Show a random fact!')
 	async def fact(self, ctx):
 		'''Sends a random fact.'''
 
@@ -29,7 +29,7 @@ class Fun(commands.Cog):
 		await ctx.send(embed=embed)
 	
 	# Emojify command
-	@commands.command(name='emojify', aliases=['Emojify', 'EMOJIFY'], description='Make the bot say whatever you want with emojis!')
+	@commands.command(name='emojify', description='Make the bot say whatever you want with emojis!')
 	async def emojify(self, ctx, *, text):
 		'''Converts the given text into emojis.'''
 		text = text.lower()
@@ -77,10 +77,9 @@ class Fun(commands.Cog):
 
 
 	# 8ball command
-	@commands.command(name='8ball', aliases=['8Ball', '8BALL', 'eightball', 'Eightball', 'EIGHTBALL', 'EightBall', 'eightBall'], description='Ask the magic 8-ball a question!')
+	@commands.command(name='8ball', aliases=['magicball', 'magic8ball'], description='Ask the magic 8-ball a question!')
 	async def eightball(self, ctx, *, question):
 		'''Sends an embed with a randoom image from the list below'''
-
 		responses = [
 		'as_i_see_it_yes',
 		'ask_again_later',
@@ -114,7 +113,7 @@ class Fun(commands.Cog):
 		print(f'[LOGS] Command used: {p}8ball')
 
 	#Coinflip command
-	@commands.command(name='coinflip', aliases=['Coinflip', 'COINFLIP', 'CoinFlip', 'coinFlip'], description='Flips a coin!')
+	@commands.command(name='coinflip', description='Flips a coin!')
 	async def coinflip(self, ctx):
 		'''Says either heads or tails.'''
 		responses = ['Heads!', 'Tails!']
@@ -123,7 +122,7 @@ class Fun(commands.Cog):
 		print(f'[LOGS] Command used: {p}coinflip')
 
 	#Choose command
-	@commands.command(name='choose', aliases=['Choose', 'CHOOSE'], description='Chooses a random item from the given input.\n**Example for usage:**\n`.choose apple mango`\n**Output:** `apple`\nYou can put as many items as you like.')
+	@commands.command(name='choose', description='Chooses a random item from the given input.\n**Example for usage:**\n`.choose apple mango`\n**Output:** `apple`\nYou can put as many items as you like.')
 	async def choose(self, ctx, *, items):
 		'''Chooses a random item from the given input'''
 		output = items.split()
@@ -132,7 +131,7 @@ class Fun(commands.Cog):
 		print(f'[LOGS] Command used: {p}choose')
 
 	# Kill command
-	@commands.command(name='kill', aliases=['Kill', 'KILL', 'keel', 'Keel', 'KEEL', 'keal', 'Keal', 'KEAL'], description='Kill your enemies!')
+	@commands.command(name='kill', aliases=['keel', 'keal'], description='Kill your enemies!')
 	async def kill(self, ctx, user: discord.Member, *, reason_=''):
 		'''Sends a random GIF from the list below'''
 		gifs = [
@@ -155,7 +154,7 @@ class Fun(commands.Cog):
 		print(f'[LOGS] Command used: {p}kill')
 
 	# Inspire command
-	@commands.command(name='inspire', aliases=['Inspire', 'INSPIRE', 'motivate', 'Motivate', 'MOTIVATE'], description='Shows a random inspirational quote.')
+	@commands.command(name='inspire', aliases=['motivate'], description='Shows a random inspirational quote.')
 	async def inspire(self, ctx):
 		'''Shows random inspirational quote'''
 		response = requests.get('https://api.quotable.io/random')
@@ -169,28 +168,28 @@ class Fun(commands.Cog):
 		print(f'[LOGS] Command used: {p}inspire')
 
 	# Hello command
-	@commands.command(name='hello', aliases=['Hello', 'HELLO'], description='Feeling lonely? Have the bot say hello to you!')
+	@commands.command(name='hello', description='Feeling lonely? Have the bot say hello to you!')
 	async def hello(self, ctx):
 		'''Says hello'''
 		await ctx.reply(f'Hello {ctx.author.mention}!')
 		print(f'[LOGS] Command used: {p}hello')
 
 	# Afk command
-	@commands.command(name='afk', aliases=['Afk', 'AFK'], description='Tells people that you are AFK.')
+	@commands.command(name='afk', description='Tells people that you are AFK.')
 	async def afk(self, ctx):
 		'''Says <ctx.author> is AFK'''
 		await ctx.send(f'{ctx.author.mention} is AFK!')
 		print(f'[LOGS] Command used: {p}afk')
 
 	# Bye command
-	@commands.command(name='bye', aliases=['Bye', 'BYE'], description='Says bye. Yep, that\'s it. Bye.')
+	@commands.command(name='bye', description='Says bye. Yep, that\'s it. Bye.')
 	async def bye(self, ctx):
 		'''Says bye'''
 		await ctx.reply(f'Bye-bye {ctx.author.mention}!')
 		print(f'[LOGS] Command used: {p}bye')
 
 	# Joke command
-	@commands.command(name='joke', aliases=['Joke', 'JOKE'], description='Shows a random joke.')
+	@commands.command(name='joke', description='Shows a random joke.')
 	async def joke(self, ctx):
 		'''Shows a random joke.'''
 
@@ -225,7 +224,7 @@ class Fun(commands.Cog):
 		await ctx.reply('All the APIs used for this command died so the command is temporarily disabled. Sadge.')
 
 	# Meme command
-	@commands.command(name='meme', aliases=['Meme', 'MEME'], description='Shows a random meme from Reddit.')
+	@commands.command(name='meme', description='Shows a random meme from Reddit.')
 	async def meme(self, ctx):
 		'''Shows a random meme from Reddit using 1 of 3 different APIs'''
 		randomNum = random.randint(1, 4)
@@ -295,7 +294,7 @@ class Fun(commands.Cog):
 			print(f'[LOGS] Command used: {p}meme')
 
 	# Yomama command
-	@commands.command(name='yomama', aliases=['Yomama', 'YOMAMA', 'YoMama', 'yoMama'], description='Tells a yomama joke.\nYo mama so fat I couldn\'t fit the entire joke about her here.')
+	@commands.command(name='yomama', aliases=['yomomma', 'yomoma'], description='Tells a yomama joke.\nYo mama so fat I couldn\'t fit the entire joke about her here.')
 	async def yomama(self, ctx):
 		res = requests.get("https://api.yomomma.info/")
 		r = res.json()
@@ -305,17 +304,17 @@ class Fun(commands.Cog):
 		print(f'[LOGS] Command used: {p}yomama')
 
 	# Uwu command
-	@commands.command(name='uwu', aliases=['Uwu', 'UWU', 'UwU', 'uWu', 'uwU', 'uWU', 'UWu'], description='UwU.')
+	@commands.command(name='uwu', description='UwU.')
 	async def uwu(self, ctx):
 		await ctx.send('**UwU**')
 
 	# Owo command
-	@commands.command(name='owo', aliases=['Owo', 'OWO', 'OwO', 'oWo', 'owO', 'oWO', 'OWo'], description='OwO.')
+	@commands.command(name='owo', description='OwO.')
 	async def owo(self, ctx):
 		await ctx.send('**OwO**')
 
 	# Say command
-	@commands.command(name='say', aliases=['Say', 'SAY'], description='Have the bot say something!')
+	@commands.command(name='say', description='Have the bot say something!')
 	async def say(self, ctx, *, message):
 		await ctx.send(message)
 

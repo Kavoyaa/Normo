@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 import os
 import asyncio
 import time
@@ -8,6 +8,8 @@ import textwrap
 import io
 import signal
 import py_compile
+import requests
+from traceback import print_exc
 
 class Code(commands.Cog):
 	global p
@@ -21,9 +23,8 @@ class Code(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Python command
-	@commands.command(name='python', aliases=['Python', 'PYTHON', 'py', 'Py', 'pY', 'PY'], description='Executes Python code(you cannot import modules).')
+	@commands.command(name='python', aliases=['py'], description='Executes Python code(you cannot import modules).')
 	async def code(self, ctx, *, code):
-		#("<a:colorfulloading:921300287505960960>")
 		await ctx.message.add_reaction("<a:colorfulloading:921304808256860171>")
 		start = time.process_time()
 		e = code.lower()
@@ -153,18 +154,11 @@ except:
 				embed.add_field(name="Program Output", value=f'```yaml\n{output[:980]} #Size limit reached\n```')
 
 				print(f'[OUTPUT]\n{output[:980]}')
-
-		
+	
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.message.clear_reaction("<a:colorfulloading:921304808256860171>")
-		msg = await ctx.send(embed=embed)
-
-		if status == 'fail':
-			await msg.add_reaction('❌')
-			
-		else:
-			await msg.add_reaction("yellow_check_mark:921595794761592853>")
+		await ctx.send(embed=embed)
 
 		with open('webserver.py', 'w') as w:
 			w.write('''
@@ -185,6 +179,40 @@ def webserver():
     t.start()
 			''')
 	
+	# Storyscript command
+	@commands.command(name='storyscript')
+	async def storyscript(self, ctx, *, code):
+		code = code.split('```')
+		code = code[1]
+		res = None
+		try:
+			await ctx.message.add_reaction("<a:colorfulloading:921304808256860171>")
+
+			res = requests.post("https://onlinestoryscript.linesofcodes.repl.co/api/run", {
+				"code": code
+			})
+			r = res.json()
+			success = r['success']
+			result = r['result']
+			print(res.status_code)
+
+			length = len(result.splitlines())
+			print(type(length))
+
+			if success == False:
+				color = discord.Color.red()
+			else:
+				color = discord.Color.green()
+			
+			embed = discord.Embed(color=color)
+			embed.add_field(name='Program Output', value=f'```yaml\n{result}\n```')
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
+
+			await ctx.message.clear_reaction("<a:colorfulloading:921304808256860171>")
+			await ctx.reply(embed=embed)
+		except Exception:
+			print_exc()
+			await ctx.reply(f'error lol here take the status code:\n {res.status_code}')
 
 def setup(client):
 	client.add_cog(Code(client))

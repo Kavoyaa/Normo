@@ -1,15 +1,18 @@
 [tool.poetry]
-name = "repl_python3_Normal-Bot-4"
+name = "repl_python3_Nromal-Bot"
 version = "0.1.0"
 description = ""
 authors = ["Kavoya <<>>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-python-dotenv = "^0.19.2"
-discord = "^1.7.3"
+yarl = "^1.7.2"
+aiohttp = "^3.8.1"
 Flask = "^2.0.2"
-nextcord = "^2.0.0-alpha.4"
+orjson = "^3.6.5"
+python-dotenv = "^0.19.2"
+typing-extensions = "^4.0.1"
+py-cord = {git = "https://github.com/Pycord-Development/pycord"}
 
 [tool.poetry.dev-dependencies]
 

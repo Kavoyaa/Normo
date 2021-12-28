@@ -1,13 +1,16 @@
 # Importing modules
-import nextcord as discord
-from nextcord.ext import commands
 import os
+import discord
+from discord.ext import commands
+
 import dotenv
 from stat import S_IREAD
 
+
+
 # Set this to prefix of your choice.
 p = '.'
-client = commands.Bot(command_prefix = p)
+client = commands.Bot(command_prefix = p, case_insensitive=True)
 
 # Removes the default 'help' command so we can use our own custom one.
 client.remove_command('help')
@@ -20,6 +23,10 @@ async def on_ready():
 
     await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Commands: {p}help'))
 
+@client.command()
+async def test(ctx):
+	await ctx.send('test')
+
 # In case of command error
 #'''
 @client.event
@@ -28,10 +35,14 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         pass
     else:  # If not 'CommandNotFOund' error
-        embed = discord.Embed(description=f'**Command Error:**\n{str(error).capitalize()}', color = 0xFF0000)
+        embed = discord.Embed(color=discord.Color.red())
+        embed.add_field(name='Command Error:', value=str(error).capitalize())
+		
         await ctx.send(embed=embed)
+
 #'''
 # Loads the cogs.
+
 def load_cogs():
     for filename in os.listdir('./cogs'):
         names = ['animals.py', 'code.py', 'creator.py', 'fun.py', 'games.py', 'giveaway.py', 'images.py', 'info.py', 'maths.py', 'moderation.py', 'music.py', 'utility.py', '__pycache__']

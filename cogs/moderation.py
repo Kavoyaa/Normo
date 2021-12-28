@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from main import p
 
 class Moderation(commands.Cog):
@@ -14,7 +14,7 @@ class Moderation(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Kick command
-	@commands.command(name='kick', aliases=['Kick', 'KICK'], description='Kicks the mentioned user.\nRequired perm(s): Kick members')
+	@commands.command(name='kick', description='Kicks the mentioned user.\nRequired perm(s): Kick members')
 	@commands.has_permissions(kick_members=True)
 	async def kick(self, ctx, user: discord.Member, *, reason_=None):
 		'''Kicks the mentioned user'''
@@ -23,7 +23,7 @@ class Moderation(commands.Cog):
 			await ctx.send('You can\'t kick yourself!')
 		else:
 			# Embed which will be sent when a person is kicked
-			embed = discord.Embed(colour=0xFF0000)
+			embed = discord.Embed(colour=discord.Color.red())
 
 			embed.set_author(name=f'User Kicked | {user}', icon_url=user.avatar.url)
 
@@ -33,7 +33,7 @@ class Moderation(commands.Cog):
 
 
 			# Embed which will be DMed to the person who was kicked
-			embed2 = discord.Embed(description=f'**You were kicked from {ctx.guild.name}**', colour=0xFF0000)
+			embed2 = discord.Embed(description=f'**You were kicked from {ctx.guild.name}**', colour=discord.Color.red())
 
 			embed2.add_field(name='Reason', value=f'{reason}', inline=True)
 			embed2.add_field(name='Moderator', value=f'{ctx.author.name}', inline=True)
@@ -48,7 +48,7 @@ class Moderation(commands.Cog):
 			print(f'[LOGS] Command used: {p}kick')
 
 	# Softban command
-	@commands.command(name='softban', aliases=['Softban', 'SOFTBAN', 'softBan', 'SoftBan'], description='Softbans the mention user.\nRequired perm(s): Kick members')
+	@commands.command(name='softban', description='Softbans the mention user.\nRequired perm(s): Kick members')
 	@commands.has_permissions(kick_members=True)
 	async def softban(self, ctx, user: discord.Member, reason_=None):
 		'''
@@ -62,7 +62,7 @@ class Moderation(commands.Cog):
 			await ctx.send('You can\'t softban yourself!')
 		else:
 			# Embed which will be sent when a person is softbanned
-			embed = discord.Embed(colour=0xFF0000)
+			embed = discord.Embed(colour=discord.Color.red())
 
 			embed.set_author(name=f'User Softbanned | {user}', icon_url=user.avatar.url)
 
@@ -72,7 +72,7 @@ class Moderation(commands.Cog):
 
 
 			# Embed which will be DMed to the person who was kicked
-			embed2 = discord.Embed(description=f'**You were softbanned from {ctx.guild.name}**', colour=0xFF0000)
+			embed2 = discord.Embed(description=f'**You were softbanned from {ctx.guild.name}**', colour=discord.Color.red())
 
 			embed2.add_field(name='Reason', value=f'{reason}', inline=True)
 			embed2.add_field(name='Moderator', value=f'{ctx.author.name}', inline=True)
@@ -88,7 +88,7 @@ class Moderation(commands.Cog):
 			print(f'[LOGS] Command used: {p}softban')
 
 	# Ban command
-	@commands.command(name='ban', aliases=['Ban', 'BAN'], description='Bans the mentioned user.\nRequired perm(s): Ban members')
+	@commands.command(name='ban', description='Bans the mentioned user.\nRequired perm(s): Ban members')
 	@commands.has_permissions(ban_members=True)
 	async def ban(self, ctx, user: discord.Member, *, reason_=None):
 		'''Bans the mentioned user'''
@@ -97,7 +97,7 @@ class Moderation(commands.Cog):
 			await ctx.send('You can\'t ban yourself!')
 		else:
 			# Embed which will be sent when a person is banned
-			embed = discord.Embed(colour=0xFF0000)
+			embed = discord.Embed(colour=discord.Color.red())
 
 			embed.set_author(name=f'User Banned | {user}', icon_url=user.avatar.url)
 
@@ -107,7 +107,7 @@ class Moderation(commands.Cog):
 
 
 			# Embed which will be DMed to the person who was banned
-			embed2 = discord.Embed(description=f'**You were banned from {ctx.guild.name}**', colour=0xFF0000)
+			embed2 = discord.Embed(description=f'**You were banned from {ctx.guild.name}**', colour=discord.Color.red())
 
 			embed2.add_field(name='Reason', value=f'{reason}', inline=True)
 			embed2.add_field(name='Moderator', value=f'{ctx.author.name}', inline=True)
@@ -122,7 +122,7 @@ class Moderation(commands.Cog):
 			print(f'[LOGS] Command used: {p}ban')
 
 	# Purge command
-	@commands.command(name='purge', aliases=['Purge', 'PURGE', 'clear', 'Clear', 'CLEAR'], description='Deletes the given amount of messages.\nRequired perm(s): Manage messages')
+	@commands.command(name='purge', aliases=['clear'], description='Deletes the given amount of messages.\nRequired perm(s): Manage messages')
 	@commands.has_permissions(manage_messages=True)
 	async def purge(self, ctx, amount: int):
 		await ctx.channel.purge(limit=amount + 1)
@@ -138,8 +138,7 @@ class Moderation(commands.Cog):
 		print(f'[LOGS] Command used: {p}purge')
 
 	# Embed command
-	@commands.command(name='embed', aliases=['Embed', 'EMBED'], description='Make your own embeds!\n`.help embed`(coming soon) to see how to use.\nRequited perm(s): Administrator')
-	@commands.has_permissions(administrator=True)
+	@commands.command(name='embed', aliases=['embedify'], description='Make your own embeds!\n`.help embed`(coming soon) to see how to use.\nRequited perm(s): Administrator')
 	async def embed(self, ctx, *, input):
 		code = input
 		title = ''
