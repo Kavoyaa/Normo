@@ -2,11 +2,8 @@
 import os
 import discord
 from discord.ext import commands
-
 import dotenv
 from stat import S_IREAD
-
-
 
 # Set this to prefix of your choice.
 p = '.'
@@ -45,7 +42,7 @@ async def on_command_error(ctx, error):
 
 def load_cogs():
     for filename in os.listdir('./cogs'):
-        names = ['animals.py', 'code.py', 'creator.py', 'fun.py', 'games.py', 'giveaway.py', 'images.py', 'info.py', 'maths.py', 'moderation.py', 'music.py', 'utility.py', '__pycache__']
+        names = ['animals.py', 'code.py', 'creator.py', 'fun.py', 'games.py', 'giveaway.py', 'images.py', 'info.py', 'maths.py', 'moderation.py', 'music.py', 'utility.py', 'slash.py', '__pycache__']
         if any(item == filename for item in names):
             print('yes yes')
             os.chmod(f"cogs/{filename}", S_IREAD)

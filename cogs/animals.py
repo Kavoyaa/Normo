@@ -13,7 +13,7 @@ class Animals(commands.Cog):
 	@commands.Cog.listener()
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
-
+	
 	# Cat command
 	@commands.command(name='cat', aliases=['kitten'], description='Shows a random cat picture 😻!')
 	async def cat(self, ctx):
@@ -48,7 +48,7 @@ class Animals(commands.Cog):
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.reply(embed=embed)
-	
+
 	# Fox command
 	@commands.command(name='fox', description='Shows a random fox picture 🦊!')
 	async def fox(self, ctx):

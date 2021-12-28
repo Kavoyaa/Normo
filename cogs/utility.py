@@ -94,7 +94,7 @@ class Utility(commands.Cog):
 				print(f'[LOGS] Command used: {p}dictionary')
 		except:
 			embed = discord.Embed(color=discord.Color.red())
-			embed.add_field(name='Command Error:', value=f"Word '{word.lower()}")
+			embed.add_field(name='Command Error:', value=f"Word '{word.lower()} not found.")
 			await ctx.send(embed=embed)
 
 	# Uppercase command

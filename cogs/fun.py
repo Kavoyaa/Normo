@@ -74,8 +74,6 @@ class Fun(commands.Cog):
 		
 		await ctx.send(output)
 
-
-
 	# 8ball command
 	@commands.command(name='8ball', aliases=['magicball', 'magic8ball'], description='Ask the magic 8-ball a question!')
 	async def eightball(self, ctx, *, question):

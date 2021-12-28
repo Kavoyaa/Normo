@@ -178,7 +178,7 @@ def webserver():
     t = Thread(target=run)
     t.start()
 			''')
-	
+'''
 	# Storyscript command
 	@commands.command(name='storyscript')
 	async def storyscript(self, ctx, *, code):
@@ -213,6 +213,6 @@ def webserver():
 		except Exception:
 			print_exc()
 			await ctx.reply(f'error lol here take the status code:\n {res.status_code}')
-
+'''
 def setup(client):
 	client.add_cog(Code(client))
