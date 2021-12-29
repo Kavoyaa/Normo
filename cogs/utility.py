@@ -9,6 +9,8 @@ import subprocess
 import traceback
 import re
 import textwrap
+from discord.ui import Button, View
+
 
 class Utility(commands.Cog):
 	global p
@@ -20,6 +22,25 @@ class Utility(commands.Cog):
 	@commands.Cog.listener()
 	async def on_ready(self):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
+
+	# Google command
+	@commands.command(name='google', description='Shows Google search results of the given input.')
+	async def test(self, ctx, *, input):
+		search = input
+		if "#" in search:
+			search = search.replace("#", "%23")
+	
+		url = "https://www.google.com/search?q=" + search
+		button = Button(label="Search Results", url=url)
+		view = View()
+		view.add_item(button)
+
+		embed = discord.Embed(color=0xdb0085)
+		embed.set_author(name='Google', icon_url='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2000px-Google_%22G%22_Logo.svg.png')
+		embed.add_field(name='Searched for:', value=input)
+		embed.set_footer(text=f'Searched by {ctx.author}', icon_url=ctx.author.avatar.url)
+
+		await ctx.send(view=view, embed=embed)
 
 	# Count command
 	@commands.command(name='count', description='Counts the number of words in the given `text`.')
@@ -46,6 +67,8 @@ class Utility(commands.Cog):
 	@commands.command(name='convert', description='Converts the given `input`(which would/must be ASCII binary) to text.')
 	async def convert(self, ctx, *, input):
 		try:
+			if " " in input:
+				input = input.replace(" ", "")
 			binary_int = int(input, 2)
 			byte_number = binary_int.bit_length() + 7 // 8
 			binary_array = binary_int.to_bytes(byte_number, "big")

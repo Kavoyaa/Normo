@@ -2,6 +2,7 @@
 import os
 import discord
 from discord.ext import commands
+from discord.ui import Button, View
 import dotenv
 from stat import S_IREAD
 
@@ -65,6 +66,19 @@ def run():
     client.run(TOKEN)
 
 os.chmod("main.py", S_IREAD)
+
+class new_button(Button):
+	def __init__(self, label, style='gray', emoji=None):
+		if style == 'red':
+			style = discord.enums.ButtonStyle.red
+		elif style == 'gray':
+			style = discord.enums.ButtonStyle.gray
+		elif style == 'blurple':
+			style = discord.enums.ButtonStyle.blurple
+		elif style == 'green':
+			style = discord.enums.ButtonStyle.green
+
+		super().__init__(label=label, style=style, emoji=emoji)
 
 # Ignore the next 2 lines, just something I use for hosting using replit + uptimerobot.
 from webserver import webserver

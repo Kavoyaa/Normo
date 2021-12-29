@@ -235,6 +235,36 @@ class Slash(commands.Cog):
 		embed = discord.Embed(description=f'**"{content}"**\n-{author}', colour=0x00FF00)
 
 		await ctx.respond(embed=embed)
+	
+	# /say
+	@slash_command(name='say', description='Have the bot say something!')
+	async def slashSay(self, ctx, message: Option(str, "The message the bot will say.")):
+		await ctx.respond(message)
+	
+	# /binary
+	@slash_command(name='binary', description='Converts the given input to ASCII binary.')
+	async def slashBinary(self, ctx, input: Option(str, "The text to be converted to binary.")):
+		res = ''.join(format(ord(i), '08b') for i in input)
+		output = str(res)
+
+		await ctx.respond(output)
+
+	# /convert
+	@slash_command(name='convert', description='Converts the given input to ASCII binary.')
+	async def slashConvert(self, ctx, input: Option(str, "The binary code which will be converted to text(make sure it's ASCII binary).")):
+		try:
+			if " " in input:
+				input = input.replace(" ", "")
+			binary_int = int(input, 2)
+			byte_number = binary_int.bit_length() + 7 // 8
+			binary_array = binary_int.to_bytes(byte_number, "big")
+			converted_text = binary_array.decode()
+
+			await ctx.respond(converted_text)
+		except:
+			embed = discord.Embed(color=discord.Color.red())
+			embed.add_field(name='Command Error:', value="The given binary code is either not valid or it isn't ASCII binary.")
+			await ctx.respond(embed=embed, ephemeral=True)
 
 def setup(client):
 	client.add_cog(Slash(client))
