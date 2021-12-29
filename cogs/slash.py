@@ -1,9 +1,12 @@
 import discord
 from discord.ext import commands
-from discord.commands import slash_command, Option
+from discord.commands import slash_command, Option, SlashCommandGroup
 import requests
 import os
 import random
+from PIL import Image
+import PIL.ImageOps  
+from io import BytesIO
 
 class Slash(commands.Cog):
 	global p
@@ -265,6 +268,69 @@ class Slash(commands.Cog):
 			embed = discord.Embed(color=discord.Color.red())
 			embed.add_field(name='Command Error:', value="The given binary code is either not valid or it isn't ASCII binary.")
 			await ctx.respond(embed=embed, ephemeral=True)
+	
+	# /image group
+	images = SlashCommandGroup("image", "Image commands.")
+
+	# /image wanted
+	@images.command(name='wanted', description='Creates a wanted poster of the given user!')
+	async def slashWanted(self, ctx, user: Option(discord.Member, "The user you want to use the command with.", required=False, default=None)):
+		if user == None:
+			user = ctx.author
+
+		wanted = Image.open('images/wanted.jpg')
+		asset = user.display_avatar.with_size(128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((177, 177))
+		wanted.paste(pfp, (120, 212))
+		# Creates a 'slash_wanted_output.jpg' which gets sent as output
+		wanted.save('slash_wanted_output.jpg')
+
+		await ctx.respond(file = discord.File('slash_wanted_output.jpg'))
+
+		# Deletes the saved image file
+		os.remove('slash_wanted_output.jpg')
+
+	# /image cmon
+	@images.command(name="cmon", description='Generates a "C\'mon do something" meme with the profile picture of the given user!')
+	async def slashCmon(self, ctx, user: Option(discord.Member, "The user you want to use the command with.", required=False, default=None)):
+		if user == None:
+			user = ctx.author
+
+		wanted = Image.open('images/cmon.jpg')
+		asset = user.display_avatar.with_size(128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((177, 177))
+		wanted.paste(pfp, (120, 212))
+		# Creates a 'slash_cmon_output.jpg' which gets sent as output
+		wanted.save('slash_cmon_output.jpg')
+
+		await ctx.respond(file = discord.File('slash_cmon_output.jpg'))
+
+		# Deletes the saved image file
+		os.remove('slash_cmon_output.jpg')
+
+	# /image delete
+	@images.command(name="delete", description='"deletes" the given user :)"')
+	async def slashDelete(self, ctx, user: Option(discord.Member, "The user you want to use the command with.", required=False, default=None)):
+		if user == None:
+			user = ctx.author
+
+		wanted = Image.open('images/delete.jpg')
+		asset = user.display_avatar.with_size(128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((195, 195))
+		wanted.paste(pfp, (120, 135))
+		# Creates a 'slash_delete_output.jpg' which gets sent as output
+		wanted.save('slash_delete_output.jpg')
+
+		await ctx.respond(file = discord.File('slash_delete_output.jpg'))
+
+		# Deletes the saved image file
+		os.remove('slash_delete_output.jpg')
 
 def setup(client):
 	client.add_cog(Slash(client))

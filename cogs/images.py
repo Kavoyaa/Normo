@@ -92,6 +92,27 @@ class Images(commands.Cog):
 		# Deletes the saved image file
 		os.remove('cmon_output.jpg')
 	
+	# Delete command
+	@commands.command(name='delete', aliases=['deletememe'], description='"deletes" the given user :)')
+	async def delete(self, ctx, user_: discord.Member=None):
+		user = user_
+		if user == None:
+			user = ctx.author
+
+		wanted = Image.open('images/delete.jpg')
+		asset = user.display_avatar.with_size(128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((195, 195))
+		wanted.paste(pfp, (120, 135))
+		# Creates a 'delete_output.jpg' which gets sent as output
+		wanted.save('delete_output.jpg')
+
+		await ctx.send(file = discord.File('delete_output.jpg'))
+
+		# Deletes the saved image file
+		os.remove('delete_output.jpg')
+	
 	# Grayscale command
 	@commands.command(name='grayscale')
 	async def gray(self, ctx, user_: discord.Member=None):
