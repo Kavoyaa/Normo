@@ -3,6 +3,75 @@ from discord.ext import commands
 from main import p
 from main import client
 
+class HelpDropdown(discord.ui.Select):
+    def __init__(self, ctx):
+        self.client = client
+        self.ctx = ctx
+        # Options that will be presented inside the dropdown
+        options = [
+			discord.SelectOption(label="Utility", description="", emoji="🛠️"),
+			discord.SelectOption(label="Fun", description="", emoji="😄"),
+			discord.SelectOption(label="Info", description="", emoji="ℹ️"),
+			discord.SelectOption(label="Animals", description="", emoji="🐶"),
+			discord.SelectOption(label="Games", description="", emoji="🎲"),
+			discord.SelectOption(label="Images", description="", emoji="🖼️"),
+			discord.SelectOption(label="Music", description="", emoji="🎵"),
+			discord.SelectOption(label="Code", description="", emoji="💻"),
+			discord.SelectOption(label="Maths", description="", emoji="📏"),
+			discord.SelectOption(label="Giveaway", description="", emoji="🎉"),
+			discord.SelectOption(label="Moderation", description="", emoji="❗")
+		]
+
+        super().__init__(placeholder="Select a module...", min_values=1, max_values=1, options=options)
+
+    async def callback(self, interaction: discord.Interaction):
+        commands = []
+        # Makes a field for every command.
+        for command in self.client.walk_commands():
+            if command.module == f'cogs.{self.values[0].lower()}':
+                commands.append(command.name)
+
+        c = str(commands)
+        c = c.replace('[', '')
+        c = c.replace(']', '')
+        c = c.replace("'", "`")
+
+        emoji = ''
+        if self.values[0].lower() == "utility":
+            emoji = "🛠️"
+        elif self.values[0] == "fun":
+            emoji = "😄"
+        elif self.values[0] == "info":
+            emoji = "ℹ️"
+        elif self.values[0] == "animals":
+            emoji = "🐶"
+        elif self.values[0] == "games":
+            emoji = "🎲"
+        elif self.values[0] == "images":
+            emoji = "🖼️"
+        elif self.values[0] == "music":
+            emoji = "🎵"
+        elif self.values[0] == "code":
+            emoji = "💻"
+        elif self.values[0] == "maths":
+            emoji = "📏"
+        elif self.values[0] == "giveaway":
+            emoji = "🎉"
+        elif self.values[0] == "moderation":
+            emoji = "❗"
+
+        embed = discord.Embed(title=f'{emoji}{self.values[0]} commands:', description=c, color=discord.Color.random())
+        embed.set_footer(text=self.ctx.author, icon_url=self.ctx.author.avatar.url)
+
+        await interaction.response.edit_message(embed=embed)
+
+class HelpDropdownView(discord.ui.View):
+    def __init__(self, ctx, timeout=30.0):
+        super().__init__()
+        self.ctx = ctx
+
+        self.add_item(HelpDropdown(ctx))
+
 class Info(commands.Cog):
 	global p
 
@@ -68,7 +137,7 @@ class Info(commands.Cog):
 			embed.add_field(name='❗Moderation', value=f'`{p}help mod`')
 			embed.add_field(name='⚙️Creator', value=f'`{p}help creator`')
 
-			await ctx.reply(embed=embed)
+			await ctx.reply(embed=embed, view=HelpDropdownView(ctx))
 			print(f'[LOGS] Command used: {p}help')
 
 		# help all
@@ -428,24 +497,6 @@ input 3
 
 							module = command.module.split('.')
 							embed.add_field(name='Module: ', value=module[1], inline=False)
-					'''
-					for command in self.client.walk_commands():
-						if command.name == c:
-							print(f'[A]\n{command.aliases}')
-							try:
-								a = str(command.aliases)
-								a = a.replace("'", "`")
-								a = a.replace('[', '')
-								a = a.replace(']', '')
-							except:
-								a = 'None'
-							print(a)
-
-							embed.add_field(name=f'Aliases: ', value=a, inline=False)
-
-							module = command.module.split('.')
-							embed.add_field(name='Module: ', value=module[1], inline=False)
-					'''
 			await ctx.reply(embed=embed)
 
 def setup(client):

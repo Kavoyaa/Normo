@@ -313,7 +313,7 @@ class Slash(commands.Cog):
 		os.remove('slash_cmon_output.jpg')
 
 	# /image delete
-	@images.command(name="delete", description='"deletes" the given user :)"')
+	@images.command(name="delete", description='"deletes" the given user :)')
 	async def slashDelete(self, ctx, user: Option(discord.Member, "The user you want to use the command with.", required=False, default=None)):
 		if user == None:
 			user = ctx.author
