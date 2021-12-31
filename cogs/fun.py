@@ -116,7 +116,7 @@ class Fun(commands.Cog):
 		'''Says either heads or tails.'''
 		responses = ['Heads!', 'Tails!']
 
-		await ctx.reply(random.choice(responses))
+		await ctx.reply(random.choice(responses), mention_author=False)
 		print(f'[LOGS] Command used: {p}coinflip')
 
 	#Choose command
@@ -125,7 +125,7 @@ class Fun(commands.Cog):
 		'''Chooses a random item from the given input'''
 		output = items.split()
 
-		await ctx.reply(random.choice(output))
+		await ctx.reply(random.choice(output), mention_author=False)
 		print(f'[LOGS] Command used: {p}choose')
 
 	# Kill command
@@ -162,7 +162,7 @@ class Fun(commands.Cog):
 
 		embed = discord.Embed(description=f'**"{content}"**\n-{author}', colour=0x00FF00)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 		print(f'[LOGS] Command used: {p}inspire')
 
 	# Hello command
@@ -281,15 +281,13 @@ class Fun(commands.Cog):
 		if nsfw:
 			embed = discord.Embed(description='An error occured, please try again!', color=0xFF0000)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}meme | NSFW error')
+			await ctx.reply(embed=embed, mention_author=False)
 		else:
 			embed = discord.Embed(description=f'**[{title}]({url})**', color=discord.Color.random())
 
 			embed.set_image(url=url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}meme')
+			await ctx.reply(embed=embed, mention_author=False)
 
 	# Yomama command
 	@commands.command(name='yomama', aliases=['yomomma', 'yomoma'], description='Tells a yomama joke.\nYo mama so fat I couldn\'t fit the entire joke about her here.')
@@ -298,8 +296,7 @@ class Fun(commands.Cog):
 		r = res.json()
 		joke = r['joke']
 
-		await ctx.send(joke)
-		print(f'[LOGS] Command used: {p}yomama')
+		await ctx.reply(joke, mention_author=False)
 
 	# Uwu command
 	@commands.command(name='uwu', description='UwU.')

@@ -2,75 +2,88 @@ import discord
 from discord.ext import commands
 from main import p
 from main import client
-
-class HelpDropdown(discord.ui.Select):
-    def __init__(self, ctx):
-        self.client = client
-        self.ctx = ctx
-        # Options that will be presented inside the dropdown
-        options = [
-			discord.SelectOption(label="Utility", description="", emoji="🛠️"),
-			discord.SelectOption(label="Fun", description="", emoji="😄"),
-			discord.SelectOption(label="Info", description="", emoji="ℹ️"),
-			discord.SelectOption(label="Animals", description="", emoji="🐶"),
-			discord.SelectOption(label="Games", description="", emoji="🎲"),
-			discord.SelectOption(label="Images", description="", emoji="🖼️"),
-			discord.SelectOption(label="Music", description="", emoji="🎵"),
-			discord.SelectOption(label="Code", description="", emoji="💻"),
-			discord.SelectOption(label="Maths", description="", emoji="📏"),
-			discord.SelectOption(label="Giveaway", description="", emoji="🎉"),
-			discord.SelectOption(label="Moderation", description="", emoji="❗")
-		]
-
-        super().__init__(placeholder="Select a module...", min_values=1, max_values=1, options=options)
-
-    async def callback(self, interaction: discord.Interaction):
-        commands = []
-        # Makes a field for every command.
-        for command in self.client.walk_commands():
-            if command.module == f'cogs.{self.values[0].lower()}':
-                commands.append(command.name)
-
-        c = str(commands)
-        c = c.replace('[', '')
-        c = c.replace(']', '')
-        c = c.replace("'", "`")
-
-        emoji = ''
-        if self.values[0].lower() == "utility":
-            emoji = "🛠️"
-        elif self.values[0] == "fun":
-            emoji = "😄"
-        elif self.values[0] == "info":
-            emoji = "ℹ️"
-        elif self.values[0] == "animals":
-            emoji = "🐶"
-        elif self.values[0] == "games":
-            emoji = "🎲"
-        elif self.values[0] == "images":
-            emoji = "🖼️"
-        elif self.values[0] == "music":
-            emoji = "🎵"
-        elif self.values[0] == "code":
-            emoji = "💻"
-        elif self.values[0] == "maths":
-            emoji = "📏"
-        elif self.values[0] == "giveaway":
-            emoji = "🎉"
-        elif self.values[0] == "moderation":
-            emoji = "❗"
-
-        embed = discord.Embed(title=f'{emoji}{self.values[0]} commands:', description=c, color=discord.Color.random())
-        embed.set_footer(text=self.ctx.author, icon_url=self.ctx.author.avatar.url)
-
-        await interaction.response.edit_message(embed=embed)
+import asyncio
 
 class HelpDropdownView(discord.ui.View):
-    def __init__(self, ctx, timeout=30.0):
-        super().__init__()
-        self.ctx = ctx
+	def __init__(self, ctx, ):
+		super().__init__(timeout=25)
+		self.client = client
+		self.ctx = ctx
+	
+	# Options that will be presented inside the dropdown
+	selectOptions = [
+		discord.SelectOption(label="Utility", description="", emoji="🛠️"),
+		discord.SelectOption(label="Fun", description="", emoji="😄"),
+		discord.SelectOption(label="Info", description="", emoji="ℹ️"),
+		discord.SelectOption(label="Animals", description="", emoji="🐶"),
+		discord.SelectOption(label="Games", description="", emoji="🎲"),
+		discord.SelectOption(label="Images", description="", emoji="🖼️"),
+		discord.SelectOption(label="Music", description="", emoji="🎵"),
+		discord.SelectOption(label="Code", description="", emoji="💻"),
+		discord.SelectOption(label="Maths", description="", emoji="📏"),
+		discord.SelectOption(label="Giveaway", description="", emoji="🎉"),
+		discord.SelectOption(label="Moderation", description="", emoji="❗"),
+		discord.SelectOption(label="All", description='List of all commands', emoji="<:normalbot:926491116516282389>")
+	]
+	
+	@discord.ui.select(placeholder="Select a module", min_values=1, max_values=1, options=selectOptions)
+	async def select_callback(self, select, interaction):
+	
+		switcher = {
+			"utility": [0, '🛠️'],
+			"fun": [1, '😄'],
+			"info": [2, 'ℹ️'],
+			"animals": [3, '🐶'],
+			"games": [4, '🎲'],
+			"images": [5, '🖼️'],
+			"music": [6, '🎵'],
+			"code": [7, '💻'],
+			"maths": [8, '📏'],
+			"giveaway": [9, '🎉'],
+			"moderation": [10, '❗'],
+			"all": [11, '']
+		}
+	
+		emoji = switcher.get(select.values[0].lower())[1]
+		i = switcher.get(select.values[0].lower())[0]
+		
+		select.options[i].default = True
 
-        self.add_item(HelpDropdown(ctx))
+		commands = []
+		num_of_commands = 0
+		for command in self.client.walk_commands():
+			num_of_commands += 1
+			if select.values[0].lower() != "all":
+				if command.module == f'cogs.{select.values[0].lower()}':
+					commands.append(command.name)
+			else:
+				commands.append(command.name)
+		
+		c = str(commands)
+		c = c.replace('[', '')
+		c = c.replace(']', '')
+		c = c.replace("'", "`")
+		
+		if select.values[0].lower() != "all":
+			embed = discord.Embed(title=f'{emoji}{select.values[0]} commands:', description=c, color=discord.Color.random())
+			embed.set_footer(text=self.ctx.author, icon_url=self.ctx.author.avatar.url)
+		else:
+			embed = discord.Embed(title='List of all commands:', description=c, color=discord.Color.random())
+			embed.set_footer(text=f"Total number of commands: {num_of_commands}")
+	
+		await interaction.response.edit_message(embed=embed, view=self)
+		select.options[i].default = False
+	
+	async def interaction_check(self, interaction):
+		if interaction.user != self.ctx.author:
+			await interaction.response.send_message("Only the command user can use that!", ephemeral=True)
+			return False
+		else:
+			return True
+	
+	async def on_timeout(self):
+		self.children[0].disabled = True
+		await helpMessage.edit(view=self)
 
 class Info(commands.Cog):
 	global p
@@ -137,8 +150,8 @@ class Info(commands.Cog):
 			embed.add_field(name='❗Moderation', value=f'`{p}help mod`')
 			embed.add_field(name='⚙️Creator', value=f'`{p}help creator`')
 
-			await ctx.reply(embed=embed, view=HelpDropdownView(ctx))
-			print(f'[LOGS] Command used: {p}help')
+			global helpMessage
+			helpMessage = await ctx.reply(embed=embed, view=HelpDropdownView(ctx), mention_author=False)
 
 		# help all
 		elif c == 'all':
@@ -163,8 +176,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=f'Total number of commands: {i}')
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help all')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help utility
 		elif c == 'utility':
@@ -184,8 +196,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help utility')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help fun
 		elif c == 'fun':
@@ -205,8 +216,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help fun')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help info
 		elif c == 'info':
@@ -226,8 +236,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help info')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help animal/animals
 		elif c == 'animal' or c =='animals':
@@ -247,8 +256,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help animal(s)')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help game/games
 		elif c == 'game' or c =='games':
@@ -268,8 +276,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help game(s)')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help image/images
 		elif c == 'image' or c =='images':
@@ -289,8 +296,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help image(s)')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help music
 		elif c == 'music':
@@ -310,8 +316,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help music')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help code
 		elif c == 'code':
@@ -331,8 +336,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help code')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help maths
 		elif c == 'maths' or c == 'math' or c == 'meth':
@@ -352,8 +356,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help maths')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help moderation
 		elif c == 'moderation' or c =='mod':
@@ -373,8 +376,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help moderation')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help giveaway
 		elif c == 'giveaway' or c == 'giveaways':
@@ -394,8 +396,7 @@ class Info(commands.Cog):
 
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help giveaway(s)')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help hex
 		elif c == 'hex':
@@ -405,8 +406,7 @@ class Info(commands.Cog):
 
 			embed.set_image(url='https://cdn.discordapp.com/attachments/878136393858187285/879052476026851398/sphx_glr_named_colors_003.png')
 
-			await ctx.reply(embed=embed)
-			print(f'[LOGS] Command used: {p}help hex')
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help python
 		elif c == 'python':
@@ -424,10 +424,10 @@ input 3
 
 			embed = discord.Embed(title=f'**{c}**', description='Executes Python code(you cannot import modules).', color=discord.Color.random())
 			embed.add_field(name='Usage:', value=v, inline=False)
-			embed.add_field(name='Aliases:', value='`Python`, `PYTHON`, `py`, `Py`, `pY`, `PY`')
+			embed.add_field(name='Aliases:', value='`py`')
 			embed.add_field(name='Module:', value='code', inline=False)
 
-			await ctx.send(embed=embed)
+			await ctx.reply(embed=embed, mention_author=False)
 
 		# help [command]
 		else:
@@ -497,7 +497,8 @@ input 3
 
 							module = command.module.split('.')
 							embed.add_field(name='Module: ', value=module[1], inline=False)
-			await ctx.reply(embed=embed)
+
+			await ctx.reply(embed=embed, mention_author=False)
 
 def setup(client):
 	client.add_cog(Info(client))

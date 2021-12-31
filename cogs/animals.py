@@ -33,7 +33,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 
 	# Dog command
 	@commands.command(name='dog', aliases=['doggo', 'doge'], description='Shows a random dog picture 🐶!')
@@ -47,7 +47,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 
 	# Fox command
 	@commands.command(name='fox', description='Shows a random fox picture 🦊!')
@@ -61,7 +61,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 
 	# Duck command
 	@commands.command(name='duck', description='Shows a random duck picture 🦆!')
@@ -75,7 +75,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 	
 	# Panda command
 	@commands.command(name='panda', description='Shows a random panda picture 🐼!')
@@ -89,7 +89,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 	
 	# Bird command
 	@commands.command(name='bird', aliases=['birb'], description='Shows a random bird picture 🐦!')
@@ -103,7 +103,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 
 	# Koala command
 	@commands.command(name='koala', description='Shows a random koala picture 🐨!')
@@ -117,7 +117,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 	
 	# Raccoon command
 	@commands.command(name='raccoon', description='Shows a random raccoon picture 🦝!')
@@ -131,7 +131,7 @@ class Animals(commands.Cog):
 		embed.set_image(url=url)
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
-		await ctx.reply(embed=embed)
+		await ctx.reply(embed=embed, mention_author=False)
 
 def setup(client):
 	client.add_cog(Animals(client))
