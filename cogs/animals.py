@@ -64,7 +64,7 @@ class Animals(commands.Cog):
 		await ctx.reply(embed=embed, mention_author=False)
 
 	# Duck command
-	@commands.command(name='duck', description='Shows a random duck picture 🦆!')
+	@commands.command(name='duck', aliases=['ducc'], description='Shows a random duck picture 🦆!')
 	async def duck(self, ctx):
 		'''Sends a random duck picture.'''
 		res = requests.get('https://random-d.uk/api/v2/quack')

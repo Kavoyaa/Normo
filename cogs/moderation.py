@@ -16,9 +16,9 @@ class Moderation(commands.Cog):
 	# Kick command
 	@commands.command(name='kick', description='Kicks the mentioned user.\nRequired perm(s): Kick members')
 	@commands.has_permissions(kick_members=True)
-	async def kick(self, ctx, user: discord.Member, *, reason_=None):
+	async def kick(self, ctx, user: discord.Member, *, reason=None):
 		'''Kicks the mentioned user'''
-		reason = reason_
+
 		if user == ctx.author:
 			await ctx.send('You can\'t kick yourself!')
 		else:
@@ -45,18 +45,15 @@ class Moderation(commands.Cog):
 
 			await user.kick(reason=reason) # Kicks the user
 			await ctx.send(embed=embed)
-			print(f'[LOGS] Command used: {p}kick')
 
 	# Softban command
 	@commands.command(name='softban', description='Softbans the mention user.\nRequired perm(s): Kick members')
 	@commands.has_permissions(kick_members=True)
-	async def softban(self, ctx, user: discord.Member, reason_=None):
+	async def softban(self, ctx, user: discord.Member, reason=None):
 		'''
 		Softbans the mentioned user.
 		A softban bans then immediately unbans the mentioned user to act asa kick which also deletes messages of the kicked user.
 		'''
-
-		reason = reason_
 
 		if user == ctx.author:
 			await ctx.send('You can\'t softban yourself!')
@@ -85,14 +82,13 @@ class Moderation(commands.Cog):
 			await user.ban(reason=f'[SOFTBAN] {reason}') # Bans the user
 			await ctx.send(embed=embed)
 			await user.unban(reason='The ban was a softban.')
-			print(f'[LOGS] Command used: {p}softban')
 
 	# Ban command
 	@commands.command(name='ban', description='Bans the mentioned user.\nRequired perm(s): Ban members')
 	@commands.has_permissions(ban_members=True)
-	async def ban(self, ctx, user: discord.Member, *, reason_=None):
+	async def ban(self, ctx, user: discord.Member, *, reason=None):
 		'''Bans the mentioned user'''
-		reason = reason_
+		
 		if user == ctx.author:
 			await ctx.send('You can\'t ban yourself!')
 		else:
@@ -119,7 +115,6 @@ class Moderation(commands.Cog):
 
 			await user.ban(reason=reason) # Bans the user
 			await ctx.send(embed=embed)
-			print(f'[LOGS] Command used: {p}ban')
 
 	# Purge command
 	@commands.command(name='purge', aliases=['clear'], description='Deletes the given amount of messages.\nRequired perm(s): Manage messages')
@@ -135,7 +130,6 @@ class Moderation(commands.Cog):
 		embed.set_footer(text='This message will be deleted in 10 seconds.')
 
 		await ctx.send(embed=embed, delete_after=10)
-		print(f'[LOGS] Command used: {p}purge')
 
 	# Embed command
 	@commands.command(name='embed', aliases=['embedify'], description='Make your own embeds!\n`.help embed`(coming soon) to see how to use.\nRequited perm(s): Administrator')
@@ -206,8 +200,6 @@ class Moderation(commands.Cog):
 					pass
 
 		await ctx.send(embed=embed)
-		print(f'[LOGS] Command used: {p}embed')
-
 
 def setup(client):
 	client.add_cog(Moderation(client))

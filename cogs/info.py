@@ -5,11 +5,11 @@ from main import client
 import asyncio
 
 class HelpDropdownView(discord.ui.View):
-	def __init__(self, ctx, ):
+	def __init__(self, ctx):
 		super().__init__(timeout=25)
 		self.client = client
 		self.ctx = ctx
-	
+
 	# Options that will be presented inside the dropdown
 	selectOptions = [
 		discord.SelectOption(label="Utility", description="", emoji="🛠️"),
@@ -126,15 +126,15 @@ class Info(commands.Cog):
 
 	# help command
 	@commands.command(name='help', description=f'Shows help about a module or command. `{p}help all` for a list of all commands.')
-	async def help(self, ctx, input_=None):
+	async def help(self, ctx, command_or_module=None):
 		'''A fully automatic help command which also shows the parameters needed for a command.'''
 
 		# (There is probably a better, more efficient way to make sub-commands other than if-elif-else statements.)
 
-		if input_ != None:
-			c = input_.lower()
+		if command_or_module != None:
+			c = command_or_module.lower()
 		# help
-		if input_ == None:
+		if command_or_module == None:
 			embed = discord.Embed(title='Nromal Bot\'s Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help [command]` for info on a specific command.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
 
 			embed.add_field(name='🛠️Utility', value=f'`{p}help utility`')
@@ -434,51 +434,19 @@ input 3
 			for command in self.client.walk_commands():
 				if command.name == c:
 					embed = discord.Embed(title=f'**{c}**', description=command.description, color=discord.Color.random())
-					parameters = list(command.params.keys())
-					try:
-						if parameters[2]:
-							if parameters[3]:
-								if parameters[4]:
-									pm1 = parameters[2].replace('_', ' (optional)')
-									pm2 = parameters[3].replace('_', ' (optional)')
-									pm3 = parameters[4].replace('_', ' (optional)')
 
-									embed.add_field(name='Usage:', value=f'{p}{command.name} `[{pm1}`] [`{pm2}`] [`{pm3}`]')
-								else:
-									pm1 = parameters[2].replace('_', ' (optional)')
-									pm2 = parameters[3].replace('_', ' (optional)')
-
-									embed.add_field(name='Usage:', value=f'{p}{command.name} [`{pm1}`] [`{pm2}`]')
-							else:
-								pm1 = parameters[2].replace('_', ' (optional)')
-
-								embed.add_field(name='Usage:', value=f'{p}{command.name} [`{pm1}`]')
+					parameters = command.params
+					usage = f'{p}{c} '
+					for key, value in parameters.items():
+						if str(key) == "self" or str(key) == "ctx":
+							pass
 						else:
-							embed.add_field(name=p + command.name, value=command.description)
-					except:
-						try:
-							if parameters[2]:
-								if parameters[3]:
-									pm1 = parameters[2].replace('_', ' (optional)')
-									pm2 = parameters[3].replace('_', ' (optional)')
-
-									embed.add_field(name='Usage:', value=f'{p}{command.name} [`{pm1}`] [`{pm2}`]')
-								else:
-									pm1 = parameters[2].replace('_', ' (optional)')
-
-									embed.add_field(name='Usage:', value=f'{p}{command.name} [`{pm1}`]')
-							else:
-								embed.add_field(name=p + command.name, value=command.description)
-						except:
-							try:
-								if parameters[2]:
-									pm1 = parameters[2].replace('_', ' (optional)')
-
-									embed.add_field(name='Usage:', value=f'{p}{command.name} [`{pm1}`]')
-								else:
-									embed.add_field(name='Usage:', value=p + command.name)
-							except:
-								embed.add_field(name='Usage:', value=p + command.name,)
+							if "=" in str(value):
+								usage += f'[`{key}`] '
+							else: 
+								usage += f'<`{key}`> '
+					
+					embed.add_field(name='Usage:', value=usage)
 
 					for command in self.client.walk_commands():
 						if command.name == c:

@@ -130,8 +130,9 @@ class Fun(commands.Cog):
 
 	# Kill command
 	@commands.command(name='kill', aliases=['keel', 'keal'], description='Kill your enemies!')
-	async def kill(self, ctx, user: discord.Member, *, reason_=''):
+	async def kill(self, ctx, user: discord.Member, *, reason=''):
 		'''Sends a random GIF from the list below'''
+
 		gifs = [
 		'https://media1.tenor.com/images/a80b2bf31635899ac0900ea6281a41f6/tenor.gif?itemid=5535365',
 		'https://media1.tenor.com/images/bb4b7a7559c709ffa26c5301150e07e4/tenor.gif?itemid=9955653',
@@ -140,7 +141,7 @@ class Fun(commands.Cog):
 		'https://media1.tenor.com/images/795bf8203af5b4a5d0713a8a2c2a0bcf/tenor.gif?itemid=18595358'
 		]
 
-		embed = discord.Embed(description=reason_, color=discord.Color.random())
+		embed = discord.Embed(description=reason, color=discord.Color.random())
 
 		embed.set_author(name=f'{ctx.author.name} is killing {user.name}!', icon_url=ctx.author.avatar.url)
 

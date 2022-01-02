@@ -19,13 +19,13 @@ class Images(commands.Cog):
 
 	# Avatar command
 	@commands.command(name='avatar', aliases=['av'], description="Sends the mentioned user's avatar(sends the command user's avatar if no one is mentioned).")
-	async def avatar(self, ctx, user_: discord.Member=None):
-		if user_ == None:
+	async def avatar(self, ctx, user: discord.Member=None):
+		if user == None:
 			av = ctx.author.avatar.url
 			heading = f"{ctx.author}'s avatar:"
 		else:
-			av = user_.avatar.url
-			heading = f"{user_}'s avatar:"
+			av = user.avatar.url
+			heading = f"{user}'s avatar:"
 		
 		embed = discord.Embed(title= heading, color=discord.Color.random())
 		embed.set_image(url=av)
@@ -34,8 +34,7 @@ class Images(commands.Cog):
 	
 	# Invert command
 	@commands.command(name='invert', description='Sends colo(u)r inverted version of the mentioned user\'s profile picture!')
-	async def invert(self, ctx, user_: discord.Member=None):
-		user = user_
+	async def invert(self, ctx, user: discord.Member=None):
 		if user == None:
 			user = ctx.author
 
@@ -51,8 +50,7 @@ class Images(commands.Cog):
 
 	# Wanted command
 	@commands.command(name='wanted', description='Generates a wanted poster of the given user!')
-	async def wanted(self, ctx, user_: discord.Member=None):
-		user = user_
+	async def wanted(self, ctx, user: discord.Member=None):
 		if user == None:
 			user = ctx.author
 
@@ -62,6 +60,7 @@ class Images(commands.Cog):
 		pfp = Image.open(data)
 		pfp = pfp.resize((177, 177))
 		wanted.paste(pfp, (120, 212))
+
 		# Creates a 'wanted_output.jpg' which gets sent as output
 		wanted.save('wanted_output.jpg')
 
@@ -73,8 +72,7 @@ class Images(commands.Cog):
 
 	# Cmon command
 	@commands.command(name='cmon', aliases=['comeon'], description='Generates a "C\'mon do something" meme with the profile picture of the given user!')
-	async def dosomething(self, ctx, user_: discord.Member=None):
-		user = user_
+	async def dosomething(self, ctx, user: discord.Member=None):
 		if user == None:
 			user = ctx.author
 
@@ -84,6 +82,7 @@ class Images(commands.Cog):
 		pfp = Image.open(data)
 		pfp = pfp.resize((177, 177))
 		wanted.paste(pfp, (120, 212))
+
 		# Creates a 'cmon_output.jpg' which gets sent as output
 		wanted.save('cmon_output.jpg')
 
@@ -94,8 +93,7 @@ class Images(commands.Cog):
 	
 	# Delete command
 	@commands.command(name='delete', aliases=['deletememe'], description='"deletes" the given user :)')
-	async def delete(self, ctx, user_: discord.Member=None):
-		user = user_
+	async def delete(self, ctx, user: discord.Member=None):
 		if user == None:
 			user = ctx.author
 
@@ -105,6 +103,7 @@ class Images(commands.Cog):
 		pfp = Image.open(data)
 		pfp = pfp.resize((195, 195))
 		wanted.paste(pfp, (120, 135))
+
 		# Creates a 'delete_output.jpg' which gets sent as output
 		wanted.save('delete_output.jpg')
 
@@ -115,8 +114,7 @@ class Images(commands.Cog):
 	
 	# Grayscale command
 	@commands.command(name='grayscale')
-	async def gray(self, ctx, user_: discord.Member=None):
-		user = user_
+	async def gray(self, ctx, user: discord.Member=None):
 		if user == None:
 			user = ctx.author
 
