@@ -129,6 +129,29 @@ class Info(commands.Cog):
 	async def help(self, ctx, command_or_module=None):
 		'''A fully automatic help command which also shows the parameters needed for a command.'''
 
+		def give_help(cog_name, emoji=''):
+			commands = []
+			# Makes a field for every command.
+			for command in self.client.walk_commands():
+				if cog_name.lower() != 'all':
+					if command.module == f'cogs.{cog_name.lower()}':
+						commands.append(command.name)
+				else:
+					commands.append(command.name)
+
+			c = str(commands)
+			c = c.replace('[', '')
+			c = c.replace(']', '')
+			c = c.replace("'", "`")
+
+			if cog_name != 'all':
+				embed = discord.Embed(title=f'{emoji}{cog_name.lower().capitalize()} commands:', description=c, color=discord.Color.random())
+			else:
+				embed = discord.Embed(title=f'{emoji}List of all commands:', description=c, color=discord.Color.random())
+			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
+
+			return embed
+
 		# (There is probably a better, more efficient way to make sub-commands other than if-elif-else statements.)
 
 		if command_or_module != None:
@@ -156,247 +179,62 @@ class Info(commands.Cog):
 		# help all
 		elif c == 'all':
 			'''Shows all commands'''
-
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='List of all commands:', description=c, color=discord.Color.random())
-
-			# Number of commands
-			i = 0
-			for command in self.client.walk_commands():
-				i += 1
-
-			embed.set_footer(text=f'Total number of commands: {i}')
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('all'), mention_author=False)
 
 		# help utility
 		elif c == 'utility':
 			'''Shows 'utility' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.utility':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='🛠️Utility commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('utility', '🛠️'), mention_author=False)
 
 		# help fun
 		elif c == 'fun':
 			'''Shows 'fun' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.fun':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='😄Fun commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('fun', '😄'), mention_author=False)
 
 		# help info
 		elif c == 'info':
 			'''Shows 'info' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.info':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='ℹ️Info commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('info', 'ℹ️'), mention_author=False)
 
 		# help animal/animals
 		elif c == 'animal' or c =='animals':
 			'''Shows 'animal' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.animals':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='🐶Animals commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('animals', '🐶'), mention_author=False)
 
 		# help game/games
 		elif c == 'game' or c =='games':
 			'''Shows 'game' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.games':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='🎲Game commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('games', '🎲'), mention_author=False)
 
 		# help image/images
 		elif c == 'image' or c =='images':
 			'''Shows 'image' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.images':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='🖼️Image commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('images', '🖼️'), mention_author=False)
 
 		# help music
 		elif c == 'music':
 			'''Shows 'music' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.music':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='🎵Music commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('music', '🎵'), mention_author=False)
 
 		# help code
 		elif c == 'code':
 			'''Shows 'code' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.code':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='💻Code commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('code', '💻'), mention_author=False)
 
 		# help maths
 		elif c == 'maths' or c == 'math' or c == 'meth':
 			'''Shows 'maths' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.maths':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='📏Math commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
-
-		# help moderation
-		elif c == 'moderation' or c =='mod':
-			'''Shows 'moderation' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.moderation':
-					commands.append(command.name)
-
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='❗Moderation commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+			await ctx.reply(embed=give_help('maths', '📏'), mention_author=False)
 
 		# help giveaway
 		elif c == 'giveaway' or c == 'giveaways':
 			'''Shows 'giveaway' commands'''
-			commands = []
-			# Makes a field for every command.
-			for command in self.client.walk_commands():
-				if command.module == 'cogs.giveaway':
-					commands.append(command.name)
+			await ctx.reply(embed=give_help('giveaway', '🎉'), mention_author=False)
 
-			c = str(commands)
-			c = c.replace('[', '')
-			c = c.replace(']', '')
-			c = c.replace("'", "`")
-
-			embed = discord.Embed(title='🎉Giveaway commands:', description=c, color=discord.Color.random())
-
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
-
-			await ctx.reply(embed=embed, mention_author=False)
+		# help moderation
+		elif c == 'moderation' or c =='mod':
+			'''Shows 'moderation' commands'''
+			await ctx.reply(embed=give_help('moderation', '❗'), mention_author=False)
 
 		# help hex
 		elif c == 'hex':
@@ -435,6 +273,7 @@ input 3
 				if command.name == c:
 					embed = discord.Embed(title=f'**{c}**', description=command.description, color=discord.Color.random())
 
+					# Adding command usage to embed
 					parameters = command.params
 					usage = f'{p}{c} '
 					for key, value in parameters.items():
@@ -448,23 +287,24 @@ input 3
 					
 					embed.add_field(name='Usage:', value=usage)
 
-					for command in self.client.walk_commands():
-						if command.name == c:
-							a = ''
-							commandAliases = command.aliases
+					# Adding aliases to embed
+					a = ''
+					commandAliases = command.aliases
 
-							for item in commandAliases:
-								a += f'`{item}`, '
-							
-							if a == '':
-								a = 'None'
-							else:
-								a = a[:-2]
-							
-							embed.add_field(name=f'Aliases: ', value=a, inline=False)
+					for item in commandAliases:
+						a += f'`{item}`, '
+					
+					if a == '':
+						a = 'None'
+					else:
+						a = a[:-2]
+					
+					embed.add_field(name=f'Aliases: ', value=a, inline=False)
 
-							module = command.module.split('.')
-							embed.add_field(name='Module: ', value=module[1], inline=False)
+					# Adding module name to embed
+					module = command.module.split('.')
+					module = module[1].capitalize()
+					embed.add_field(name='Module: ', value=module, inline=False)
 
 			await ctx.reply(embed=embed, mention_author=False)
 
