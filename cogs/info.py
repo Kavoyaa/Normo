@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from main import p
 from main import client
-import asyncio
 
 class HelpDropdownView(discord.ui.View):
 	def __init__(self, ctx):
@@ -28,24 +27,10 @@ class HelpDropdownView(discord.ui.View):
 	
 	@discord.ui.select(placeholder="Select a module", min_values=1, max_values=1, options=selectOptions)
 	async def select_callback(self, select, interaction):
+		modules = {"utility": [0, '🛠️'], "fun": [1, '😄'], "info": [2, 'ℹ️'], "animals": [3, '🐶'], "games": [4, '🎲'], "images": [5, '🖼️'], "music": [6, '🎵'], "code": [7, '💻'], "maths": [8, '📏'], "giveaway": [9, '🎉'], "moderation": [10, '❗'], "all": [11, '']}
 	
-		switcher = {
-			"utility": [0, '🛠️'],
-			"fun": [1, '😄'],
-			"info": [2, 'ℹ️'],
-			"animals": [3, '🐶'],
-			"games": [4, '🎲'],
-			"images": [5, '🖼️'],
-			"music": [6, '🎵'],
-			"code": [7, '💻'],
-			"maths": [8, '📏'],
-			"giveaway": [9, '🎉'],
-			"moderation": [10, '❗'],
-			"all": [11, '']
-		}
-	
-		emoji = switcher.get(select.values[0].lower())[1]
-		i = switcher.get(select.values[0].lower())[0]
+		emoji = modules.get(select.values[0].lower())[1]
+		i = modules.get(select.values[0].lower())[0]
 		
 		select.options[i].default = True
 

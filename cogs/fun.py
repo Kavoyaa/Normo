@@ -38,37 +38,12 @@ class Fun(commands.Cog):
 			if char == " ":
 				output += "      "
 			if char in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '?', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']:
-				if char == '1':
-					char = ":one:"
-				elif char == "2":
-					char = ":two:"
-				elif char == "3":
-					char = ":three:"
-				elif char == "4":
-					char = ":four:"
-				elif char == "5":
-					char = ":five:"
-				elif char == "6":
-					char = ":six:"
-				elif char == "7":
-					char = ":seven:"
-				elif char == "8":
-					char = ":eight:"
-				elif char == "9":
-					char = ":nine:"
-				elif char == "0":
-					char = ":zero:"
-				elif char == "!":
-					char = ":grey_exclamation:"
-				elif char == "?":
-					char = ":grey_question:"
-				elif char == "#":
-					char = ":hash:"
-				elif char == "*":
-					char = ":asterisk:"
-				else:
-					char = char.replace(char, f":regional_indicator_{char}:")
-				output += char
+				numberEmojis = {"1": ":one:", "2": ":two:", "3": ":three:", "4": ":four:", "5": ":five:", "6": ":six:", "7": ":seven:", "8": ":eight:", "9": ":nine:", "0": ":zero:", "!": ":grey_exclamation:", "?": ":grey_question:", "#": ":hash:", "*": ":asterisk:"}
+
+				emoji = numberEmojis.get(char)
+				if emoji == None:
+					emoji = char.replace(char, f":regional_indicator_{char}:")
+				output += emoji
 			else:
 				output += char
 		
