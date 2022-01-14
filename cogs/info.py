@@ -239,13 +239,11 @@ class Info(commands.Cog):
 .python
 `​`​`py
 [code]
-`​``input 1
-input 2
-input 3
-```***NOTE:** Specify the inputs only if there are any.*
+`​``
+```
 '''
 
-			embed = discord.Embed(title=f'**{c}**', description='Executes Python code(you cannot import modules).', color=discord.Color.random())
+			embed = discord.Embed(title=f'**{c}**', description='Executes Python code.', color=discord.Color.random())
 			embed.add_field(name='Usage:', value=v, inline=False)
 			embed.add_field(name='Aliases:', value='`py`')
 			embed.add_field(name='Module:', value='code', inline=False)
