@@ -70,6 +70,7 @@ class HelpDropdownView(discord.ui.View):
 		self.children[0].disabled = True
 		await helpMessage.edit(view=self)
 
+
 class Info(commands.Cog):
 	global p
 
@@ -114,6 +115,7 @@ class Info(commands.Cog):
 	async def help(self, ctx, command_or_module=None):
 		'''A fully automatic help command which also shows the parameters needed for a command.'''
 
+		# Returns help embed for given module
 		def give_help(cog_name, emoji=''):
 			commands = []
 			# Makes a field for every command.
@@ -133,14 +135,54 @@ class Info(commands.Cog):
 				embed = discord.Embed(title=f'{emoji}{cog_name.lower().capitalize()} commands:', description=c, color=discord.Color.random())
 			else:
 				embed = discord.Embed(title=f'{emoji}List of all commands:', description=c, color=discord.Color.random())
+		
 			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 			return embed
+		
+		# Returns help embed for a code module command
+		async def give_code_help(language):
+			if language == 'c#':
+				cb_type = 'csharp'
+			else:
+				cb_type = language
+			usage = f'''
+```
+.{language}
+`​`​`{cb_type}
+[code]
+`​``
+```*\`\`\` is used to make a codeblock.*
+'''			
+
+			for command in self.client.walk_commands():
+				if command.name == language.lower():
+					aliases = ''
+					for item in command.aliases:
+						aliases += f'`{item}`, '
+
+					if aliases == '':
+						aliases = 'None'
+					else:
+						aliases = aliases[:-2]
+
+			embed = discord.Embed(title=f'**{c}**', description=f'Executes {language.capitalize()} code!', color=discord.Color.random())
+			embed.add_field(name='Usage:', value=usage, inline=False)
+			embed.add_field(name='Aliases:', value=aliases)
+			embed.add_field(name='Module:', value='code', inline=False)
+
+			await ctx.reply(embed=embed, mention_author=False)
+
+		code_commands = []
+		for command in self.client.walk_commands():
+			if command.module == 'cogs.code':
+				code_commands.append(command.name)
 
 		# (There is probably a better, more efficient way to make sub-commands other than if-elif-else statements.)
 
 		if command_or_module != None:
 			c = command_or_module.lower()
+
 		# help
 		if command_or_module == None:
 			embed = discord.Embed(title='Nromal Bot\'s Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help [command]` for info on a specific command.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
@@ -231,24 +273,9 @@ class Info(commands.Cog):
 
 			await ctx.reply(embed=embed, mention_author=False)
 
-		# help python
-		elif c == 'python':
-			'''Gives information about .python command.'''
-			v = '''
-```
-.python
-`​`​`py
-[code]
-`​``
-```
-'''
-
-			embed = discord.Embed(title=f'**{c}**', description='Executes Python code.', color=discord.Color.random())
-			embed.add_field(name='Usage:', value=v, inline=False)
-			embed.add_field(name='Aliases:', value='`py`')
-			embed.add_field(name='Module:', value='code', inline=False)
-
-			await ctx.reply(embed=embed, mention_author=False)
+		# help [command from code module]
+		elif c in code_commands:
+			await give_code_help(c)
 
 		# help [command]
 		else:
