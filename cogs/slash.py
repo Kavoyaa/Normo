@@ -190,7 +190,6 @@ class Slash(commands.Cog):
 			embed = discord.Embed(description='An error occured, please try again!', color=0xFF0000)
 
 			await ctx.respond(embed=embed)
-			print(f'[LOGS] Command used: {p}meme | NSFW error')
 		else:
 			embed = discord.Embed(description=f'**[{title}]({url})**', color=discord.Color.random())
 
@@ -217,10 +216,8 @@ class Slash(commands.Cog):
 
 			try:
 				await ctx.respond(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}\n\n**{partOfSpeech1}**\n{definition1}")
-				print(f'[LOGS] Command used: {p}dictionary')
 			except:
 				await ctx.respond(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}")
-				print(f'[LOGS] Command used: {p}dictionary')
 		except:
 			embed = discord.Embed(color=discord.Color.red())
 			embed.add_field(name='Command Error:', value=f"Word '{word.lower()} not found.")

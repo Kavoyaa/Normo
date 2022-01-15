@@ -65,7 +65,6 @@ class Images(commands.Cog):
 		wanted.save('wanted_output.jpg')
 
 		await ctx.send(file = discord.File('wanted_output.jpg'))
-		print(f'[LOGS] Command used: {p}wanted')
 
 		# Deletes the saved image file
 		os.remove('wanted_output.jpg')

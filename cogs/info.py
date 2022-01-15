@@ -90,7 +90,6 @@ class Info(commands.Cog):
 		latency = round(client.latency * 1000)
 
 		await ctx.send(f'🏓 | ...pong! In {latency}ms.')
-		print(f'[LOGS] Command used: {p}ping')
 
 	# Aliases command
 	@commands.command(name='aliases', aliases = ['alias'], description='Shows alias(es) of the given comamnds.')
@@ -108,7 +107,6 @@ class Info(commands.Cog):
 				embed.add_field(name=f'{p}{cmd.name} aliases:', value=a)
 
 		await ctx.reply(embed=embed)
-		print(f'[LOGS] Command used: {p}aliases')
 
 	# help command
 	@commands.command(name='help', description=f'Shows help about a module or command. `{p}help all` for a list of all commands.')
@@ -116,10 +114,12 @@ class Info(commands.Cog):
 		'''A fully automatic help command which also shows the parameters needed for a command.'''
 
 		# Returns help embed for given module
-		def give_help(cog_name, emoji=''):
+		async def give_help(cog_name, emoji=''):
 			commands = []
 			# Makes a field for every command.
+			i = 0
 			for command in self.client.walk_commands():
+				i += 1
 				if cog_name.lower() != 'all':
 					if command.module == f'cogs.{cog_name.lower()}':
 						commands.append(command.name)
@@ -133,12 +133,12 @@ class Info(commands.Cog):
 
 			if cog_name != 'all':
 				embed = discord.Embed(title=f'{emoji}{cog_name.lower().capitalize()} commands:', description=c, color=discord.Color.random())
+				embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 			else:
 				embed = discord.Embed(title=f'{emoji}List of all commands:', description=c, color=discord.Color.random())
-		
-			embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
+				embed.set_footer(text=f"Total number of commands: {i}")
 
-			return embed
+			await ctx.reply(embed=embed, mention_author=False)
 		
 		# Returns help embed for a code module command
 		async def give_code_help(language):
@@ -185,7 +185,7 @@ class Info(commands.Cog):
 
 		# help
 		if command_or_module == None:
-			embed = discord.Embed(title='Nromal Bot\'s Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help [command]` for info on a specific command.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
+			embed = discord.Embed(title='Normo Command List', description=f'Use `{p}help [module]` for more info on a module.\nUse `{p}help [command]` for info on a specific command.\nUse `{p}help all` for a list of all commands.', color=discord.Color.random())
 
 			embed.add_field(name='🛠️Utility', value=f'`{p}help utility`')
 			embed.add_field(name='😄Fun', value=f'`{p}help fun`')
@@ -206,62 +206,62 @@ class Info(commands.Cog):
 		# help all
 		elif c == 'all':
 			'''Shows all commands'''
-			await ctx.reply(embed=give_help('all'), mention_author=False)
+			await give_help("all")
 
 		# help utility
 		elif c == 'utility':
 			'''Shows 'utility' commands'''
-			await ctx.reply(embed=give_help('utility', '🛠️'), mention_author=False)
+			await give_help('utility', '🛠️')
 
 		# help fun
 		elif c == 'fun':
 			'''Shows 'fun' commands'''
-			await ctx.reply(embed=give_help('fun', '😄'), mention_author=False)
+			await give_help('fun', '😄')
 
 		# help info
 		elif c == 'info':
 			'''Shows 'info' commands'''
-			await ctx.reply(embed=give_help('info', 'ℹ️'), mention_author=False)
+			await give_help('info', 'ℹ️')
 
 		# help animal/animals
 		elif c == 'animal' or c =='animals':
 			'''Shows 'animal' commands'''
-			await ctx.reply(embed=give_help('animals', '🐶'), mention_author=False)
+			await give_help('animals', '🐶')
 
 		# help game/games
 		elif c == 'game' or c =='games':
 			'''Shows 'game' commands'''
-			await ctx.reply(embed=give_help('games', '🎲'), mention_author=False)
+			await give_help('games', '🎲')
 
 		# help image/images
 		elif c == 'image' or c =='images':
 			'''Shows 'image' commands'''
-			await ctx.reply(embed=give_help('images', '🖼️'), mention_author=False)
+			await give_help('images', '🖼️')
 
 		# help music
 		elif c == 'music':
 			'''Shows 'music' commands'''
-			await ctx.reply(embed=give_help('music', '🎵'), mention_author=False)
+			await give_help('music', '🎵')
 
 		# help code
 		elif c == 'code':
 			'''Shows 'code' commands'''
-			await ctx.reply(embed=give_help('code', '💻'), mention_author=False)
+			await give_help('code', '💻')
 
 		# help maths
 		elif c == 'maths' or c == 'math' or c == 'meth':
 			'''Shows 'maths' commands'''
-			await ctx.reply(embed=give_help('maths', '📏'), mention_author=False)
+			await give_help('maths', '📏')
 
 		# help giveaway
 		elif c == 'giveaway' or c == 'giveaways':
 			'''Shows 'giveaway' commands'''
-			await ctx.reply(embed=give_help('giveaway', '🎉'), mention_author=False)
+			await give_help('giveaway', '🎉')
 
 		# help moderation
 		elif c == 'moderation' or c =='mod':
 			'''Shows 'moderation' commands'''
-			await ctx.reply(embed=give_help('moderation', '❗'), mention_author=False)
+			await give_help('moderation', '❗')
 
 		# help hex
 		elif c == 'hex':

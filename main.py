@@ -26,11 +26,22 @@ async def on_command_error(ctx, error):
     # Ignores the error if it is 'CommandNotFound', which means the command used was invalid.
     if isinstance(error, commands.CommandNotFound):
         pass
-    else:  # If not 'CommandNotFOund' error
-        embed = discord.Embed(color=discord.Color.red())
-        embed.add_field(name='Command Error:', value=str(error).capitalize())
+    elif isinstance(error, commands.MissingPermissions):
+        missing_perms = str(error.missing_permissions)
+        missing_perms = missing_perms.replace('[', '')
+        missing_perms = missing_perms.replace(']', '')
+
+        value = f'You are missing the following permission(s):\n{missing_perms}'
+    elif isinstance(error, commands.MissingRequiredArgument):
+        value = str(error).capitalize()
+    else:
+        value=str(error).capitalize()
 		
-        await ctx.send(embed=embed)
+    embed = discord.Embed(color=discord.Color.red())
+    embed.add_field(name='Command Error:', value=value)
+		
+    await ctx.send(embed=embed)
+		
 #'''
 # Loads the cogs.
 

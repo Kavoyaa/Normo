@@ -1,15 +1,5 @@
 import discord
 from discord.ext import commands
-import os
-import asyncio
-import time
-import subprocess
-import textwrap
-import io
-import signal
-import py_compile
-import requests
-from traceback import print_exc
 from pyston import PystonClient, File
 
 

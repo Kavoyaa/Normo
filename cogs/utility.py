@@ -52,7 +52,6 @@ class Utility(commands.Cog):
 			await ctx.reply(f'There is {number_of_words} word in this text.\n*smh you can count that much yourself, why use me?*')
 		else:
 			await ctx.reply(f'There are {number_of_words} words in this text.')
-			print(f'[LOGS] Command used: {p}count')
 
 	# Binary command
 	@commands.command(name='binary', description='Converts the given `input` to ASCII binary.')
@@ -61,7 +60,6 @@ class Utility(commands.Cog):
 		output = str(res)
 
 		await ctx.send(output)
-		print(f'[LOGS] Command used: {p}binary')
 
 	# Convert command
 	@commands.command(name='convert', description='Converts the given `input`(which would/must be ASCII binary) to text.')
@@ -90,7 +88,6 @@ class Utility(commands.Cog):
 			reversedString = letter + reversedString
 
 		await ctx.send(reversedString)
-		print(f'[LOGS] Command used: {p}reverse')
 
 	# Dictionary command
 	@commands.command(name='dictionary', aliases=['dict'], description='Gets the dictionary information about a word.')
@@ -111,10 +108,8 @@ class Utility(commands.Cog):
 
 			try:
 				await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}\n\n**{partOfSpeech1}**\n{definition1}")
-				print(f'[LOGS] Command used: {p}dictionary')
 			except:
 				await ctx.send(f"**{r[0]['word']}**\n/{r[0]['phonetic']}/\n\n**{partOfSpeech0}**\n{definition0}")
-				print(f'[LOGS] Command used: {p}dictionary')
 		except:
 			embed = discord.Embed(color=discord.Color.red())
 			embed.add_field(name='Command Error:', value=f"Word '{word.lower()} not found.")
@@ -125,14 +120,12 @@ class Utility(commands.Cog):
 	async def uppercase(slef, ctx, *, text):
 		'''Converts given input to uppercase'''
 		await ctx.reply(text.upper())
-		print(f'[LOGS] Command used: {p}upper')
 
 	# Lowercase command
 	@commands.command(name='lowercase', aliases=['lower'], description='Converts the given text to lowercase.')
 	async def lowercase(slef, ctx, *, text):
 		'''Converts given input to lowercase'''
 		await ctx.reply(text.lower())
-		print(f'[LOGS] Command used: {p}lower')
 
 	# Hexcode command
 	@commands.command(name='hexcode', aliases=['hex'], description='Tells the hex code of the given colour.')
