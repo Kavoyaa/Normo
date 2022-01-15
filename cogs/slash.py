@@ -7,6 +7,66 @@ import random
 from PIL import Image
 import PIL.ImageOps  
 from io import BytesIO
+from pyston import PystonClient, File
+
+async def run_code(ctx, language, codeblock_type, msg, comment, color, auto_detect):
+	code = msg.content
+	
+	if code.count('`') < 6:
+		await ctx.respond(f"**The code must be inside a codeblock.**\n\nHow to make a codeblock:\n\`\`\`{codeblock_type}\n[code]\n\`\`\`", ephemeral=True)
+		return
+
+	await msg.add_reaction("<a:colorfulloading:921304808256860171>")
+
+	url = msg.jump_url
+
+	code = code.split('```')
+	code = code[1]
+	code = code.splitlines(keepends=True)
+	code = code[1:]
+
+	co = ''
+	for item in code:
+		co += item
+
+	pyston = PystonClient()
+	output = await pyston.execute(language, [File(co)])
+	success = output.success
+	output = str(output)
+
+	if output == "":
+		output = "```\nNo Output\n```" 
+	else:
+		if len(output) > 980:
+			output = output[:980]
+			output = output + f"\n{comment} Size limit reached"
+		
+		if output.count('\n') > 51:
+			o = output.split('\n')
+			o = o[:51]
+			
+			result = ''
+			for item in o:
+				result += item + '\n'
+			
+			output = result + f'{comment} Length limit reached'
+
+		output = f"```yaml\n{output}\n```"	
+	
+	click = f'Click [here]({url}) to see the code.'
+
+	if auto_detect:
+		embed = discord.Embed(color = color if success else discord.Color.red())
+		embed.add_field(name='Program Output', value=output, inline=False)
+		embed.add_field(name='Lang chosen by Auto-Detect:', value=f'```\n{language.capitalize()}\n```{click}', inline=False)
+	elif not auto_detect:
+		embed = discord.Embed(color = color if success else discord.Color.red())
+		embed.add_field(name='Program Output', value=output+click, inline=False)
+
+	embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
+
+	await ctx.respond(embed=embed)
+	await msg.clear_reaction("<a:colorfulloading:921304808256860171>")
 
 class Slash(commands.Cog):
 	global p
@@ -250,7 +310,7 @@ class Slash(commands.Cog):
 		await ctx.respond(output)
 
 	# /convert
-	@slash_command(name='convert', description='Converts the given input to ASCII binary.')
+	@slash_command(name='convert', description='Converts ASCII binary to text.')
 	async def slashConvert(self, ctx, input: Option(str, "The binary code which will be converted to text(make sure it's ASCII binary).")):
 		try:
 			if " " in input:
@@ -329,6 +389,53 @@ class Slash(commands.Cog):
 		# Deletes the saved image file
 		os.remove('slash_delete_output.jpg')
 
+	# /execute
+	@slash_command(name='execute', description='Runs the code of the given langauge.')
+	async def slashExecute(self, ctx, language: Option(str, "The language you want to run.", choices=['Auto-Detect', 'Python', 'JavaScript', 'C#', 'Java', 'C++', 'Rust']), message_id: Option(str, 'ID of the message with the code. You may need to type the message beforehand.')):
+		try:
+			msg = await ctx.fetch_message(int(message_id))
+		except:
+			await ctx.respond('**Invalid message ID.**\n\n**How to get message ID?**\nTurn on "Devloper Mode" then right click/hold a message and click/tap "Copy ID"\n\n**How to turn "Devloper Mode"?**\n__Desktop:__\nSettings Area -> Under User Settings -> Devloper Mode\n\n__Mobile:__\nSettings Area -> Under App Settings -> Behaviour -> Devloper Mode', ephemeral=True)
+			return
+
+		auto = False
+		if language == 'Auto-Detect':
+			auto = True
+
+			m = msg.content
+			m = m.split('```')
+			m = m[1]
+			m = m.splitlines(keepends=True)[0]
+			m = m.replace('\n', '')
+
+			if m == 'cs' or m == 'csharp':
+				language = "C#"
+			elif m == 'py' or m == 'python':
+				language = 'Python'
+			elif m == 'js' or m == 'javascript':
+				language = "JavaScript"
+			elif m == 'java':
+				language = 'Java'
+			elif m == 'cpp' or m == 'c++':
+				language = 'C++'
+			elif m == 'rs' or m == 'rust':
+				language = 'Rust'
+			else:
+				await ctx.respond('Auto-detect failed. Please manually select the language.', ephemeral=True)
+				return
+
+		if language == "C#":
+			await run_code(ctx, "csharp", "cs", msg, "//", discord.Color.purple(), auto_detect=auto)
+		elif language == "Python":
+			await run_code(ctx, "python", "py", msg, "#", discord.Color.gold(), auto_detect=auto)
+		elif language == "JavaScript":
+			await run_code(ctx, "javascript", "js", msg, "//", 0xFFF200, auto_detect=auto)
+		elif language == "Java":
+			await run_code(ctx, "java", "java", msg, "//", 0x178DC9, auto_detect=auto)
+		elif language == "C++":
+			await run_code(ctx, "c++", "cpp", msg, "//", 0x1F6ABD, auto_detect=auto)
+		elif language == "Rust":
+			await run_code(ctx, "rust", "rs", msg, "//", discord.Color.orange(), auto_detect=auto)
+
 def setup(client):
 	client.add_cog(Slash(client))
-	

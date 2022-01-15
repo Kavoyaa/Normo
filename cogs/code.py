@@ -2,17 +2,22 @@ import discord
 from discord.ext import commands
 from pyston import PystonClient, File
 
-
 async def run_code(ctx, language, codeblock_type, code, comment, color):
+	if code.count('`') < 6:
+		await ctx.reply(f"**The code must be inside a codeblock.**\n\nHow to make a codeblock:\n\`\`\`{codeblock_type}\n[code]\n\`\`\`", mention_author=False)
+		return
+
 	await ctx.message.add_reaction("<a:colorfulloading:921304808256860171>")
 
-	code = code.replace(f'```{language}', '```')
-	code = code.replace(f'```{codeblock_type}', '```')
-	code = code.split('```')
-	code = code[1][1:]
+	co = code.splitlines(keepends=True)
+	co = co[1:-1]
+
+	c = ''
+	for item in co:
+		c += item
 
 	pyston = PystonClient()
-	output = await pyston.execute(language, [File(code)])
+	output = await pyston.execute(language, [File(c)])
 	success = output.success
 	output = str(output)
 
@@ -47,7 +52,6 @@ class Code(commands.Cog):
 
 	def __init__(self, client):
 		self.client = client
-		
 
 	# When the cog is loaded
 	@commands.Cog.listener()
@@ -72,7 +76,7 @@ class Code(commands.Cog):
 	async def java(self, ctx, *, code):
 		await run_code(ctx, "java", "java", code, "//", 0x178DC9)
 
-	# Java command
+	# C++ command
 	@commands.command(name='c++', aliases=['cpp', 'cplusplus'], description='Executes C++ code!')
 	@commands.cooldown(1, 6, commands.BucketType.user)
 	async def cpp(self, ctx, *, code):

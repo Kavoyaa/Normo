@@ -11,7 +11,6 @@ import re
 import textwrap
 from discord.ui import Button, View
 
-
 class Utility(commands.Cog):
 	global p
 

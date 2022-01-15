@@ -59,7 +59,7 @@ class Fun(commands.Cog):
 		'better_not_tell_you_now',
 		'cannot_predict_now',
 		'concentrate_and_ask_again',
-		'dont_count_on_it.',
+		'dont_count_on_it',
 		'it_is_certain',
 		'it_is_decidely_so',
 		'most_likely',
@@ -83,7 +83,6 @@ class Fun(commands.Cog):
 		embed.set_footer(text=ctx.author, icon_url=ctx.author.avatar.url)
 
 		await ctx.send(f'*\🎱"{question}"\🎱*', file=file, embed=embed)
-		print(f'[LOGS] Command used: {p}8ball')
 
 	#Coinflip command
 	@commands.command(name='coinflip', description='Flips a coin!')
@@ -92,7 +91,6 @@ class Fun(commands.Cog):
 		responses = ['Heads!', 'Tails!']
 
 		await ctx.reply(random.choice(responses), mention_author=False)
-		print(f'[LOGS] Command used: {p}coinflip')
 
 	#Choose command
 	@commands.command(name='choose', description='Chooses a random item from the given input.\n**Example for usage:**\n`.choose apple mango`\n**Output:** `apple`\nYou can put as many items as you like.')
@@ -101,7 +99,6 @@ class Fun(commands.Cog):
 		output = items.split()
 
 		await ctx.reply(random.choice(output), mention_author=False)
-		print(f'[LOGS] Command used: {p}choose')
 
 	# Kill command
 	@commands.command(name='kill', aliases=['keel', 'keal'], description='Kill your enemies!')
@@ -125,7 +122,6 @@ class Fun(commands.Cog):
 		embed.set_footer(text=f'{ctx.author.name} killed {user.name}. RIP💀')
 
 		await ctx.send(embed=embed)
-		print(f'[LOGS] Command used: {p}kill')
 
 	# Inspire command
 	@commands.command(name='inspire', aliases=['motivate'], description='Shows a random inspirational quote.')
@@ -139,28 +135,24 @@ class Fun(commands.Cog):
 		embed = discord.Embed(description=f'**"{content}"**\n-{author}', colour=0x00FF00)
 
 		await ctx.reply(embed=embed, mention_author=False)
-		print(f'[LOGS] Command used: {p}inspire')
 
 	# Hello command
 	@commands.command(name='hello', description='Feeling lonely? Have the bot say hello to you!')
 	async def hello(self, ctx):
 		'''Says hello'''
 		await ctx.reply(f'Hello {ctx.author.mention}!')
-		print(f'[LOGS] Command used: {p}hello')
 
 	# Afk command
 	@commands.command(name='afk', description='Tells people that you are AFK.')
 	async def afk(self, ctx):
 		'''Says <ctx.author> is AFK'''
 		await ctx.send(f'{ctx.author.mention} is AFK!')
-		print(f'[LOGS] Command used: {p}afk')
 
 	# Bye command
 	@commands.command(name='bye', description='Says bye. Yep, that\'s it. Bye.')
 	async def bye(self, ctx):
 		'''Says bye'''
 		await ctx.reply(f'Bye-bye {ctx.author.mention}!')
-		print(f'[LOGS] Command used: {p}bye')
 
 	# Joke command
 	@commands.command(name='joke', description='Shows a random joke.')
@@ -287,6 +279,7 @@ class Fun(commands.Cog):
 	# Say command
 	@commands.command(name='say', description='Have the bot say something!')
 	async def say(self, ctx, *, message):
+		await ctx.channel.purge(limit=1)
 		await ctx.send(message)
 
 def setup(client):

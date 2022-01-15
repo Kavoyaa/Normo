@@ -4,6 +4,24 @@ from main import p
 import statistics as stat
 import math
 
+async def average(ctx, type_of_average, values):
+	toa = type_of_average.lower()
+	values = values.replace(" ", "")
+	v = values.split(',')
+	
+	data = []
+	for item in v:
+		data.append(int(item))
+	
+	if toa == 'mean':
+		output = stat.mean(data)
+	elif toa == 'median':
+		output = stat.median(data)
+	elif toa == 'mode':
+		output = stat.median(data)
+
+	await ctx.reply(f'{toa.capitalize()} of: `{values.replace(",", ", ")}`\n**{output}**', mention_author=False)
+
 class Maths(commands.Cog):
 	global p
 
@@ -24,35 +42,27 @@ class Maths(commands.Cog):
 				pass
 			else:
 				i += item
-		i = i.replace('^', '**')
-		await ctx.reply(eval(i, {'__builtins__':{}}))
-	
-	# Average command
-	@commands.command(name='average', aliases=['avg'], description='Tells the average of the given values! If the type of average(mean, median or mode) is not mentioned, command shows the mean of the given values. Seprate the values by a `,`(comma).')
-	async def mean(self, ctx, typeOfAverage: None, *, values):
-		if typeOfAverage == None:
-			toa = 'mean'
-		else:
-			toa = typeOfAverage.lower()
-		if toa == "mean" or toa == "median" or toa == "mode":
-			values = values.replace(" ", "")
-			values = values.split(',')
-			
-			data = []
-			for item in values:
-				data.append(int(item))
 
-			if toa == 'mean':
-				await ctx.reply(stat.mean(data))
-			elif toa == 'median':
-				await ctx.reply(stat.median(data))
-			elif toa == 'mode':
-				await ctx.reply(stat.mode(data))
-		else:
-			embed = discord.Embed(color=discord.Color.red())
-			embed.add_field(name='Command Error:', value=f"typeOfAverage must be 'mean', 'median' or 'mode', not '{typeOfAverage}'")
-			await ctx.send(embed=embed)
+		e = i.replace('^', '**')
+		output = eval(e, {'__builtins__':{}})
+
+		await ctx.reply(f'`{i}`\n**{output}**')
+
+	# Mean command
+	@commands.command(name='mean', description='Tells the mean of the given values! Seprate the values by a `,`(comma).')
+	async def mean(self, ctx, *, values):
+		await average(ctx, "mean", values)
+
+	# Median command
+	@commands.command(name='median', description='Tells the median of the given values! Seprate the values by a `,`(comma).')
+	async def median(self, ctx, *, values):
+		await average(ctx, "median", values)
 	
+	# Mode command
+	@commands.command(name='mode', description='Tells the mode of the given values! Seprate the values by a `,`(comma).')
+	async def mode(self, ctx, *, values):
+		await average(ctx, "mode", values)
+
 	# Squareroot command
 	@commands.command(name='squareroot', aliases=['sqrt'], description='Gives the square root of the given number!')
 	async def squareroot(self, ctx, number: int):

@@ -1,14 +1,12 @@
-# Importing modules
 import os
 import discord
 from discord.ext import commands
 import dotenv
 
-# Set this to prefix of your choice.
-p = '.'
-client = commands.Bot(command_prefix = p, case_insensitive=True)
+p = '.' # Set this to prefix of your choice.
+client = commands.Bot(command_prefix=p, case_insensitive=True, intents=discord.Intents.all())
 
-# Removes the default 'help' command so we can use our own custom one.
+# Removes the default 'help' command.
 client.remove_command('help')
 
 # When bot comes online
@@ -23,28 +21,36 @@ async def on_ready():
 #'''
 @client.event
 async def on_command_error(ctx, error):
-    # Ignores the error if it is 'CommandNotFound', which means the command used was invalid.
+    value =str(error).capitalize()
     if isinstance(error, commands.CommandNotFound):
-        pass
+        if '.' in value:
+            return
+        else:
+            pass
     elif isinstance(error, commands.MissingPermissions):
         missing_perms = str(error.missing_permissions)
         missing_perms = missing_perms.replace('[', '')
         missing_perms = missing_perms.replace(']', '')
 
         value = f'You are missing the following permission(s):\n{missing_perms}'
+    elif isinstance(error, commands.BotMissingPermissions):
+        bot_missing_perms = str(error.missing_permissions)
+        bot_missing_perms = missing_perms.replace('[', '')
+        bot_missing_perms = missing_perms.replace(']', '')
+
+        value = f'The bot is missing the following permission(s):\n{bot_missing_perms}'
     elif isinstance(error, commands.MissingRequiredArgument):
         value = str(error).capitalize()
     else:
-        value=str(error).capitalize()
+        raise error
 		
     embed = discord.Embed(color=discord.Color.red())
     embed.add_field(name='Command Error:', value=value)
 		
-    await ctx.send(embed=embed)
-		
+    await ctx.send(embed=embed)	
 #'''
-# Loads the cogs.
 
+# Loads the cogs.
 def load_cogs():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
