@@ -34,7 +34,7 @@ class Maths(commands.Cog):
 		print(f'[LOGS] {self.__class__.__name__} cog has been loaded.\n')
 
 	# Calculate command
-	@commands.command(name='calculate', aliases=['calc', 'c'], description='Calculate the given input(numbers only)!')
+	@commands.command(name='calculate', aliases=['calc'], description='Calculate the given input(numbers only)!')
 	async def calculate(self, ctx, *, input):
 		i = ''
 		for item in input:

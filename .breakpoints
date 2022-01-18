@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "cogs/slash.py": [
+      {
+        "id": "ed075d64-8a66-4596-baa0-2fb9a4c0145e",
+        "line": 215,
+        "version": 4915,
+        "index": 6259
+      }
+    ]
+  }
 }

@@ -5,7 +5,7 @@ from main import client
 
 class HelpDropdownView(discord.ui.View):
 	def __init__(self, ctx):
-		super().__init__(timeout=25)
+		super().__init__(timeout=40)
 		self.client = client
 		self.ctx = ctx
 

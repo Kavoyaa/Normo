@@ -81,6 +81,12 @@ class Code(commands.Cog):
 	@commands.cooldown(1, 6, commands.BucketType.user)
 	async def cpp(self, ctx, *, code):
 		await run_code(ctx, "c++", "cpp", code, "//", 0x1F6ABD)
+	
+	# C command
+	@commands.command(name='c', description='Executes C code!')
+	@commands.cooldown(1, 6, commands.BucketType.user)
+	async def c(self, ctx, *, code):
+		await run_code(ctx, "c", "c", code, "//", 0x1F6ABD)
 
 	# Rust command
 	@commands.command(name='rust', aliases=['rs'], description='Executes Rust code!')
@@ -93,6 +99,12 @@ class Code(commands.Cog):
 	@commands.cooldown(1, 6, commands.BucketType.user)
 	async def csharp(self, ctx, *, code):
 		await run_code(ctx, "csharp", "cs", code, "//", discord.Color.purple())
+
+	# Php command
+	@commands.command(name='php', description='Executes PHP code!')
+	@commands.cooldown(1, 6, commands.BucketType.user)
+	async def php(self, ctx, *, code):
+		await run_code(ctx, "php", "php", code, "//", 0x787CB4)
 
 def setup(client):
 	client.add_cog(Code(client))

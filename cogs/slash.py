@@ -58,7 +58,7 @@ async def run_code(ctx, language, codeblock_type, msg, comment, color, auto_dete
 	if auto_detect:
 		embed = discord.Embed(color = color if success else discord.Color.red())
 		embed.add_field(name='Program Output', value=output, inline=False)
-		embed.add_field(name='Lang chosen by Auto-Detect:', value=f'```\n{language.capitalize()}\n```{click}', inline=False)
+		embed.add_field(name='Lang chosen by Auto-Detect:', value=f'```fix\n{language.capitalize()}\n```{click}', inline=False)
 	elif not auto_detect:
 		embed = discord.Embed(color = color if success else discord.Color.red())
 		embed.add_field(name='Program Output', value=output+click, inline=False)
@@ -192,71 +192,27 @@ class Slash(commands.Cog):
 	# /meme
 	@slash_command(name='meme', description='Shows a random meme from Reddit.')
 	async def slashMeme(self, ctx):
-		'''Shows a random meme from Reddit using 1 of 3 different APIs'''
-		randomNum = random.randint(1, 4)
+		'''Shows a random meme from Reddit'''
+		def give_meme():
+			response = requests.get("https://reddit-meme-api.herokuapp.com")
+			res = response.json()
 
-		# API one.
-		if randomNum == 1:
-			links = [
-			'https://meme-api.herokuapp.com/gimme/i_irl',
-			'https://meme-api.herokuapp.com/gimme/memes',
-			'https://meme-api.herokuapp.com/gimme/me_irl',
-			'https://meme-api.herokuapp.com/gimme/dankmemes',
-			]
+			post = res['post_link']
+			title = res['title']
+			url = res['url']
+			ups = res['ups']
+			nsfw = res['nsfw']
 
-			res = requests.get(random.choice(links))
-			r = res.json()
-			title = r['title']
-			url = r['url']
-			nsfw = r['nsfw']
-		# Same API as above if statement.
-		elif randomNum == 2:
-			links=[
-			'https://meme-api.herokuapp.com/gimme/bonehurtingjuice',
-			'https://meme-api.herokuapp.com/gimme/trippinthroughtime',
-			'https://meme-api.herokuapp.com/gimme/technicallythetruth'
-			]
+			if nsfw: return discord.Embed(description='An unknown error occured. Please try again.', color=discord.Color.red())
 
-			res = requests.get(random.choice(links))
-			r = res.json()
-			title = r['title']
-			url = r['url']
-			nsfw = r['nsfw']
-		# API two.
-		elif randomNum == 3:
-			links= [
-			'https://reddit-meme-api.herokuapp.com/'
-			]
-
-			res = requests.get(random.choice(links))
-			r = res.json()
-			title = r['title']
-			url = r['url']
-			nsfw = r['nsfw']
-		# API three.
-		elif randomNum == 4:
-			links = [
-			'https://memes.blademaker.tv/api'
-			]
-
-			res = requests.get(random.choice(links))
-			r = res.json()
-			title = r['title']
-			url = r['image']
-			nsfw = r['nsfw']
-
-		# Checks if the meme is NSFW or not; Dosen't send the meme if it's NSFW.
-		if nsfw:
-			embed = discord.Embed(description='An error occured, please try again!', color=0xFF0000)
-
-			await ctx.respond(embed=embed)
-		else:
-			embed = discord.Embed(description=f'**[{title}]({url})**', color=discord.Color.random())
-
+			embed = discord.Embed(description=f'**[{title}]({post})**', color=discord.Color.random())
 			embed.set_image(url=url)
+			embed.set_footer(text=f'👍 {ups}')
 
-			await ctx.respond(embed=embed)
-	
+			return embed
+
+		await ctx.respond(embed=give_meme())
+
 	# /dictionary
 	@slash_command(name='dictionary', description='Gets the dictionary information about a word.')
 	async def slashDictionary(self, ctx, word: Option(str, 'The word you want dictionary information about.')):
@@ -391,11 +347,11 @@ class Slash(commands.Cog):
 
 	# /execute
 	@slash_command(name='execute', description='Runs the code of the given langauge.')
-	async def slashExecute(self, ctx, language: Option(str, "The language you want to run.", choices=['Auto-Detect', 'Python', 'JavaScript', 'C#', 'Java', 'C++', 'Rust']), message_id: Option(str, 'ID of the message with the code. You may need to type the message beforehand.')):
+	async def slashExecute(self, ctx, language: Option(str, "The language you want to run.", choices=['Auto-Detect', 'Python', 'JavaScript', 'C#', 'Java', 'C++', 'Rust', 'C', 'PHP']), message_id: Option(str, 'ID of the message with the code. You may need to type the message beforehand.')):
 		try:
 			msg = await ctx.fetch_message(int(message_id))
 		except:
-			await ctx.respond('**Invalid message ID.**\n\n**How to get message ID?**\nTurn on "Devloper Mode" then right click/hold a message and click/tap "Copy ID"\n\n**How to turn "Devloper Mode"?**\n__Desktop:__\nSettings Area -> Under User Settings -> Devloper Mode\n\n__Mobile:__\nSettings Area -> Under App Settings -> Behaviour -> Devloper Mode', ephemeral=True)
+			await ctx.respond('**Invalid message ID.**\n\n**How to get message ID?**\nTurn on "Devloper Mode" then right click/hold a message and click/tap "Copy ID"\n\n**How to turn on "Devloper Mode"?**\n__Desktop:__\nSettings Area -> Under User Settings -> Advanced -> Devloper Mode\n\n__Mobile:__\nSettings Area -> Under App Settings -> Behaviour -> Devloper Mode', ephemeral=True)
 			return
 
 		auto = False
@@ -418,8 +374,12 @@ class Slash(commands.Cog):
 				language = 'Java'
 			elif m == 'cpp' or m == 'c++':
 				language = 'C++'
+			elif m == 'c':
+				language = 'C'
 			elif m == 'rs' or m == 'rust':
 				language = 'Rust'
+			elif m == 'php':
+				language = 'PHP'
 			else:
 				await ctx.respond('Auto-detect failed. Please manually select the language.', ephemeral=True)
 				return
@@ -434,8 +394,12 @@ class Slash(commands.Cog):
 			await run_code(ctx, "java", "java", msg, "//", 0x178DC9, auto_detect=auto)
 		elif language == "C++":
 			await run_code(ctx, "c++", "cpp", msg, "//", 0x1F6ABD, auto_detect=auto)
+		elif language == "C":
+			await run_code(ctx, "c", "c", msg, "//", 0x1F6ABD, auto_detect=auto)
 		elif language == "Rust":
 			await run_code(ctx, "rust", "rs", msg, "//", discord.Color.orange(), auto_detect=auto)
+		elif language == 'PHP':
+			await run_code(ctx, "php", "php", msg, "//", 0x787CB4, auto_detect=auto)
 
 def setup(client):
 	client.add_cog(Slash(client))
