@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from main import p
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 import PIL.ImageOps  
 from io import BytesIO
 import os
@@ -112,7 +112,7 @@ class Images(commands.Cog):
 		os.remove('delete_output.jpg')
 	
 	# Grayscale command
-	@commands.command(name='grayscale')
+	@commands.command(name='grayscale', description='Grayscales the PFP of the given user.')
 	async def gray(self, ctx, user: discord.Member=None):
 		if user == None:
 			user = ctx.author
@@ -125,6 +125,32 @@ class Images(commands.Cog):
 
 		await ctx.send(file = discord.File('grayscaled.jpg'))
 		os.remove('grayscaled.jpg')
+	
+	# What command
+	@commands.command(name='what')
+	async def what(self, ctx, *, text):
+		image = Image.open("images/what.png")
+		font = ImageFont.truetype("fonts/arial.ttf", 75)
+		draw = ImageDraw.Draw(image)
+
+		draw.text((5, 5), text, (0, 0, 0), font=font)
+		image.save("what_output.png")
+		
+		await ctx.send(file=discord.File("what_output.png"))
+		os.remove("what_output.png")
+	
+	# What command
+	@commands.command(name='changeMyMind', aliases=['change_my_mind'], description='Generates a "Change My Mind" meme/')
+	async def change_my_mind(self, ctx, *, text):
+		image = Image.open("images/change_my_mind.jpeg")
+		font = ImageFont.truetype("fonts/arial.ttf", 40)
+		draw = ImageDraw.Draw(image)
+
+		draw.text((300, 550), text, (0, 0, 0), font=font)
+		image.save("change_my_mind_output.jpeg")
+		
+		await ctx.send(file=discord.File("change_my_mind_output.jpeg"))
+		os.remove("change_my_mind_output.jpeg")
 
 def setup(client):
 	client.add_cog(Images(client))

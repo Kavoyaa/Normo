@@ -4,7 +4,7 @@ from discord.commands import slash_command, Option, SlashCommandGroup
 import requests
 import os
 import random
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 import PIL.ImageOps  
 from io import BytesIO
 from pyston import PystonClient, File
@@ -340,7 +340,7 @@ class Slash(commands.Cog):
 		# Creates a 'slash_delete_output.jpg' which gets sent as output
 		wanted.save('slash_delete_output.jpg')
 
-		await ctx.respond(file = discord.File('slash_delete_output.jpg'))
+		await ctx.respond(file=discord.File('slash_delete_output.jpg'))
 
 		# Deletes the saved image file
 		os.remove('slash_delete_output.jpg')
