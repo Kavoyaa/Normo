@@ -17,7 +17,7 @@ async def on_ready():
 
     await client.change_presence(status=discord.Status.online, activity=discord.Game(f'Commands: {p}help'))
 
-# In case of command error
+# In case of command error(aka error handler)
 #'''
 @client.event
 async def on_command_error(ctx, error):
@@ -42,10 +42,8 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.MissingRequiredArgument):
         value = str(error).capitalize()
     else:
-        raise error
-		
-    embed = discord.Embed(color=discord.Color.red())
-    embed.add_field(name='Command Error:', value=value)
+    	embed = discord.Embed(color=discord.Color.red())
+    	embed.add_field(name='Command Error:', value=f"```\n{value}\n```")
 		
     await ctx.send(embed=embed)	
 #'''
